@@ -1,0 +1,86 @@
+{
+  "results/cleaning_log.csv": {
+    "data_files": {
+      "data/raw/hangu/Data.csv": "bf4e377c0fd9b4adf65a53b2b2a53d60391808dfdc6d752877c28b6b05956bc8",
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d",
+      "data/raw/openml/medical_appointment_43617.arff": "4c33a04273f2bc63b2c7461978ec359eb9231dbecddd73a244c5a6cbd9b92d96"
+    },
+    "date": "2026-10-06T18:02:07+00:00",
+    "git_commit": "ac74fa17beec53cb881b6f174f39e307671dda5e",
+    "git_dirty": false,
+    "script": "ml/src/e1_profile.py",
+    "seed": 42
+  },
+  "results/dataset_summary.csv": {
+    "data_files": {
+      "data/raw/hangu/Data.csv": "bf4e377c0fd9b4adf65a53b2b2a53d60391808dfdc6d752877c28b6b05956bc8",
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d",
+      "data/raw/openml/medical_appointment_43617.arff": "4c33a04273f2bc63b2c7461978ec359eb9231dbecddd73a244c5a6cbd9b92d96"
+    },
+    "date": "2026-10-06T18:02:07+00:00",
+    "git_commit": "ac74fa17beec53cb881b6f174f39e307671dda5e",
+    "git_dirty": false,
+    "script": "ml/src/e1_profile.py",
+    "seed": 42
+  },
+  "results/e1_eda_rates.csv": {
+    "data_files": {
+      "data/raw/hangu/Data.csv": "bf4e377c0fd9b4adf65a53b2b2a53d60391808dfdc6d752877c28b6b05956bc8",
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d",
+      "data/raw/openml/medical_appointment_43617.arff": "4c33a04273f2bc63b2c7461978ec359eb9231dbecddd73a244c5a6cbd9b92d96"
+    },
+    "date": "2026-10-06T18:02:07+00:00",
+    "git_commit": "ac74fa17beec53cb881b6f174f39e307671dda5e",
+    "git_dirty": false,
+    "script": "ml/src/e1_profile.py",
+    "seed": 42
+  },
+  "results/figures/e1_noshow_by_age_band.png": {
+    "data_files": {
+      "data/raw/hangu/Data.csv": "bf4e377c0fd9b4adf65a53b2b2a53d60391808dfdc6d752877c28b6b05956bc8",
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d",
+      "data/raw/openml/medical_appointment_43617.arff": "4c33a04273f2bc63b2c7461978ec359eb9231dbecddd73a244c5a6cbd9b92d96"
+    },
+    "date": "2026-10-06T18:02:07+00:00",
+    "git_commit": "ac74fa17beec53cb881b6f174f39e307671dda5e",
+    "git_dirty": false,
+    "script": "ml/src/e1_profile.py",
+    "seed": 42
+  },
+  "results/figures/e1_noshow_by_lead_time.png": {
+    "data_files": {
+      "data/raw/hangu/Data.csv": "bf4e377c0fd9b4adf65a53b2b2a53d60391808dfdc6d752877c28b6b05956bc8",
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d",
+      "data/raw/openml/medical_appointment_43617.arff": "4c33a04273f2bc63b2c7461978ec359eb9231dbecddd73a244c5a6cbd9b92d96"
+    },
+    "date": "2026-10-06T18:02:07+00:00",
+    "git_commit": "ac74fa17beec53cb881b6f174f39e307671dda5e",
+    "git_dirty": false,
+    "script": "ml/src/e1_profile.py",
+    "seed": 42
+  },
+  "results/figures/e1_noshow_by_weekday.png": {
+    "data_files": {
+      "data/raw/hangu/Data.csv": "bf4e377c0fd9b4adf65a53b2b2a53d60391808dfdc6d752877c28b6b05956bc8",
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d",
+      "data/raw/openml/medical_appointment_43617.arff": "4c33a04273f2bc63b2c7461978ec359eb9231dbecddd73a244c5a6cbd9b92d96"
+    },
+    "date": "2026-10-06T18:02:07+00:00",
+    "git_commit": "ac74fa17beec53cb881b6f174f39e307671dda5e",
+    "git_dirty": false,
+    "script": "ml/src/e1_profile.py",
+    "seed": 42
+  },
+  "results/figures/e1_overall_noshow_rate.png": {
+    "data_files": {
+      "data/raw/hangu/Data.csv": "bf4e377c0fd9b4adf65a53b2b2a53d60391808dfdc6d752877c28b6b05956bc8",
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d",
+      "data/raw/openml/medical_appointment_43617.arff": "4c33a04273f2bc63b2c7461978ec359eb9231dbecddd73a244c5a6cbd9b92d96"
+    },
+    "date": "2026-10-06T18:02:07+00:00",
+    "git_commit": "ac74fa17beec53cb881b6f174f39e307671dda5e",
+    "git_dirty": false,
+    "script": "ml/src/e1_profile.py",
+    "seed": 42
+  }
+}

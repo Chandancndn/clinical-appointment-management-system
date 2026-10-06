@@ -1,0 +1,25 @@
+dataset,step,rule,kind,rows_before,rows_after,rows_changed,columns_changed,note
+kaggle,1,load,load,110527,110527,0,0,"positive class no_show = 1 (No-show = 'Yes'): 22,319 rows (20.19%)"
+kaggle,2,rename_columns,rename,110527,110527,0,13,"snake_case names; source typos fixed: Hipertension -> hypertension, Handcap -> handicap"
+kaggle,3,drop_non_integer_patient_id,drop,110527,110522,5,0,a PatientId with a fractional part is malformed and cannot be cast to an integer without corrupting it
+kaggle,4,cast_patient_id_to_int,cast,110522,110522,0,1,"float64 -> int64, lossless (all remaining ids are whole numbers below 2**53)"
+kaggle,5,drop_impossible_age,drop,110522,110516,6,0,age < 0 or age > 110; age 0 (newborns) is kept
+kaggle,6,drop_appointment_before_scheduled,drop,110516,110511,5,0,"compared by calendar date: AppointmentDay is stored at 00:00, so a same-day booking is valid"
+kaggle,7,drop_exact_duplicates,drop,110511,110511,0,0,"rows identical in every column, including AppointmentID"
+kaggle,8,report_duplicates_ignoring_appointment_id,report,110511,110511,617,0,"rows identical to an earlier row in every column except AppointmentID; kept, because they may be genuine second appointments"
+kaggle,9,derive_lead_days_and_weekday,derive,110511,110511,0,2,"lead_days = whole days from scheduled date to appointment date, ignoring time of day; appt_weekday: 0 = Monday"
+openml,1,load,load,61214,61214,0,0,"positive class no_show = 1 (no_show = 1 - show): 12,868 rows (21.02%)"
+openml,2,drop_cosine_columns,drop_columns,61214,61214,0,6,"cosine encodings of month, weekday and hour duplicate the discrete columns; discrete ones kept"
+openml,3,rename_and_cast_columns,rename,61214,61214,0,12,English names; float64 -> int64 (all values are whole numbers)
+openml,4,recode_sex,recode,61214,61214,61214,0,"1 -> M, 2 -> F, matching Kaggle's Gender"
+openml,5,recode_weekday,recode,61214,61214,61214,2,"1 = Monday ... 7 = Sunday  ->  0 = Monday ... 6 = Sunday, matching Kaggle's appt_weekday"
+openml,6,drop_negative_lead_days,drop,61214,61214,0,0,latencia is the number of days between booking and appointment
+openml,7,drop_impossible_age,drop,61214,61214,0,0,age < 0 or age > 110
+openml,8,drop_exact_duplicates,drop,61214,60990,224,0,"rows identical in every column; the file has no patient ID, so identical rows might be distinct appointments by similar patients. Dropped as the plan says; the share is small"
+openml,9,report_hours_outside_clinic_hours,report,60990,60990,1,0,appointment hour outside 7-21; kept
+hangu,1,load,load,6637,6637,0,0,consultation records of one physician; ServTime is in seconds
+hangu,2,rename_columns,rename,6637,6637,0,14,snake_case names; ServTime -> service_seconds
+hangu,3,drop_missing_or_nonpositive_service_time,drop,6637,6637,0,0,a consultation cannot take zero or negative time
+hangu,4,drop_service_time_above_limit,drop,6637,6637,0,0,over 4 hours is a recording error; the real long tail below it is kept
+hangu,5,drop_exact_duplicates,drop,6637,6637,0,0,rows identical in every column
+hangu,6,derive_service_minutes,derive,6637,6637,0,1,service_minutes = service_seconds / 60

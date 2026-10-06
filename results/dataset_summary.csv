@@ -1,0 +1,72 @@
+dataset,metric,value,note
+kaggle,rows_raw,110527,rows in the raw file
+kaggle,rows_clean,110511,rows after the cleaning rules in cleaning_log.csv
+kaggle,rows_removed,16,
+kaggle,no_show_n_clean,22311,
+kaggle,no_show_rate_clean,0.20188940467464778,share of cleaned rows with no_show = 1
+kaggle,unique_patients_clean,62291,
+kaggle,mean_appointments_per_patient,1.7741086192226807,
+kaggle,appointment_date_min,2016-04-29,
+kaggle,appointment_date_max,2016-06-08,
+kaggle,n_appointment_dates,27,
+kaggle,share_same_day_booking,0.3489154925753997,lead_days == 0
+kaggle,lead_days_median,4.0,
+kaggle,lead_days_p95,39.0,
+kaggle,share_sms_received,0.3210540127227154,SMS reminder: research feature only
+kaggle,share_female,0.6499624471772041,
+kaggle,age_mean,37.0862538570821,
+kaggle,age_median,37.0,
+kaggle,n_train_rows,88527,the locked training part
+kaggle,n_holdout_rows,21984,the locked holdout: scored once per final model
+kaggle,holdout_share_rows,0.19893042321578847,
+kaggle,train_no_show_rate,0.20605013159826946,
+kaggle,holdout_no_show_rate,0.18513464337700145,described only; the holdout is not used in the EDA rates
+kaggle,train_last_date,2016-06-01,
+kaggle,holdout_first_date,2016-06-02,
+kaggle,n_train_dates,22,
+kaggle,n_holdout_dates,5,"round(0.2 * distinct dates), cut at a date boundary"
+kaggle,cv_n_splits,5,"GroupKFold on PatientId, seed 42, built on the training part"
+kaggle,cv_valid_rows_min,17572,
+kaggle,cv_valid_rows_max,17845,
+kaggle,cv_patients_in_both_sides,0,patients on both sides of any fold; must be 0
+openml,rows_raw,61214,rows in the raw file
+openml,rows_clean,60990,rows after the cleaning rules in cleaning_log.csv
+openml,rows_removed,224,
+openml,no_show_n_clean,12828,
+openml,no_show_rate_clean,0.2103295622233153,share of cleaned rows with no_show = 1
+openml,appt_month_min,1,
+openml,appt_month_max,4,
+openml,lead_days_median,4.0,
+openml,lead_days_p95,35.0,
+openml,share_female,0.5974913920314806,
+openml,age_mean,34.63844892605345,
+openml,age_median,34.0,
+openml,n_specialties,73,
+openml,share_channel_call_centre,0.5309394982784063,canal = 1
+openml,share_channel_personal,0.13052959501557632,canal = 2
+openml,share_channel_web,0.3385309067060174,canal = 3
+openml,share_appt_type_procedures,0.09965568125922282,tipo = 2
+openml,n_train_rows,46136,the locked training part
+openml,n_holdout_rows,14854,the locked holdout: scored once per final model
+openml,holdout_share_rows,0.24354812264305623,
+openml,train_no_show_rate,0.2072134558696029,
+openml,holdout_no_show_rate,0.22000807863201832,described only; the holdout is not used in the EDA rates
+openml,holdout_month,4,the last month in the data
+openml,cv_n_splits,5,"stratified, seed 42, built on the training part"
+openml,cv_valid_rows_min,9227,
+openml,cv_valid_rows_max,9228,
+openml,cv_valid_no_show_rate_min,0.2071954919809276,
+openml,cv_valid_no_show_rate_max,0.20721794732849247,
+hangu,rows_raw,6637,rows in Data.csv
+hangu,rows_clean,6637,
+hangu,rows_removed,0,
+hangu,sessions,381,half-day sessions
+hangu,unique_patient_codes,2429,
+hangu,service_seconds_min,180,Data.csv holds no value below this: shorter consultations were removed by the dataset's authors
+hangu,service_seconds_median,725.0,
+hangu,service_seconds_mean,801.9109537441615,
+hangu,service_seconds_p95,1498.1999999999998,
+hangu,service_seconds_max,3457,
+hangu,service_minutes_median,12.083333333333334,
+hangu,service_minutes_mean,13.365182562402692,
+hangu,service_minutes_p95,24.969999999999995,
