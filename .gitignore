@@ -1,0 +1,19 @@
+# Environment and secrets
+venv/
+.venv/
+.env
+
+# Raw datasets are never committed (CLAUDE.md hard rule 5).
+# data/raw/ is the documented location; datasets/ is where the downloads currently sit.
+data/raw/
+datasets/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Local databases and OS noise
+*.sqlite3
+instance/
+.DS_Store

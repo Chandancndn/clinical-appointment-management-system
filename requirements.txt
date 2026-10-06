@@ -1,0 +1,14 @@
+flask
+flask-sqlalchemy
+sqlalchemy
+pymysql
+cryptography
+python-dotenv
+pytest
+pandas
+numpy
+scipy
+scikit-learn
+simpy
+matplotlib
+joblib
