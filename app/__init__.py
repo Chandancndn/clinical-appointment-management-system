@@ -43,4 +43,6 @@ def create_app(config: dict | None = None) -> Flask:
     if not app.config.get("SQLALCHEMY_DATABASE_URI"):
         raise RuntimeError("DATABASE_URL is not set. Copy .env.example to .env and fill it in.")
     db.init_app(app)
+    from . import models  # noqa: F401  (registers the tables on db.metadata)
+
     return app
