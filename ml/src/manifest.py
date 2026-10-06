@@ -79,5 +79,6 @@ def record_result(result_path, *, script, seed, data_files=(), repo_root=ROOT, m
     with tempfile.NamedTemporaryFile("w", dir=manifest.parent, delete=False, suffix=".tmp") as handle:
         json.dump(stored, handle, indent=2, sort_keys=True)
         handle.write("\n")
+    os.chmod(handle.name, 0o644)  # a temp file is created private; the manifest is meant to be shared
     os.replace(handle.name, manifest)  # all or nothing: never a half-written manifest
     return entry

@@ -107,6 +107,13 @@ def test_a_missing_result_or_data_file_is_an_error(repo, files):
     assert not (repo / "results" / "manifest.json").exists()  # a failed record leaves no half-written manifest
 
 
+def test_the_manifest_file_is_readable_by_teammates(repo, files):
+    raw, result = files
+    manifest.record_result(result, script="s", seed=1, data_files=[raw], repo_root=repo)
+    mode = (repo / "results" / "manifest.json").stat().st_mode & 0o777
+    assert mode & 0o044 == 0o044, oct(mode)  # group and others can read it
+
+
 def test_a_seed_is_required():
     with pytest.raises(TypeError):
         manifest.record_result(Path("x"), script="s")  # type: ignore[call-arg]
