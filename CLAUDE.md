@@ -6,7 +6,7 @@ Stack: Python, Flask, SQLAlchemy, HTML/CSS/JS, MySQL; scikit-learn for models, S
 
 The guide allows and encourages ML and simulation. No real clinic data exists, so all learning uses public datasets and all clinic behaviour in the simulation is assumed and stated.
 
-**Full design and build order: `docs/PLAN.md`** (Markdown export of the "CAMS Master Plan: Design to Final Project" document). At the start of every session, read this file and the PLAN section for the milestone being worked on. This file holds the rules; PLAN holds the design.
+**Full design and build order: `docs/PLAN.pdf`** (the "CAMS Master Plan: Design to Final Project" document, 24 pages; read it with page ranges, e.g. pages 1-8). At the start of every session, read this file and the PLAN section for the milestone being worked on. This file holds the rules; PLAN holds the design.
 
 ## Hard rules
 
@@ -114,7 +114,7 @@ sim/        clinic.py, policies.py, experiments.py
 data/       raw/ (gitignored), README.md with download steps
 results/    tables, figures, manifest.json written by scripts
 tests/      booking concurrency and constraint tests, leakage tests, simulation sanity tests, risk flag tests
-docs/       PLAN.md, numbers_audit.csv, report drafts
+docs/       PLAN.pdf, numbers_audit.csv, report drafts
 ```
 
 ## Build order (one milestone per session; commit when its checks pass)
@@ -137,7 +137,7 @@ If time runs short, cut in this order: reinforcement-learning policy, standby li
 
 ## Report notes
 
-- Chapters: 1 Introduction, 2 Literature Survey, 3 Limitations of the Existing Works, 4 Problem Statement, 5 Objectives, 6 Proposed Design, 7 Implementation and Testing, 8 Results, 9 Limitations and Future Work, 10 Conclusion, 11 References. Details in `docs/PLAN.md` section 8.
+- Chapters: 1 Introduction, 2 Literature Survey, 3 Limitations of the Existing Works, 4 Problem Statement, 5 Objectives, 6 Proposed Design, 7 Implementation and Testing, 8 Results, 9 Limitations and Future Work, 10 Conclusion, 11 References. Details in `docs/PLAN.pdf` section 8.
 - Literature references: see the CAMS Report: Revised Sections 2 to 4 document (23 corrected entries).
 - Amalina & An (2026) is an arXiv preprint; label it as such.
 - Open items: confirm Fan et al. pages 469-490, full author lists for Deina et al. and Zhou et al.

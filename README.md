@@ -4,7 +4,7 @@ V-semester CSE mini project, SIT Tumakuru. Flask + SQLAlchemy + MySQL, with a no
 prediction model (scikit-learn) and a booking-policy simulation (SimPy).
 
 - Rules for contributors and AI assistants: [CLAUDE.md](CLAUDE.md)
-- Design and build order: the "CAMS Master Plan" document (`docs/PLAN.md`)
+- Design and build order: the "CAMS Master Plan" document (`docs/PLAN.pdf`)
 
 The central guarantee is that the same doctor, date and time can never be booked twice.
 The **database** enforces it (a unique key on `slots` and a unique generated column on
@@ -83,7 +83,7 @@ sim/        simulation                        (M6)
 data/       README.md with download steps; raw files go in data/raw/ (gitignored)
 results/    tables, figures, manifest.json written by scripts
 tests/      booking, leakage, simulation and risk-flag tests
-docs/       PLAN.md, numbers_audit.csv, report drafts
+docs/       PLAN.pdf, numbers_audit.csv, report drafts
 ```
 
 Raw datasets are never committed. Download steps will be in `data/README.md` (milestone M3).
