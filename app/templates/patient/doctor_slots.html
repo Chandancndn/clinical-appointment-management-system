@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% from "_macros.html" import csrf_field, day_strip with context %}
+{% block title %}{{ doctor.name }}{% endblock %}
+{% block content %}
+<p><a href="{{ url_for('patient.index') }}">&larr; All doctors</a></p>
+<h1>{{ doctor.name }}</h1>
+<p class="muted">{{ doctor.specialization }} · {{ doctor.slot_minutes }}-minute appointments</p>
+
+{% if error %}<div class="alert alert-error" role="alert">{{ error }}</div>{% endif %}
+
+{{ day_strip(days, day, 'patient.doctor_slots', doctor_id=doctor.id) }}
+
+<section class="card">
+  <div class="daybar">
+    <a class="btn btn-small" href="{{ url_for('patient.doctor_slots', doctor_id=doctor.id, date=previous_day.isoformat()) }}">&larr; Previous day</a>
+    <h2>{{ day|date_long }}</h2>
+    <a class="btn btn-small" href="{{ url_for('patient.doctor_slots', doctor_id=doctor.id, date=next_day.isoformat()) }}">Next day &rarr;</a>
+  </div>
+
+  {% if slots %}
+    <form method="post" action="{{ url_for('patient.book') }}">
+      {{ csrf_field() }}
+      <label>Reason for visit <small class="muted">(optional)</small>
+        <input type="text" name="reason" maxlength="500" placeholder="e.g. follow-up, fever, annual check-up"></label>
+      <p class="muted small">Choose a time to book it.</p>
+      <div class="slots">
+        {% for s in slots %}
+          {% if s.state == 'free' %}
+            <button type="submit" name="slot_id" value="{{ s.id }}" class="slot slot-free">{{ s.time|time_short }}</button>
+          {% elif s.state == 'taken' %}
+            <span class="slot slot-taken">{{ s.time|time_short }}<small>Taken</small></span>
+          {% else %}
+            <span class="slot slot-past">{{ s.time|time_short }}<small>Past</small></span>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </form>
+  {% else %}
+    <p class="empty">No slots on this day. Try another day above.</p>
+  {% endif %}
+</section>
+{% endblock %}

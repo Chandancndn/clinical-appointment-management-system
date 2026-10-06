@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Doctors{% endblock %}
+{% block content %}
+<h1>Our doctors</h1>
+{% if doctors %}
+  <div class="cards">
+    {% for d in doctors %}
+      <article class="card">
+        <h2>{{ d.name }}</h2>
+        <p class="muted">{{ d.specialization }} · {{ d.slot_minutes }}-minute appointments</p>
+        <a class="btn" href="{{ url_for('patient.doctor_slots', doctor_id=d.id) }}">View free slots</a>
+      </article>
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="empty">No doctors have been added yet.</p>
+{% endif %}
+{% endblock %}

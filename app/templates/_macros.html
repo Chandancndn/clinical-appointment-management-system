@@ -1,0 +1,50 @@
+{# Import with context: {% from "_macros.html" import ... with context %} #}
+
+{% macro csrf_field() -%}
+  <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+{%- endmacro %}
+
+{% macro error_list(items) %}
+  {% if items %}
+    <div class="alert alert-error" role="alert"><ul>{% for item in items %}<li>{{ item }}</li>{% endfor %}</ul></div>
+  {% endif %}
+{% endmacro %}
+
+{% macro badge(status) -%}
+  <span class="badge badge-{{ status }}">{{ status|status_label }}</span>
+{%- endmacro %}
+
+{# A row of days, each linking to `endpoint` with ?date=. Extra keyword arguments go into the link. #}
+{% macro day_strip(days, selected, endpoint) %}
+  <div class="days" aria-label="Choose a day">
+    {% for d in days %}
+      {% if d.has_slots %}
+        <a class="day{% if d.day == selected %} day-selected{% endif %}{% if not d.free %} day-full{% endif %}"
+           href="{{ url_for(endpoint, date=d.day.isoformat(), **kwargs) }}">
+          <strong>{{ d.day.strftime('%a') }}</strong> {{ d.day.strftime('%d %b') }}
+          <small>{% if d.free %}{{ d.free }} free{% else %}none free{% endif %}</small>
+        </a>
+      {% else %}
+        <span class="day day-none"><strong>{{ d.day.strftime('%a') }}</strong> {{ d.day.strftime('%d %b') }}<small>no slots</small></span>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endmacro %}
+
+{# Buttons that record how a started appointment ended. Posts to the shared outcome route. #}
+{% macro outcome_buttons(booking_id, status) %}
+  {% for outcome, label in (('completed', 'Mark completed'), ('no_show', 'Mark no-show')) %}
+    {% if status != outcome %}
+      <form method="post" action="{{ url_for('doctor.outcome', booking_id=booking_id) }}" class="inline">
+        {{ csrf_field() }}<input type="hidden" name="outcome" value="{{ outcome }}">
+        <button type="submit" class="btn btn-small">{{ label }}</button>
+      </form>
+    {% endif %}
+  {% endfor %}
+{% endmacro %}
+
+{% macro cancel_button(url, label='Cancel') %}
+  <form method="post" action="{{ url }}" class="inline" data-confirm="Cancel this appointment? The slot becomes free.">
+    {{ csrf_field() }}<button type="submit" class="btn btn-small btn-danger">{{ label }}</button>
+  </form>
+{% endmacro %}

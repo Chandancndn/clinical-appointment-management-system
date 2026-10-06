@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% from "_macros.html" import csrf_field, error_list with context %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<section class="card narrow">
+  <h1>Create a patient account</h1>
+  {{ error_list(errors) }}
+  <form method="post" action="{{ url_for('auth.register') }}" class="stack">
+    {{ csrf_field() }}
+    <label>Full name <input type="text" name="name" value="{{ form.get('name', '') }}" maxlength="120" required autofocus></label>
+    <label>Email <input type="email" name="email" value="{{ form.get('email', '') }}" maxlength="255" required autocomplete="username"></label>
+    <label>Password <small class="muted">at least 8 characters</small>
+      <input type="password" name="password" minlength="8" maxlength="128" required autocomplete="new-password"></label>
+    <label>Date of birth <input type="date" name="date_of_birth" value="{{ form.get('date_of_birth', '') }}" required></label>
+    <label>Sex
+      <select name="sex" required>
+        <option value="" {% if not form.get('sex') %}selected{% endif %}>Select…</option>
+        <option value="F" {% if form.get('sex') == 'F' %}selected{% endif %}>Female</option>
+        <option value="M" {% if form.get('sex') == 'M' %}selected{% endif %}>Male</option>
+      </select>
+    </label>
+    <p class="muted small">Your age and sex are stored on your profile. They are used only for clinic scheduling.</p>
+    <button type="submit" class="btn">Register</button>
+  </form>
+  <p class="muted">Already registered? <a href="{{ url_for('auth.login') }}">Log in</a>.</p>
+</section>
+{% endblock %}

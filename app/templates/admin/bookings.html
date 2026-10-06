@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% from "_macros.html" import badge, outcome_buttons, cancel_button with context %}
+{% block title %}All bookings{% endblock %}
+{% block content %}
+<h1>All bookings</h1>
+
+<p class="filters">
+  Show:
+  <a class="chip{% if not status %} chip-on{% endif %}" href="{{ url_for('admin.bookings') }}">All</a>
+  {% for s in statuses %}
+    <a class="chip{% if status == s %} chip-on{% endif %}" href="{{ url_for('admin.bookings', status=s) }}">{{ s|status_label }}</a>
+  {% endfor %}
+  <span class="muted">· {{ total }} booking(s)</span>
+</p>
+
+{% if rows %}
+  <table>
+    <thead><tr><th>#</th><th>When</th><th>Doctor</th><th>Patient</th><th>Reason</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+      {% for b in rows %}
+        <tr>
+          <td>{{ b.id }}</td>
+          <td>{{ b.slot_date|date_long }}, {{ b.slot_time|time_short }}</td>
+          <td>{{ b.doctor_name }}</td><td>{{ b.patient_name }}</td><td>{{ b.reason or '—' }}</td>
+          <td>{{ badge(b.status) }}</td>
+          <td class="actions">
+            {% if b.status != 'cancelled' %}
+              {% if has_started(b.slot_date, b.slot_time) %}
+                {{ outcome_buttons(b.id, b.status) }}
+              {% elif b.status == 'confirmed' %}
+                {{ cancel_button(url_for('admin.cancel', booking_id=b.id)) }}
+              {% endif %}
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p class="pager">
+    {% if page > 1 %}<a class="btn btn-small" href="{{ url_for('admin.bookings', page=page - 1, status=status) }}">&larr; Newer</a>{% endif %}
+    <span class="muted">Page {{ page }} of {{ last_page }}</span>
+    {% if page < last_page %}<a class="btn btn-small" href="{{ url_for('admin.bookings', page=page + 1, status=status) }}">Older &rarr;</a>{% endif %}
+  </p>
+{% else %}
+  <p class="empty">No bookings match.</p>
+{% endif %}
+{% endblock %}

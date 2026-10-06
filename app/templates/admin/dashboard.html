@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% from "_macros.html" import badge, outcome_buttons, cancel_button with context %}
+{% block title %}Overview{% endblock %}
+{% block content %}
+<h1>Overview</h1>
+
+<div class="stats">
+  <div class="stat"><strong>{{ counts.patients }}</strong><span>patients</span></div>
+  <div class="stat"><strong>{{ counts.doctors }}</strong><span>doctors</span></div>
+  <div class="stat"><strong>{{ counts.upcoming }}</strong><span>upcoming appointments</span></div>
+  {% for status, n in counts.by_status.items() %}
+    <div class="stat"><strong>{{ n }}</strong><span>{{ status|status_label|lower }}</span></div>
+  {% endfor %}
+</div>
+
+<h2>Doctors</h2>
+{% if doctors %}
+  <table>
+    <thead><tr><th>Name</th><th>Specialization</th><th>Slot length</th><th></th></tr></thead>
+    <tbody>
+      {% for d in doctors %}
+        <tr>
+          <td>{{ d.name }}</td><td>{{ d.specialization }}</td><td>{{ d.slot_minutes }} min</td>
+          <td class="actions"><a class="btn btn-small" href="{{ url_for('admin.generate_slots', doctor_id=d.id) }}">Generate slots</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p class="empty">No doctors yet.</p>
+{% endif %}
+<p><a class="btn" href="{{ url_for('admin.new_doctor') }}">Add a doctor</a></p>
+
+<h2>Next 25 appointments</h2>
+{% if upcoming %}
+  <table>
+    <thead><tr><th>When</th><th>Doctor</th><th>Patient</th><th>Reason</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+      {% for b in upcoming %}
+        <tr>
+          <td>{{ b.slot_date|date_long }}<br><strong>{{ b.slot_time|time_short }}</strong></td>
+          <td>{{ b.doctor_name }}</td><td>{{ b.patient_name }}</td><td>{{ b.reason or '—' }}</td>
+          <td>{{ badge(b.status) }}</td>
+          <td class="actions">{{ cancel_button(url_for('admin.cancel', booking_id=b.id)) }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p><a href="{{ url_for('admin.bookings') }}">See all bookings &rarr;</a></p>
+{% else %}
+  <p class="empty">No upcoming appointments.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% from "_macros.html" import csrf_field, error_list with context %}
+{% block title %}Add doctor{% endblock %}
+{% block content %}
+<section class="card narrow">
+  <h1>Add a doctor</h1>
+  {{ error_list(errors) }}
+  <form method="post" action="{{ url_for('admin.new_doctor') }}" class="stack">
+    {{ csrf_field() }}
+    <label>Full name <input type="text" name="name" value="{{ form.get('name', '') }}" maxlength="120" required autofocus></label>
+    <label>Email <input type="email" name="email" value="{{ form.get('email', '') }}" maxlength="255" required autocomplete="off"></label>
+    <label>Initial password <small class="muted">at least 8 characters; share it with the doctor securely</small>
+      <input type="password" name="password" minlength="8" maxlength="128" required autocomplete="new-password"></label>
+    <label>Specialization <input type="text" name="specialization" value="{{ form.get('specialization', '') }}" maxlength="100" required></label>
+    <label>Appointment length (minutes) <input type="number" name="slot_minutes" value="{{ form.get('slot_minutes', '15') }}" min="5" max="120" required></label>
+    <button type="submit" class="btn">Create doctor account</button>
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% from "_macros.html" import csrf_field, error_list, badge, outcome_buttons, cancel_button with context %}
+{% block title %}My schedule{% endblock %}
+{% block content %}
+<h1>My schedule</h1>
+<p class="muted">{{ doctor.name }} · {{ doctor.specialization }} · {{ doctor.slot_minutes }}-minute appointments</p>
+
+<div class="days" aria-label="This week">
+  {% for d in week %}
+    <a class="day{% if d.day == day %} day-selected{% endif %}{% if not d.total %} day-none{% endif %}"
+       href="{{ url_for('doctor.schedule', date=d.day.isoformat()) }}">
+      <strong>{{ d.day.strftime('%a') }}</strong> {{ d.day.strftime('%d %b') }}
+      <small>{% if d.total %}{{ d.booked }}/{{ d.total }} booked{% else %}no slots{% endif %}</small>
+    </a>
+  {% endfor %}
+</div>
+
+<section class="card">
+  <div class="daybar">
+    <a class="btn btn-small" href="{{ url_for('doctor.schedule', date=previous_day.isoformat()) }}">&larr; Previous day</a>
+    <h2>{{ day|date_long }}</h2>
+    <a class="btn btn-small" href="{{ url_for('doctor.schedule', date=next_day.isoformat()) }}">Next day &rarr;</a>
+  </div>
+  <form method="get" action="{{ url_for('doctor.schedule') }}" class="row goto">
+    <label>Go to date <input type="date" name="date" value="{{ day.isoformat() }}"></label>
+    <button type="submit" class="btn btn-small">Go</button>
+  </form>
+
+  {% if rows %}
+    <table>
+      <thead><tr><th>Time</th><th>Patient</th><th>Reason</th><th>Status</th><th></th></tr></thead>
+      <tbody>
+        {% for r in rows %}
+          {% set started = has_started(r.slot_date, r.slot_time) %}
+          <tr>
+            <td><strong>{{ r.slot_time|time_short }}</strong></td>
+            {% if r.booking_id %}
+              <td>{{ r.patient_name }}</td>
+              <td>{{ r.reason or '—' }}</td>
+              <td>{{ badge(r.status) }}</td>
+              <td class="actions">
+                {% if started %}
+                  {{ outcome_buttons(r.booking_id, r.status) }}
+                {% elif r.status == 'confirmed' %}
+                  {{ cancel_button(url_for('doctor.cancel', booking_id=r.booking_id)) }}
+                {% endif %}
+              </td>
+            {% else %}
+              <td class="muted" colspan="4">{{ 'Unbooked (past)' if started else 'Free' }}</td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="empty">No slots on this day. Create them below.</p>
+  {% endif %}
+</section>
+
+<section class="card">
+  <h2>Create slots for a day</h2>
+  {{ error_list(errors) }}
+  <form method="post" action="{{ url_for('doctor.generate') }}" class="row">
+    {{ csrf_field() }}
+    <label>Date <input type="date" name="date" value="{{ form.get('date', day.isoformat()) }}" min="{{ now.date().isoformat() }}" required></label>
+    <label>From <input type="time" name="start_time" value="{{ form.get('start_time', '09:00') }}" required></label>
+    <label>Until <input type="time" name="end_time" value="{{ form.get('end_time', '13:00') }}" required></label>
+    <button type="submit" class="btn">Create slots</button>
+  </form>
+  <p class="muted small">Slots are {{ doctor.slot_minutes }} minutes each. Running this twice never creates duplicates.</p>
+</section>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% from "_macros.html" import csrf_field, error_list with context %}
+{% block title %}Log in{% endblock %}
+{% block content %}
+<section class="card narrow">
+  <h1>Log in</h1>
+  {{ error_list(errors) }}
+  <form method="post" action="{{ url_for('auth.login') }}" class="stack">
+    {{ csrf_field() }}
+    <label>Email <input type="email" name="email" value="{{ form.get('email', '') }}" required autofocus autocomplete="username"></label>
+    <label>Password <input type="password" name="password" required autocomplete="current-password"></label>
+    <button type="submit" class="btn">Log in</button>
+  </form>
+  <p class="muted">New patient? <a href="{{ url_for('auth.register') }}">Create an account</a>.</p>
+</section>
+{% endblock %}

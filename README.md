@@ -62,6 +62,28 @@ cp .env.example .env        # then edit .env, see below
    python -m db.init_db             # applies db/schema.sql to the database in DATABASE_URL
    ```
 
+## Run the app
+
+```bash
+python -m db.seed_synthetic      # synthetic demo data only; prints the demo logins
+flask --app app run --port 5001  # then open http://127.0.0.1:5001
+```
+
+(Port 5001 because macOS uses 5000 for AirPlay. Add `--debug` for auto-reload on your own machine.)
+
+`db.seed_synthetic` creates 1 admin, 5 doctors and 40 patients with obviously fake names, slots for
+the next and previous 14 weekdays, some future bookings (a few cancelled) and past appointments with
+outcomes. It never reads `data/raw/` or any dataset. Every demo account shares one password:
+`SEED_PASSWORD` from `.env` (or a random one, printed when the script runs). Demo accounts:
+
+| Role | Email |
+|---|---|
+| Admin | `admin@cams-demo.test` |
+| Doctor | `dr.meera@cams-demo.test` (also `dr.arjun`, `dr.kavya`, `dr.rohan`, `dr.sana`) |
+| Patient | `asha.demo01@cams-demo.test` (also `<name>.demo02` ... `.demo40`) |
+
+Re-seeding needs `python -m db.seed_synthetic --reset`, which deletes every row first.
+
 ## Tests
 
 ```bash
@@ -76,8 +98,9 @@ constraint has to be proven on the engine the project actually uses.
 ## Repository layout
 
 ```
-app/        Flask app (services, models; blueprints and templates arrive in M2)
-db/         schema.sql (MySQL), init_db.py, check_connection.py
+app/        Flask app: blueprints/ (auth, patient, doctor, admin), services.py (bookings),
+            accounts.py, scheduling.py, queries.py (read-only), security.py, templates/, static/
+db/         schema.sql (MySQL), init_db.py, check_connection.py, seed_synthetic.py
 ml/         src/, artifacts/, notebooks/      (M3 onwards)
 sim/        simulation                        (M6)
 data/       README.md with download steps; raw files go in data/raw/ (gitignored)

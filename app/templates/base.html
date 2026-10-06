@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}CAMS{% endblock %} · CAMS</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap bar">
+      <a class="brand" href="{{ url_for('main.index') }}">CAMS <span>Clinic Appointments</span></a>
+      <nav>
+        {% if current_user %}
+          {% if current_user.role == 'patient' %}
+            <a href="{{ url_for('patient.index') }}">Doctors</a>
+            <a href="{{ url_for('patient.bookings') }}">My appointments</a>
+          {% elif current_user.role == 'doctor' %}
+            <a href="{{ url_for('doctor.schedule') }}">My schedule</a>
+          {% elif current_user.role == 'admin' %}
+            <a href="{{ url_for('admin.dashboard') }}">Overview</a>
+            <a href="{{ url_for('admin.bookings') }}">All bookings</a>
+            <a href="{{ url_for('admin.new_doctor') }}">Add doctor</a>
+          {% endif %}
+          <span class="who">{{ current_user.name }} <small>({{ current_user.role }})</small></span>
+          <form method="post" action="{{ url_for('auth.logout') }}" class="inline">
+            <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+            <button type="submit" class="linklike">Log out</button>
+          </form>
+        {% else %}
+          <a href="{{ url_for('auth.login') }}">Log in</a>
+          <a href="{{ url_for('auth.register') }}">Register</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}" role="status">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="wrap foot">CAMS is a student project (SIT Tumakuru). All data shown here is synthetic.</footer>
+</body>
+</html>

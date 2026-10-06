@@ -14,11 +14,14 @@ import itertools
 import os
 from datetime import date, datetime, time, timedelta
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 from dotenv import load_dotenv
 from sqlalchemy import inspect
 from sqlalchemy.engine import make_url
+
+from helpers import FAST_HASH, PASSWORD, csrf_token
 
 ROOT = Path(__file__).resolve().parents[1]
 ENGINES = ("sqlite", "mysql")
@@ -87,7 +90,12 @@ def app(engine_name, tmp_path):
         url = f"sqlite:///{tmp_path / 'cams_test.sqlite3'}"
     else:
         url = _mysql_test_url()
-    flask_app = create_app({"SQLALCHEMY_DATABASE_URI": url, "TESTING": True, "SECRET_KEY": "test-secret"})
+    flask_app = create_app({
+        "SQLALCHEMY_DATABASE_URI": url,
+        "TESTING": True,
+        "SECRET_KEY": "test-secret",
+        "PASSWORD_HASH_METHOD": "pbkdf2:sha256:1000",  # fast hashing for tests
+    })
     with flask_app.app_context():
         _create_schema(engine_name)
         yield flask_app
@@ -95,33 +103,46 @@ def app(engine_name, tmp_path):
         db.engine.dispose()
 
 
+@pytest.fixture
+def client(app):
+    return app.test_client()
+
+
 class World:
-    """Builds the rows a booking test needs. Every method commits and returns an id."""
+    """Builds the rows a test needs. Every method commits and returns an id."""
 
     def __init__(self):
         self._n = itertools.count(1)
+        self.emails: dict[int, str] = {}
+        self.doctor_user_ids: dict[int, int] = {}
 
-    def user(self, role: str) -> int:
+    def user(self, role: str, name: str | None = None) -> int:
         from app.extensions import db
         from app.models import User
 
         n = next(self._n)
-        user = User(name=f"Test {role} {n}", email=f"{role}{n}@example.test",
-                    password_hash="not-a-real-hash", role=role)
+        email = f"{role}{n}@example.test"
+        user = User(name=name or f"Test {role} {n}", email=email, password_hash=FAST_HASH, role=role)
         db.session.add(user)
         db.session.commit()
+        self.emails[user.id] = email
         return user.id
 
-    def patient(self) -> int:
-        return self.user("patient")
+    def patient(self, name: str | None = None) -> int:
+        return self.user("patient", name)
 
-    def doctor(self) -> int:
+    def admin(self) -> int:
+        return self.user("admin")
+
+    def doctor(self, specialization: str = "General Medicine", slot_minutes: int = 15) -> int:
         from app.extensions import db
         from app.models import Doctor
 
-        doctor = Doctor(user_id=self.user("doctor"), specialization="General Medicine", slot_minutes=15)
+        user_id = self.user("doctor")
+        doctor = Doctor(user_id=user_id, specialization=specialization, slot_minutes=slot_minutes)
         db.session.add(doctor)
         db.session.commit()
+        self.doctor_user_ids[doctor.id] = user_id
         return doctor.id
 
     def slots(self, doctor_id: int, count: int, day: date = date(2030, 1, 7)) -> list[int]:
@@ -136,7 +157,39 @@ class World:
         db.session.commit()
         return [row.id for row in rows]
 
+    def booking(self, slot_id: int, patient_id: int, status: str = "confirmed") -> int:
+        """Insert a booking directly, bypassing the service rules (needed to build past appointments)."""
+        from app.extensions import db
+        from app.models import Booking
+
+        booking = Booking(slot_id=slot_id, patient_id=patient_id, status=status)
+        db.session.add(booking)
+        db.session.commit()
+        return booking.id
+
+    def login(self, client, user_id: int) -> None:
+        """Log `client` in through the real login form."""
+        response = client.post("/login", data={
+            "email": self.emails[user_id], "password": PASSWORD, "_csrf": csrf_token(client)})
+        assert response.status_code == 302, f"login failed: {response.status_code}"
+
 
 @pytest.fixture
 def world(app):
     return World()
+
+
+@pytest.fixture
+def scene(world):
+    """One doctor with four slots on 2030-01-07, a second doctor, two patients, an admin, and
+    a confirmed booking by `alice` in the doctor's first slot."""
+    doctor = world.doctor()
+    slots = world.slots(doctor, 4)
+    alice, bob = world.patient("Alice Patient"), world.patient("Bob Patient")
+    return SimpleNamespace(
+        doctor=doctor, doctor_user=world.doctor_user_ids[doctor], slots=slots,
+        other_doctor=world.doctor("Dermatology"),
+        alice=alice, bob=bob, admin=world.admin(),
+        booking=world.booking(slots[0], alice),
+        day="2030-01-07",
+    )

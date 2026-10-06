@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% from "_macros.html" import badge, cancel_button with context %}
+{% block title %}My appointments{% endblock %}
+{% block content %}
+<h1>My appointments</h1>
+{% if error %}<div class="alert alert-error" role="alert">{{ error }}</div>{% endif %}
+
+<h2>Upcoming</h2>
+{% if upcoming %}
+  <table>
+    <thead><tr><th>When</th><th>Doctor</th><th>Reason</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+      {% for b in upcoming %}
+        <tr>
+          <td>{{ b.slot_date|date_long }}<br><strong>{{ b.slot_time|time_short }}</strong></td>
+          <td>{{ b.doctor_name }}<br><small class="muted">{{ b.specialization }}</small></td>
+          <td>{{ b.reason or '—' }}</td>
+          <td>{{ badge(b.status) }}</td>
+          <td class="actions">
+            <a class="btn btn-small" href="{{ url_for('patient.reschedule_form', booking_id=b.id) }}">Reschedule</a>
+            {{ cancel_button(url_for('patient.cancel', booking_id=b.id)) }}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p class="empty">You have no upcoming appointments. <a href="{{ url_for('patient.index') }}">Book one</a>.</p>
+{% endif %}
+
+<h2>Past and cancelled</h2>
+{% if history %}
+  <table>
+    <thead><tr><th>When</th><th>Doctor</th><th>Reason</th><th>Status</th></tr></thead>
+    <tbody>
+      {% for b in history %}
+        <tr>
+          <td>{{ b.slot_date|date_long }}, {{ b.slot_time|time_short }}</td>
+          <td>{{ b.doctor_name }}</td>
+          <td>{{ b.reason or '—' }}</td>
+          <td>{{ badge(b.status) }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p class="empty">Nothing here yet.</p>
+{% endif %}
+{% endblock %}

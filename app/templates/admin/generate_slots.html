@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% from "_macros.html" import csrf_field, error_list with context %}
+{% block title %}Generate slots{% endblock %}
+{% block content %}
+<section class="card narrow">
+  <p><a href="{{ url_for('admin.dashboard') }}">&larr; Overview</a></p>
+  <h1>Generate slots</h1>
+  <p class="muted">{{ doctor.name }} · {{ doctor.specialization }} · {{ doctor.slot_minutes }}-minute slots</p>
+  {{ error_list(errors) }}
+  <form method="post" action="{{ url_for('admin.generate_slots', doctor_id=doctor.id) }}" class="stack">
+    {{ csrf_field() }}
+    <label>First date <input type="date" name="date_from" value="{{ form.get('date_from', today.isoformat()) }}" required></label>
+    <label>Last date <input type="date" name="date_to" value="{{ form.get('date_to', today.isoformat()) }}" required></label>
+    <label>From <input type="time" name="start_time" value="{{ form.get('start_time', '09:00') }}" required></label>
+    <label>Until <input type="time" name="end_time" value="{{ form.get('end_time', '13:00') }}" required></label>
+    <label class="check"><input type="checkbox" name="skip_weekends" {% if form.get('skip_weekends') or not form %}checked{% endif %}> Skip Saturdays and Sundays</label>
+    <button type="submit" class="btn">Generate slots</button>
+  </form>
+  <p class="muted small">Safe to run again: slots that already exist are left alone, never duplicated.</p>
+</section>
+{% endblock %}

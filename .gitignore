@@ -17,3 +17,6 @@ __pycache__/
 *.sqlite3
 instance/
 .DS_Store
+
+# Local Claude Code launcher config
+.claude/
