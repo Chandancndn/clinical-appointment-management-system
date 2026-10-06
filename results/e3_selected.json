@@ -1,0 +1,45 @@
+{
+  "all_models": {
+    "hist_gradient_boosting": {
+      "l2_regularization": 1.0,
+      "learning_rate": 0.05,
+      "max_iter": 200,
+      "max_leaf_nodes": 15
+    },
+    "logistic_regression": {
+      "C": 10.0
+    },
+    "random_forest": {
+      "max_features": 0.5,
+      "min_samples_leaf": 80,
+      "n_estimators": 300
+    }
+  },
+  "chosen_by": "cross-validated average precision on the training part",
+  "columns": [
+    "prev_appointments",
+    "prev_no_show_rate",
+    "has_history",
+    "lead_days",
+    "lead_same_day",
+    "appt_weekday",
+    "age",
+    "is_female",
+    "sms_received",
+    "scholarship",
+    "hypertension",
+    "diabetes",
+    "alcoholism",
+    "handicap",
+    "neighbourhood"
+  ],
+  "cv_ap_mean": 0.37992683615340866,
+  "model": "hist_gradient_boosting",
+  "params": {
+    "l2_regularization": 1.0,
+    "learning_rate": 0.05,
+    "max_iter": 200,
+    "max_leaf_nodes": 15
+  },
+  "seed": 42
+}

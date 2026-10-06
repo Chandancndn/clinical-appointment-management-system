@@ -35,6 +35,138 @@
     "script": "ml/src/e1_profile.py",
     "seed": 42
   },
+  "results/e2_baselines.csv": {
+    "data_files": {
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d",
+      "data/raw/openml/medical_appointment_43617.arff": "4c33a04273f2bc63b2c7461978ec359eb9231dbecddd73a244c5a6cbd9b92d96"
+    },
+    "date": "2026-10-06T18:20:41+00:00",
+    "git_commit": "72dde9645016c660984bcb932e446379aa8fe777",
+    "git_dirty": false,
+    "script": "ml/src/e2_baselines.py",
+    "seed": 42
+  },
+  "results/e3_kaggle_models.csv": {
+    "data_files": {
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d"
+    },
+    "date": "2026-10-06T18:23:17+00:00",
+    "git_commit": "72dde9645016c660984bcb932e446379aa8fe777",
+    "git_dirty": false,
+    "script": "ml/src/e3_kaggle_models.py",
+    "seed": 42
+  },
+  "results/e3_ladder.csv": {
+    "data_files": {
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d"
+    },
+    "date": "2026-10-06T18:23:18+00:00",
+    "git_commit": "72dde9645016c660984bcb932e446379aa8fe777",
+    "git_dirty": false,
+    "script": "ml/src/e3_kaggle_models.py",
+    "seed": 42
+  },
+  "results/e3_selected.json": {
+    "data_files": {
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d"
+    },
+    "date": "2026-10-06T18:23:18+00:00",
+    "git_commit": "72dde9645016c660984bcb932e446379aa8fe777",
+    "git_dirty": false,
+    "script": "ml/src/e3_kaggle_models.py",
+    "seed": 42
+  },
+  "results/e3_tuning.csv": {
+    "data_files": {
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d"
+    },
+    "date": "2026-10-06T18:23:17+00:00",
+    "git_commit": "72dde9645016c660984bcb932e446379aa8fe777",
+    "git_dirty": false,
+    "script": "ml/src/e3_kaggle_models.py",
+    "seed": 42
+  },
+  "results/e4_ablation.csv": {
+    "data_files": {
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d"
+    },
+    "date": "2026-10-06T18:23:57+00:00",
+    "git_commit": "72dde9645016c660984bcb932e446379aa8fe777",
+    "git_dirty": false,
+    "script": "ml/src/e4_ablation.py",
+    "seed": 42
+  },
+  "results/e4_sms_crosstab.csv": {
+    "data_files": {
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d"
+    },
+    "date": "2026-10-06T18:23:57+00:00",
+    "git_commit": "72dde9645016c660984bcb932e446379aa8fe777",
+    "git_dirty": false,
+    "script": "ml/src/e4_ablation.py",
+    "seed": 42
+  },
+  "results/e5_openml_models.csv": {
+    "data_files": {
+      "data/raw/openml/medical_appointment_43617.arff": "4c33a04273f2bc63b2c7461978ec359eb9231dbecddd73a244c5a6cbd9b92d96"
+    },
+    "date": "2026-10-06T18:25:06+00:00",
+    "git_commit": "72dde9645016c660984bcb932e446379aa8fe777",
+    "git_dirty": false,
+    "script": "ml/src/e5_openml_models.py",
+    "seed": 42
+  },
+  "results/e5_tuning.csv": {
+    "data_files": {
+      "data/raw/openml/medical_appointment_43617.arff": "4c33a04273f2bc63b2c7461978ec359eb9231dbecddd73a244c5a6cbd9b92d96"
+    },
+    "date": "2026-10-06T18:25:06+00:00",
+    "git_commit": "72dde9645016c660984bcb932e446379aa8fe777",
+    "git_dirty": false,
+    "script": "ml/src/e5_openml_models.py",
+    "seed": 42
+  },
+  "results/e6_transfer.csv": {
+    "data_files": {
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d",
+      "data/raw/openml/medical_appointment_43617.arff": "4c33a04273f2bc63b2c7461978ec359eb9231dbecddd73a244c5a6cbd9b92d96"
+    },
+    "date": "2026-10-06T18:27:27+00:00",
+    "git_commit": "72dde9645016c660984bcb932e446379aa8fe777",
+    "git_dirty": false,
+    "script": "ml/src/e6_transfer.py",
+    "seed": 42
+  },
+  "results/e7_imbalance.csv": {
+    "data_files": {
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d"
+    },
+    "date": "2026-10-06T18:28:47+00:00",
+    "git_commit": "72dde9645016c660984bcb932e446379aa8fe777",
+    "git_dirty": false,
+    "script": "ml/src/e7_imbalance.py",
+    "seed": 42
+  },
+  "results/e8_calibration.csv": {
+    "data_files": {
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d"
+    },
+    "date": "2026-10-06T18:29:23+00:00",
+    "git_commit": "72dde9645016c660984bcb932e446379aa8fe777",
+    "git_dirty": false,
+    "script": "ml/src/e8_calibration.py",
+    "seed": 42
+  },
+  "results/e8_reliability.csv": {
+    "data_files": {
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d"
+    },
+    "date": "2026-10-06T18:29:23+00:00",
+    "git_commit": "72dde9645016c660984bcb932e446379aa8fe777",
+    "git_dirty": false,
+    "script": "ml/src/e8_calibration.py",
+    "seed": 42
+  },
   "results/figures/e1_noshow_by_age_band.png": {
     "data_files": {
       "data/raw/hangu/Data.csv": "bf4e377c0fd9b4adf65a53b2b2a53d60391808dfdc6d752877c28b6b05956bc8",
@@ -81,6 +213,36 @@
     "git_commit": "ac74fa17beec53cb881b6f174f39e307671dda5e",
     "git_dirty": false,
     "script": "ml/src/e1_profile.py",
+    "seed": 42
+  },
+  "results/figures/e3_pr.png": {
+    "data_files": {
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d"
+    },
+    "date": "2026-10-06T18:23:18+00:00",
+    "git_commit": "72dde9645016c660984bcb932e446379aa8fe777",
+    "git_dirty": false,
+    "script": "ml/src/e3_kaggle_models.py",
+    "seed": 42
+  },
+  "results/figures/e3_roc.png": {
+    "data_files": {
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d"
+    },
+    "date": "2026-10-06T18:23:18+00:00",
+    "git_commit": "72dde9645016c660984bcb932e446379aa8fe777",
+    "git_dirty": false,
+    "script": "ml/src/e3_kaggle_models.py",
+    "seed": 42
+  },
+  "results/figures/e8_reliability.png": {
+    "data_files": {
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d"
+    },
+    "date": "2026-10-06T18:29:24+00:00",
+    "git_commit": "72dde9645016c660984bcb932e446379aa8fe777",
+    "git_dirty": false,
+    "script": "ml/src/e8_calibration.py",
     "seed": 42
   }
 }

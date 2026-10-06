@@ -95,6 +95,27 @@ pytest --engine both         # both engines
 The booking tests must pass on MySQL, not only SQLite, because the double-booking
 constraint has to be proven on the engine the project actually uses.
 
+## Research experiments (ML)
+
+Needs the raw datasets in `data/raw/` (see `data/README.md`). Every script writes its tables and figures to
+`results/` and records them in `results/manifest.json` (seed, raw-data hashes, date, git commit). Run them in this
+order, one at a time (they share the manifest, and E4, E7 and E8 read the model E3 selected):
+
+```bash
+python -m ml.src.e1_profile          # E1  dataset profile and cleaning log
+python -m ml.src.e2_baselines        # E2  always-show and the earlier-no-show-rate rule
+python -m ml.src.e3_kaggle_models    # E3  logistic regression, random forest, gradient boosting; ROC/PR figures
+python -m ml.src.e4_ablation         # E4  feature-group ablation and the SMS x lead-time check
+python -m ml.src.e5_openml_models    # E5  the same ladder on OpenML
+python -m ml.src.e6_transfer         # E6  train on one dataset, test on the other
+python -m ml.src.e7_imbalance        # E7  class weights, thresholds, RUS, SMOTE, NearMiss (ablation only)
+python -m ml.src.e8_calibration      # E8  Platt vs isotonic, reliability figure
+```
+
+The holdout (latest 20% of Kaggle appointment dates; the last OpenML month) is scored once per final model, and a
+run stops if any AUC exceeds 0.85 (suspected leakage). Hyper-parameters are tuned by patient-grouped
+cross-validation on the training part only.
+
 ## Repository layout
 
 ```
