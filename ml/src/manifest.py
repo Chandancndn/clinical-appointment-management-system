@@ -15,8 +15,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-# Untracked or modified files here make the code "dirty". results/ and data/ are outputs, not code.
+# Untracked or modified files here make the code "dirty". results/ and data/ are outputs, not code, and neither is
+# ml/artifacts/ (the saved model and its card are written by a script, so they must not make the next run look dirty).
 CODE_PATHS = ("ml", "sim", "app", "db", "tests", "requirements.txt")
+OUTPUT_PATHS = ("ml/artifacts",)
 
 
 def file_sha256(path) -> str:
@@ -48,7 +50,8 @@ def git_state(root, code_paths=CODE_PATHS):
     if not commit:
         return "unknown", None
     paths = [p for p in code_paths if (Path(root) / p).exists()]
-    status = _git(root, "status", "--porcelain", "--", *paths) if paths else ""
+    excluded = [f":(exclude){p}" for p in OUTPUT_PATHS]
+    status = _git(root, "status", "--porcelain", "--", *paths, *excluded) if paths else ""
     return commit, bool(status)
 
 

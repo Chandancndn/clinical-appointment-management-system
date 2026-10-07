@@ -154,9 +154,45 @@
   },
   "thresholds": {
     "bands": {
-      "low": "predicted risk below the Medium threshold",
-      "medium": "risk at or above Medium and below High",
-      "high": "risk at or above the High threshold"
+      "low": {
+        "lower": 0.0,
+        "upper": 0.19,
+        "holdout_share_of_bookings": 0.41402838427947597,
+        "holdout_no_show_rate": 0.05932762030323006,
+        "holdout_no_show_rate_95ci": [
+          0.05437937399634859,
+          0.06480631682277234
+        ],
+        "holdout_share_of_all_no_shows": 0.13267813267813267,
+        "training_oof_share_of_bookings": 0.40087205033492607,
+        "training_oof_no_show_rate": 0.06233092876465284
+      },
+      "medium": {
+        "lower": 0.19,
+        "upper": 0.38,
+        "holdout_share_of_bookings": 0.486353711790393,
+        "holdout_no_show_rate": 0.25411522633744854,
+        "holdout_no_show_rate_95ci": [
+          0.24579912196932302,
+          0.2627581729780378
+        ],
+        "holdout_share_of_all_no_shows": 0.6675675675675675,
+        "training_oof_share_of_bookings": 0.5020728139437686,
+        "training_oof_no_show_rate": 0.28274124237856324
+      },
+      "high": {
+        "lower": 0.38,
+        "upper": null,
+        "holdout_share_of_bookings": 0.09961790393013101,
+        "holdout_no_show_rate": 0.37123287671232874,
+        "holdout_no_show_rate_95ci": [
+          0.35127238637443503,
+          0.39172648902821317
+        ],
+        "holdout_share_of_all_no_shows": 0.19975429975429976,
+        "training_oof_share_of_bookings": 0.09705513572130536,
+        "training_oof_no_show_rate": 0.4029329608938548
+      }
     },
     "chosen_on": "out-of-fold predictions of the training part (patient-grouped CV); the holdout only reports the result",
     "min_flagged_share": 0.01,
@@ -194,7 +230,7 @@
         0.21223969755347308
       ]
     },
-    "reasoning": "The targets are the plan's: High is the lowest cut-off at which at least 40% of flagged bookings were no-shows (about twice the 20.6% training base rate) and Medium the same for 30%, both measured on out-of-fold predictions of the training part, never on the holdout, so the holdout stays an honest test. A cut-off must flag at least 1% of bookings so a lucky handful of top scores cannot set it, and precision must stay at or above the target at every higher cut-off. On the holdout, High flags 10.0% of bookings, 37.1% of them no-shows, catching 20.0% of all no-shows; Medium flags 58.6%, 27.4% precise, catching 86.7%. Holdout precision sits below the training figure because the holdout's base rate is lower and it has more patient history (see limitations). The model's ranking is modest (holdout AUC 0.727), so High is a short list for a reminder call and Medium is a broad 'above average' band. The flag is advisory: staff see Low, Medium or High next to a booking, the slot rule never changes, and no patient is refused or moved because of it.",
+    "reasoning": "The targets are the plan's: High is the lowest cut-off at which at least 40% of flagged bookings were no-shows (about twice the 20.6% training base rate) and Medium the same for 30%, both measured on out-of-fold predictions of the training part, never on the holdout, so the holdout stays an honest test. A cut-off must flag at least 1% of bookings so a lucky handful of top scores cannot set it, and precision must stay at or above the target at every higher cut-off. On the holdout, High flags 10.0% of bookings, 37.1% of them no-shows, catching 20.0% of all no-shows; Medium flags 58.6%, 27.4% precise, catching 86.7%. Holdout precision sits below the training figure because the holdout's base rate is lower and it has more patient history (see limitations). Judged as three bands, which is how staff see them, the thresholds split the holdout into Low (41.4% of bookings, 5.9% no-show), Medium (48.6%, 25.4%) and High (10.0%, 37.1%): Low is genuinely safe and holds only 13.3% of all no-shows, High is a short list for a reminder call, and Medium is the broad middle, so a Medium badge alone says little. The model's ranking is modest (holdout AUC 0.727). The flag is advisory: staff see Low, Medium or High next to a booking, the slot rule never changes, and no patient is refused or moved because of it.",
     "table": "results/e10_thresholds.csv",
     "percentile_thresholds_on_training_oof": {
       "p50": 0.22592787674136305,
@@ -224,8 +260,8 @@
   },
   "code": {
     "script": "ml/src/e9_deployable.py",
-    "git_commit": "ac8bbd6a4c20609d1dd0d130b9eee2018d8a969e",
-    "git_dirty": true
+    "git_commit": "2e7fc4e6d72989c6bd8048aecec2e47ddee13289",
+    "git_dirty": false
   },
   "artifact_sha256": "350b60edd6e2bf9ff2a891e5ddbc1df6134094d9bcb68c2a4cb7d8ad893fceb6"
 }

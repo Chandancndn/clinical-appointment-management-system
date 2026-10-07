@@ -70,6 +70,15 @@ def test_results_and_raw_data_do_not_make_the_code_look_dirty(repo, files):
     assert manifest.record_result(result, script="ml/script.py", seed=1, data_files=[raw], repo_root=repo)["git_dirty"] is False
 
 
+def test_a_saved_model_under_ml_artifacts_does_not_make_the_code_look_dirty(repo, files):
+    raw, result = files
+    (repo / "ml" / "artifacts").mkdir()
+    (repo / "ml" / "artifacts" / "risk_model.joblib").write_bytes(b"model")  # untracked output of an earlier script
+    assert manifest.record_result(result, script="ml/script.py", seed=1, data_files=[raw], repo_root=repo)["git_dirty"] is False
+    (repo / "ml" / "other.py").write_text("x = 1\n")  # real code next to it still counts
+    assert manifest.record_result(result, script="ml/script.py", seed=1, data_files=[raw], repo_root=repo)["git_dirty"] is True
+
+
 def test_entries_for_several_results_live_side_by_side_and_rerunning_replaces_only_its_own(repo, files):
     raw, result = files
     other = repo / "results" / "other.csv"
