@@ -85,14 +85,14 @@ def prepare_openml(clean: Optional[pd.DataFrame] = None, seed: int = DEFAULT_SEE
 class ResultWriter:
     """Writes a result file and records it in results/manifest.json (seed, raw-data hashes, date, commit)."""
 
-    def __init__(self, results_dir, script: str, seed: int, inputs, repo_root=data.ROOT) -> None:
-        self.results_dir, self.script, self.seed = Path(results_dir), script, seed
+    def __init__(self, results_dir, script: str, seed: int, inputs, repo_root=data.ROOT, note=None) -> None:
+        self.results_dir, self.script, self.seed, self.note = Path(results_dir), script, seed, note
         self.inputs, self.repo_root = [Path(p) for p in inputs], repo_root
         self.results_dir.mkdir(parents=True, exist_ok=True)
 
     def _record(self, path: Path) -> Path:
         record_result(path, script=self.script, seed=self.seed, data_files=self.inputs, repo_root=self.repo_root,
-                      manifest_path=self.results_dir / "manifest.json")
+                      manifest_path=self.results_dir / "manifest.json", note=self.note)
         return path
 
     def table(self, frame: pd.DataFrame, name: str) -> Path:

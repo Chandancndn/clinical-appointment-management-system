@@ -121,6 +121,18 @@ The holdout (latest 20% of Kaggle appointment dates; the last OpenML month) is s
 run stops if any AUC exceeds 0.85 (suspected leakage). Hyper-parameters are tuned by patient-grouped
 cross-validation on the training part only.
 
+## Simulation (booking policies)
+
+```bash
+python -m sim.experiments     # S2 to S6 plus the consultation-time fit; needs the raw data and ml/artifacts/risk_model.joblib
+```
+
+One provider, one half-day session (T minutes from the seeded app slots, slots of L minutes where L is Hangu's median
+consultation time rounded up to the next 5), at least 1,000 replications with seed `base + r`, and common random
+numbers: every policy sees the same patients, attendance and consultation times. It uses the saved deployable model and
+never retrains. Tables and figures go to `results/` (`s2_policy_tradeoffs.csv` ... `s6_value_of_prediction.csv`) with
+manifest entries that record T, L, N and the replication count. The sanity tests (S1) are `tests/test_sim.py`.
+
 ## Repository layout
 
 ```
