@@ -84,6 +84,25 @@ outcomes. It never reads `data/raw/` or any dataset. Every demo account shares o
 
 Re-seeding needs `python -m db.seed_synthetic --reset`, which deletes every row first.
 
+## Risk flag (advisory)
+
+Doctors and admins see a **Low / Medium / High** badge beside each appointment, with the note "advisory only". It
+comes from the saved deployable model (`ml/artifacts/risk_model.joblib`), uses the Medium and High thresholds on
+`ml/artifacts/model_card.json` (never typed into the app), and is computed by the same `features.deployable_features()`
+that trained the model.
+
+- Booking never reads it. `app/services.py` does not import `app/risk.py`; a booking is scored **after** it has been
+  committed, inside a try/except, and scores live in their own table (`risk_scores`), not on `bookings`.
+- If the model file or card is missing, does not match its hash, or scoring raises, the badges simply do not appear and
+  booking, cancelling and rescheduling behave exactly as before.
+- Patients never receive risk data, and no patient is refused or moved because of a flag.
+
+To see the badges: `python -m db.init_db` (adds `risk_scores` if missing), `python -m db.seed_synthetic --reset`
+(scores the demo bookings and prints the Low/Medium/High mix), start the app, and log in as the doctor
+(`dr.meera@cams-demo.test`, **My schedule**, a day with appointments) or the admin (**Overview** and **All bookings**).
+Log in as a patient to confirm there is nothing to see. Re-running E9 and E10 changes the model version, and the next
+staff page view re-scores what it shows.
+
 ## Tests
 
 ```bash
@@ -137,7 +156,7 @@ manifest entries that record T, L, N and the replication count. The sanity tests
 
 ```
 app/        Flask app: blueprints/ (auth, patient, doctor, admin), services.py (bookings),
-            accounts.py, scheduling.py, queries.py (read-only), security.py, templates/, static/
+            accounts.py, scheduling.py, queries.py (read-only), security.py, risk.py (advisory flag), templates/, static/
 db/         schema.sql (MySQL), init_db.py, check_connection.py, seed_synthetic.py
 ml/         src/, artifacts/, notebooks/      (M3 onwards)
 sim/        simulation                        (M6)

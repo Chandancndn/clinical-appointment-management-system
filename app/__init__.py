@@ -43,6 +43,7 @@ def create_app(config: dict | None = None) -> Flask:
         SESSION_COOKIE_SAMESITE="Lax",
         PERMANENT_SESSION_LIFETIME=timedelta(hours=8),
         MAX_CONTENT_LENGTH=1024 * 1024,
+        RISK_ARTIFACTS_DIR=ROOT / "ml" / "artifacts",  # the saved risk model and its card (advisory flag, M7)
     )
     if config:
         app.config.update(config)

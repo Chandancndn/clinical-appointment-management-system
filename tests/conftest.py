@@ -82,20 +82,26 @@ def _create_schema(engine_name: str) -> None:
 
 
 @pytest.fixture
-def app(engine_name, tmp_path):
-    from app import create_app
+def app(engine_name, tmp_path, request):
+    """A fresh app and database. By default there is NO risk model (RISK_ARTIFACTS_DIR points at nothing), so the
+    booking and role tests run exactly the no-model path; a test module opts in with APP_CONFIG = {...}."""
+    from app import create_app, risk
     from app.extensions import db
 
     if engine_name == "sqlite":
         url = f"sqlite:///{tmp_path / 'cams_test.sqlite3'}"
     else:
         url = _mysql_test_url()
-    flask_app = create_app({
+    risk.reset_cache()
+    config = {
         "SQLALCHEMY_DATABASE_URI": url,
         "TESTING": True,
         "SECRET_KEY": "test-secret",
         "PASSWORD_HASH_METHOD": "pbkdf2:sha256:1000",  # fast hashing for tests
-    })
+        "RISK_ARTIFACTS_DIR": tmp_path / "no_model_here",
+    }
+    config.update(getattr(request.module, "APP_CONFIG", {}))
+    flask_app = create_app(config)
     with flask_app.app_context():
         _create_schema(engine_name)
         yield flask_app
@@ -156,6 +162,15 @@ class World:
         db.session.add_all(rows)
         db.session.commit()
         return [row.id for row in rows]
+
+    def profile(self, user_id: int, date_of_birth: date = date(1990, 6, 15), sex: str = "F") -> int:
+        from app.extensions import db
+        from app.models import PatientProfile
+
+        row = PatientProfile(user_id=user_id, date_of_birth=date_of_birth, sex=sex)
+        db.session.add(row)
+        db.session.commit()
+        return row.id
 
     def booking(self, slot_id: int, patient_id: int, status: str = "confirmed") -> int:
         """Insert a booking directly, bypassing the service rules (needed to build past appointments)."""

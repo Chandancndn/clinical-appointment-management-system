@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 
 from flask import Blueprint, abort, flash, g, redirect, render_template, request, url_for
 
-from .. import clock, forms, queries, services
+from .. import clock, forms, queries, risk, services
 from ..security import roles_required
 
 bp = Blueprint("patient", __name__, url_prefix="/patient")
@@ -65,7 +65,7 @@ def book():
     slot = queries.slot_info(slot_id) or abort(404)
     reason = (request.form.get("reason") or "").strip()[:500] or None
     try:
-        services.book(slot_id, g.user.id, reason)
+        booking = services.book(slot_id, g.user.id, reason)
     except services.SlotTaken:
         doctor = queries.get_doctor(slot.doctor_id)
         return _slot_page("patient/doctor_slots.html", doctor, slot.slot_date, status=409,
@@ -76,6 +76,7 @@ def book():
                           error="That time has already passed. Please pick a later slot.")
     except services.NotFound:
         abort(404)
+    risk.score_after_commit(booking)  # advisory and staff-only: runs after the commit, can never change the outcome
     flash("Your appointment is booked.", "success")
     return redirect(url_for("patient.bookings"))
 
@@ -121,7 +122,7 @@ def reschedule(booking_id):
     if new_slot_id is None:
         abort(400)
     try:
-        services.reschedule(booking_id, new_slot_id, g.user.id)
+        moved = services.reschedule(booking_id, new_slot_id, g.user.id)
     except services.SlotTaken:
         return _reschedule_page(booking, status=409,
                                 error="That slot was just taken. The list below is up to date; please pick another.")
@@ -131,5 +132,6 @@ def reschedule(booking_id):
         abort(404)
     except services.InvalidState as error:
         return _reschedule_page(booking, status=409, error=str(error))
+    risk.score_after_commit(moved)  # the new booking, scored after its transaction committed
     flash("Your appointment has been moved.", "success")
     return redirect(url_for("patient.bookings"))

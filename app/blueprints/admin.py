@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from flask import Blueprint, abort, flash, g, redirect, render_template, request, url_for
 
-from .. import accounts, clock, forms, queries, scheduling, services
+from .. import accounts, clock, forms, queries, risk, scheduling, services
 from ..security import roles_required
 
 bp = Blueprint("admin", __name__, url_prefix="/admin")
@@ -17,8 +17,9 @@ STATUSES = ("confirmed", "completed", "no_show", "cancelled")
 @admin_only
 def dashboard():
     now = clock.now()
-    return render_template("admin/dashboard.html", counts=queries.admin_counts(now),
-                           doctors=queries.list_doctors(), upcoming=queries.upcoming_bookings(25, now), now=now)
+    upcoming = queries.upcoming_bookings(25, now)
+    return render_template("admin/dashboard.html", counts=queries.admin_counts(now), doctors=queries.list_doctors(),
+                           upcoming=upcoming, now=now, flags=risk.flags_for(b.id for b in upcoming))
 
 
 @bp.get("/bookings")
@@ -29,7 +30,8 @@ def bookings():
     rows, total = queries.bookings_page(page, PER_PAGE, status)
     return render_template("admin/bookings.html", rows=rows, total=total, page=page, per_page=PER_PAGE,
                            status=status, statuses=STATUSES, now=clock.now(),
-                           last_page=max(1, -(-total // PER_PAGE)))
+                           last_page=max(1, -(-total // PER_PAGE)),
+                           flags=risk.flags_for(r.id for r in rows if r.status != "cancelled"))
 
 
 @bp.post("/bookings/<int:booking_id>/cancel")

@@ -15,6 +15,9 @@ What it creates (PLAN section 3):
   * about 40% of the past slots booked, with outcomes (completed / no_show / cancelled) drawn from a
     per-patient no-show propensity, so there is history for the risk flag later
   * age (normal, mean 38, sd 18, clipped to 1-90) and sex (55% F) for each patient
+  * future bookings are back-dated: a third were made just now, the rest up to a month ago, so lead times vary
+  * every non-cancelled booking is scored by the SAVED risk model (ml/artifacts), so the demo shows Low, Medium and
+    High badges to staff; without a model file the seed still works and simply has no flags
 """
 from __future__ import annotations
 
@@ -27,9 +30,9 @@ from datetime import date, datetime, time, timedelta
 
 import sqlalchemy as sa
 
-from app import accounts, clock, create_app, scheduling, services
+from app import accounts, clock, create_app, risk, scheduling, services
 from app.extensions import db
-from app.models import Booking, Doctor, PatientProfile, Slot, User
+from app.models import Booking, Doctor, PatientProfile, RiskScore, Slot, User
 
 SEED = 20261006
 DOMAIN = "cams-demo.test"  # .test is a reserved TLD: these addresses can never be real
@@ -72,7 +75,7 @@ def _weekdays(start: date, count: int, step: int) -> list[date]:
 
 
 def _wipe() -> None:
-    for model in (Booking, Slot, PatientProfile, Doctor, User):  # children before parents
+    for model in (RiskScore, Booking, Slot, PatientProfile, Doctor, User):  # children before parents
         db.session.execute(sa.delete(model))
     db.session.commit()
 
@@ -113,6 +116,14 @@ def _generate_slots(doctors, days: list[date]) -> int:
     return created
 
 
+def _booked_at(rng: random.Random, now: datetime) -> datetime:
+    """When a future booking was made: a third just now (so some are same-day), the rest up to a month ago.
+    Never after `now`, so never after the appointment."""
+    if rng.random() < 0.33:
+        return now - timedelta(minutes=rng.randint(1, 120))
+    return now - timedelta(days=min(30.0, rng.expovariate(1 / 7)), hours=rng.uniform(0, 8))
+
+
 def _book_future(rng: random.Random, patients, now: datetime) -> tuple[int, int]:
     """Book about a third of the future slots through the real service; cancel some. Returns (booked, cancelled)."""
     slots = db.session.execute(
@@ -123,6 +134,8 @@ def _book_future(rng: random.Random, patients, now: datetime) -> tuple[int, int]
             continue
         patient = rng.choice(patients)[0]
         booking = services.book(slot.id, patient.id, reason=rng.choice(REASONS))
+        db.session.execute(sa.update(Booking).where(Booking.id == booking.id).values(created_at=_booked_at(rng, now)))
+        db.session.commit()
         booked += 1
         if rng.random() < FUTURE_CANCELLED_SHARE:
             services.cancel(booking.id, actor_id=patient.id)
@@ -173,6 +186,7 @@ def seed(password: str, rng_seed: int = SEED, reset: bool = False) -> dict:
     past_slots = _generate_slots(doctors, past_days)
     future_booked, future_cancelled = _book_future(rng, patients, now)
     past_booked = _book_past(rng, patients, now)
+    flags = risk.score_many(db.session.execute(sa.select(Booking.id).where(Booking.status != "cancelled")).scalars().all())
 
     doctor_user = db.session.get(User, doctors[0].user_id)
     return {
@@ -180,6 +194,7 @@ def seed(password: str, rng_seed: int = SEED, reset: bool = False) -> dict:
         "doctors": len(doctors), "patients": len(patients),
         "slots": future_slots + past_slots, "future_slots": future_slots, "past_slots": past_slots,
         "future_bookings": future_booked, "future_cancelled": future_cancelled, "past_bookings": past_booked,
+        "flags": flags,  # {"scored", "low", "medium", "high"} or None when there is no risk model
         "future_days": (future_days[0], future_days[-1]), "past_days": (past_days[0], past_days[-1]),
     }
 
@@ -206,6 +221,12 @@ def main(argv=None) -> int:
           f"{summary['past_days'][0]} to {summary['past_days'][1]} behind)")
     print(f"  {summary['future_bookings']} future bookings ({summary['future_cancelled']} cancelled), "
           f"{summary['past_bookings']} past appointments with outcomes")
+    flags = summary["flags"]
+    if flags:
+        print(f"  risk flags from the saved model (advisory, staff pages only): {flags['low']} Low, "
+              f"{flags['medium']} Medium, {flags['high']} High")
+    else:
+        print("  no risk model found in ml/artifacts, so no risk flags (booking is unaffected)")
     print("\nDemo logins (one shared password for every demo account):")
     print(f"  admin    {summary['admin']}")
     print(f"  doctor   {summary['doctor']}")

@@ -30,5 +30,12 @@ def test_schema_sql_has_the_same_tables_and_columns_as_the_models():
     assert tables_in_schema_sql() == from_models
 
 
-def test_the_five_m1_tables_exist():
-    assert set(db.metadata.tables) == {"users", "patient_profiles", "doctors", "slots", "bookings"}
+def test_the_tables_are_the_documented_ones():
+    assert set(db.metadata.tables) == {"users", "patient_profiles", "doctors", "slots", "bookings", "risk_scores"}
+
+
+def test_risk_scores_is_one_advisory_row_per_booking():
+    table = db.metadata.tables["risk_scores"]
+    assert [c.name for c in table.columns] == ["booking_id", "no_show_probability", "model_version", "scored_at"]
+    assert [c.name for c in table.primary_key.columns] == ["booking_id"]  # one current score per booking
+    assert {fk.target_fullname for fk in table.foreign_keys} == {"bookings.id"}

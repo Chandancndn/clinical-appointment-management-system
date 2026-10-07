@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "_macros.html" import badge, outcome_buttons, cancel_button with context %}
+{% from "_macros.html" import badge, outcome_buttons, cancel_button, risk_badge, risk_note with context %}
 {% block title %}All bookings{% endblock %}
 {% block content %}
 <h1>All bookings</h1>
@@ -13,9 +13,10 @@
   <span class="muted">· {{ total }} booking(s)</span>
 </p>
 
+{{ risk_note(flags) }}
 {% if rows %}
   <table>
-    <thead><tr><th>#</th><th>When</th><th>Doctor</th><th>Patient</th><th>Reason</th><th>Status</th><th></th></tr></thead>
+    <thead><tr><th>#</th><th>When</th><th>Doctor</th><th>Patient</th><th>Reason</th><th>Status</th>{% if flags %}<th>Risk</th>{% endif %}<th></th></tr></thead>
     <tbody>
       {% for b in rows %}
         <tr>
@@ -23,6 +24,7 @@
           <td>{{ b.slot_date|date_long }}, {{ b.slot_time|time_short }}</td>
           <td>{{ b.doctor_name }}</td><td>{{ b.patient_name }}</td><td>{{ b.reason or '—' }}</td>
           <td>{{ badge(b.status) }}</td>
+          {% if flags %}<td>{{ risk_badge(flags, b.id) }}</td>{% endif %}
           <td class="actions">
             {% if b.status != 'cancelled' %}
               {% if has_started(b.slot_date, b.slot_time) %}

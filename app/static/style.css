@@ -132,3 +132,10 @@ button.slot-free:hover { background: #cdeedb; }
 .chip { padding: 0.15rem 0.7rem; border: 1px solid var(--line); border-radius: 999px; text-decoration: none; background: #fff; font-size: 0.9rem; }
 .chip-on { background: var(--brand); border-color: var(--brand); color: #fff; }
 .pager { display: flex; gap: 0.8rem; align-items: center; }
+
+/* advisory no-show risk badges (staff pages only) */
+.risk { display: inline-block; padding: 0.1rem 0.55rem; border-radius: 999px; font-size: 0.8rem; font-weight: 600; white-space: nowrap; }
+.risk-high { background: var(--bad-bg); color: var(--bad); }
+.risk-medium { background: var(--warn-bg); color: var(--warn); }
+.risk-low { background: #e9edf1; color: var(--muted); }
+.advisory { margin: 0.6rem 0; color: var(--muted); font-size: 0.88rem; }

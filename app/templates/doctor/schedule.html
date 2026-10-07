@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "_macros.html" import csrf_field, error_list, badge, outcome_buttons, cancel_button with context %}
+{% from "_macros.html" import csrf_field, error_list, badge, outcome_buttons, cancel_button, risk_badge, risk_note with context %}
 {% block title %}My schedule{% endblock %}
 {% block content %}
 <h1>My schedule</h1>
@@ -26,9 +26,10 @@
     <button type="submit" class="btn btn-small">Go</button>
   </form>
 
+  {{ risk_note(flags) }}
   {% if rows %}
     <table>
-      <thead><tr><th>Time</th><th>Patient</th><th>Reason</th><th>Status</th><th></th></tr></thead>
+      <thead><tr><th>Time</th><th>Patient</th><th>Reason</th><th>Status</th>{% if flags %}<th>Risk</th>{% endif %}<th></th></tr></thead>
       <tbody>
         {% for r in rows %}
           {% set started = has_started(r.slot_date, r.slot_time) %}
@@ -38,6 +39,7 @@
               <td>{{ r.patient_name }}</td>
               <td>{{ r.reason or '—' }}</td>
               <td>{{ badge(r.status) }}</td>
+              {% if flags %}<td>{{ risk_badge(flags, r.booking_id) }}</td>{% endif %}
               <td class="actions">
                 {% if started %}
                   {{ outcome_buttons(r.booking_id, r.status) }}
@@ -46,7 +48,7 @@
                 {% endif %}
               </td>
             {% else %}
-              <td class="muted" colspan="4">{{ 'Unbooked (past)' if started else 'Free' }}</td>
+              <td class="muted" colspan="{{ 5 if flags else 4 }}">{{ 'Unbooked (past)' if started else 'Free' }}</td>
             {% endif %}
           </tr>
         {% endfor %}

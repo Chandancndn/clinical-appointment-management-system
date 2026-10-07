@@ -9,7 +9,7 @@ from datetime import timedelta
 
 from flask import Blueprint, abort, flash, g, redirect, render_template, request, url_for
 
-from .. import clock, forms, queries, scheduling, services
+from .. import clock, forms, queries, risk, scheduling, services
 from ..security import roles_required
 
 bp = Blueprint("doctor", __name__, url_prefix="/doctor")
@@ -22,11 +22,12 @@ def _my_profile():
 
 def _schedule_page(doctor, day, errors=(), status=200, form=None):
     now = clock.now()
+    rows = queries.doctor_schedule(doctor.id, day)
     return render_template(
         "doctor/schedule.html", doctor=doctor, day=day, now=now, errors=list(errors), form=form or {},
         previous_day=day - timedelta(days=1), next_day=day + timedelta(days=1),
-        rows=queries.doctor_schedule(doctor.id, day), week=queries.week_summary(doctor.id, day),
-        outcomes=services.OUTCOMES), status
+        rows=rows, week=queries.week_summary(doctor.id, day), outcomes=services.OUTCOMES,
+        flags=risk.flags_for(r.booking_id for r in rows if r.booking_id)), status  # advisory badges, staff only
 
 
 @bp.get("/")

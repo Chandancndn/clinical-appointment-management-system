@@ -71,3 +71,14 @@ CREATE TABLE bookings (
   CONSTRAINT fk_bookings_patient FOREIGN KEY (patient_id) REFERENCES users (id),
   CONSTRAINT fk_bookings_cancelled_by FOREIGN KEY (cancelled_by) REFERENCES users (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Advisory no-show risk (CLAUDE.md hard rule 2). Written AFTER a booking is committed and read only by staff pages.
+-- Booking logic never reads this table, and nothing about a booking depends on a row being here.
+CREATE TABLE risk_scores (
+  booking_id          INT         NOT NULL,
+  no_show_probability DOUBLE      NOT NULL,
+  model_version       VARCHAR(40) NOT NULL,
+  scored_at           DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (booking_id),
+  CONSTRAINT fk_risk_scores_booking FOREIGN KEY (booking_id) REFERENCES bookings (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

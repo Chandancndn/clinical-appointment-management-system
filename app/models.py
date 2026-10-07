@@ -88,3 +88,14 @@ class Booking(db.Model):
     )
 
     __table_args__ = (sa.UniqueConstraint("confirmed_slot_id", name="uq_bookings_confirmed_slot"),)
+
+
+class RiskScore(db.Model):
+    """Advisory no-show probability for one booking (milestone M7). Never read by the booking logic."""
+
+    __tablename__ = "risk_scores"
+
+    booking_id = db.Column(db.Integer, db.ForeignKey("bookings.id"), primary_key=True, autoincrement=False)
+    no_show_probability = db.Column(sa.Double, nullable=False)
+    model_version = db.Column(db.String(40), nullable=False)
+    scored_at = db.Column(db.DateTime, nullable=False, server_default=sa.func.now())

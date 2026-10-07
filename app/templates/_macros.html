@@ -48,3 +48,13 @@
     {{ csrf_field() }}<button type="submit" class="btn btn-small btn-danger">{{ label }}</button>
   </form>
 {% endmacro %}
+
+{# Advisory no-show risk, STAFF pages only. `flags` is {booking id: flag} from risk.flags_for(); nothing is drawn without one. #}
+{% macro risk_badge(flags, booking_id) %}
+  {% set flag = flags.get(booking_id) if flags else none %}
+  {% if flag %}<span class="risk risk-{{ flag.band }}" title="Estimated no-show risk {{ '%.0f' % (flag.probability * 100) }}%. Advisory only.">{{ flag.band|capitalize }}</span>{% endif %}
+{% endmacro %}
+
+{% macro risk_note(flags) %}
+  {% if flags %}<p class="advisory">Risk badges are advisory only: they never decide who gets a slot, and no patient is refused or moved because of one.</p>{% endif %}
+{% endmacro %}
