@@ -397,7 +397,9 @@ def test_the_seeded_demo_shows_a_mix_of_low_medium_and_high(app, monkeypatch):
     flags = summary["flags"]
     assert flags is not None and flags["scored"] > 100
     assert min(flags["low"], flags["medium"], flags["high"]) >= 0.03 * flags["scored"], flags  # every band is really present
-    non_cancelled = db.session.execute(text("SELECT COUNT(*) FROM bookings WHERE status <> 'cancelled'")).scalar_one()
-    assert score_rows() == flags["scored"] == non_cancelled
+    appointments = db.session.execute(  # a slot closed for leave is not an appointment and is never scored
+        text("SELECT COUNT(*) FROM bookings WHERE status NOT IN ('cancelled', 'closed')")).scalar_one()
+    assert score_rows() == flags["scored"] == appointments
+    assert summary["closed_slots"] > 0
     # seeding again with --reset wipes the scores first (foreign key) and still works
     assert seed("another-password", reset=True)["flags"]["scored"] > 100
