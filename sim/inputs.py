@@ -160,7 +160,7 @@ def qq_figure(fit: FitResult, path) -> None:
         ax.set_xlabel("Fitted quantile (minutes)", color=INK_SECONDARY, fontsize=9)
     axes[0].set_ylabel("Observed quantile (minutes)", color=INK_SECONDARY, fontsize=9)
     fig.text(0.08, 0.03, "Hangu Data.csv, service time in minutes. The data has no consultation shorter than 3 minutes "
-             "(removed upstream), so the lowest quantiles are cut off.", fontsize=7.5, color=INK_MUTED, ha="left", va="bottom")
+             "(they appear to have been removed upstream), so the lowest quantiles are cut off.", fontsize=7.5, color=INK_MUTED, ha="left", va="bottom")
     Path(path).parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(path, facecolor=SURFACE)
     plt.close(fig)

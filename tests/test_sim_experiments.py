@@ -164,6 +164,17 @@ def test_s6_the_oracle_is_a_ceiling_and_risk_ranking_beats_random_on_collisions(
         assert oracle["mean_wait_min_vs_random_hi"] < 0  # the oracle clearly waits less than random placement
 
 
+def test_s6_also_compares_each_selector_with_the_uniform_comparator_in_a_paired_way(s6):
+    """The uniform comparator is the real P1 rule when counts are matched to P1, even spacing when matched to P2."""
+    for scheme, uniform_selector in (("matched_to_p1", "p1_uniform_k"), ("matched_to_p2", "uniform")):
+        part = s6[(s6["scheme"] == scheme) & (s6["selector"] == uniform_selector)]
+        for label in ("mean_wait_min", "overtime_min", "idle_min", "share_sessions_both_attend", "patients_served"):
+            assert (part[f"{label}_vs_uniform"] == 0).all() and (part[f"{label}_vs_uniform_hi"] == 0).all()
+    risk = s6[(s6["scheme"] == "matched_to_p1") & (s6["selector"] == "risk_top_m")]
+    assert (risk["patients_served_vs_uniform"] == 0).all()  # same extras, so the same number served
+    assert {"mean_wait_min_vs_uniform_lo", "overtime_min_vs_uniform_hi"} <= set(s6.columns)
+
+
 def test_s6_the_comparison_against_random_is_paired_so_random_against_itself_is_exactly_zero(s6):
     random = s6[s6["selector"] == "random"]
     for label in ("mean_wait_min", "overtime_min", "idle_min", "share_sessions_both_attend"):

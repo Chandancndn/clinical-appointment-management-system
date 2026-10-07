@@ -227,6 +227,9 @@ def s6_value_of_prediction(inputs: Inputs, n_reps: int = N_REPS, base_seed: int 
                    random scores, even spacing and an oracle that knows who will not attend double-book exactly m slots
     matched_to_p1  each P1 k fixes m = N / k; risk ranking, random scores and the oracle double-book m slots too
 
+    Paired differences are given against P0 (_vs_p0), against random slots (_vs_random) and against the uniform
+    comparator (_vs_uniform: the real P1 rule in the P1-matched design, even spacing in the P2-matched one).
+
     Extras are taken in order from shared draws, so at equal m every selector serves the SAME patients and only the
     placement differs: prediction can show up in waiting, overtime, idle time and collisions, never in patients served.
     """
@@ -262,8 +265,9 @@ def s6_value_of_prediction(inputs: Inputs, n_reps: int = N_REPS, base_seed: int 
     rows = []
     for (scheme, setting, selector), frame in frames.items():
         random_frame = frames[(scheme, setting, "random")]
+        uniform_frame = frames[(scheme, setting, "p1_uniform_k" if scheme == "matched_to_p1" else "uniform")]
         row = {**meta, "scheme": scheme, "setting": setting, "selector": selector,
-               **summary_row(frame, {"vs_p0": p0_frame, "vs_random": random_frame})}
+               **summary_row(frame, {"vs_p0": p0_frame, "vs_random": random_frame, "vs_uniform": uniform_frame})}
         row["served_gain_per_double_slot"] = (row["patients_served_vs_p0"] / row["double_slots_mean"]
                                               if row["double_slots_mean"] else math.nan)  # ratio of means, no interval
         rows.append(row)
@@ -311,9 +315,10 @@ def tradeoff_figure(table: pd.DataFrame, path) -> None:
             part = table[table["family"] == family]
             ax.plot(part[column], part["patients_served"], linestyle="none", marker=marker, markersize=8, color=color,
                     markeredgecolor=SURFACE, markeredgewidth=1.5, label=name, zorder=3)
-            for _, r in part.iterrows():
-                ax.annotate(r["parameter"] if family != "P0" else "", (r[column], r["patients_served"]), xytext=(5, 4),
-                            textcoords="offset points", fontsize=7, color=INK_SECONDARY)
+            offset, align = {"P0": ((7, -12), "left"), "P1": ((8, -12), "left"), "P2": ((-8, 7), "right")}[family]
+            for _, r in part.iterrows():  # P1 labels sit below-right of their points, P2 above-left, so they never collide
+                ax.annotate("P0" if family == "P0" else r["parameter"], (r[column], r["patients_served"]), xytext=offset,
+                            textcoords="offset points", fontsize=7.5, color=INK_SECONDARY, ha=align)
         ax.set_xlabel(label, color=INK_SECONDARY, fontsize=9)
     axes[0].set_ylabel("Patients served per session", color=INK_SECONDARY, fontsize=9)
     handles, labels = axes[0].get_legend_handles_labels()
@@ -331,7 +336,7 @@ S6_STYLE = {"p2_risk_threshold": ("#2a78d6", "o", "Risk threshold (P2)"), "rando
 def value_figure(table: pd.DataFrame, path) -> None:
     """At the same number of double-booked slots per session, how do the ways of choosing them compare?"""
     part = table[table["scheme"] == "matched_to_p2"]
-    panels = (("share_sessions_both_attend", "Sessions where both patients of a double-booked slot attend"),
+    panels = (("share_sessions_both_attend", "Sessions with both patients attending"),
               ("mean_wait_min", "Mean wait of attending patients (minutes)"),
               ("overtime_min", "Doctor overtime (minutes)"))
     fig, axes = plt.subplots(1, 3, figsize=(13.5, 5.2), dpi=200, facecolor=SURFACE)
