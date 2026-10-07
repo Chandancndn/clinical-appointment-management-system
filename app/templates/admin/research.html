@@ -29,13 +29,13 @@
 {% if page.bands %}
 <h2>The three bands staff see</h2>
 <table>
-  <thead><tr><th>Band</th><th>Predicted risk</th><th>Share of bookings</th><th>No-show rate in the band</th><th>Share of all no-shows</th></tr></thead>
+  <thead><tr><th>Band</th><th>Predicted risk</th><th class="num">Share of bookings</th><th class="num">No-show rate in the band</th><th class="num">Share of all no-shows</th></tr></thead>
   <tbody>
     {% for b in page.bands %}
       <tr>
         <td><span class="risk risk-{{ b.band }}">{{ b.band|capitalize }}</span></td>
         <td>{% if b.to %}{{ b.from }} to {{ b.to }}{% else %}{{ b.from }} and above{% endif %}</td>
-        <td>{{ b.share }}</td><td>{{ b.rate }}</td><td>{{ b.caught }}</td>
+        <td class="num">{{ b.share }}</td><td class="num">{{ b.rate }}</td><td class="num">{{ b.caught }}</td>
       </tr>
     {% endfor %}
   </tbody>
@@ -53,10 +53,10 @@
 <p>A simulated half-day session for one doctor, with consultation times from the Hangu data (a clinic in China) and no-show risk from the model above (Kaggle, Brazil). Clinic behaviour is assumed: one doctor, patients who arrive on time and are seen in slot order, and a no-show uses no doctor time. This shows a method and its trade-offs, not what would happen in a real clinic.</p>
 {% if page.policies %}
 <table>
-  <thead><tr><th>Policy</th><th>Double-booked slots</th><th>Patients served</th><th>Mean wait (min)</th><th>Doctor overtime (min)</th><th>Doctor idle (min)</th><th>Sessions where both patients of some double slot attend</th></tr></thead>
+  <thead><tr><th>Policy</th><th class="num">Double-booked slots</th><th class="num">Patients served</th><th class="num">Mean wait (min)</th><th class="num">Doctor overtime (min)</th><th class="num">Doctor idle (min)</th><th class="num">Sessions where both patients of some double slot attend</th></tr></thead>
   <tbody>
     {% for p in page.policies %}
-      <tr><td class="nowrap"><strong>{{ p.policy }}</strong></td><td>{{ p.double }}</td><td>{{ p.served }}</td><td>{{ p.wait }}</td><td>{{ p.overtime }}</td><td>{{ p.idle }}</td><td>{{ p.both }}</td></tr>
+      <tr><td class="nowrap"><strong>{{ p.policy }}</strong></td><td class="num">{{ p.double }}</td><td class="num">{{ p.served }}</td><td class="num">{{ p.wait }}</td><td class="num">{{ p.overtime }}</td><td class="num">{{ p.idle }}</td><td class="num">{{ p.both }}</td></tr>
     {% endfor %}
   </tbody>
 </table>
@@ -67,10 +67,10 @@
 <h2>A policy learned by reinforcement learning</h2>
 <p>Instead of fixing a rule by hand, P3 learns from simulated sessions where to add a second patient. It sees the same predicted risk as P2, plus its own earlier choices in the session. Learning needs one number to maximise, so a cost has to be put on delay: patients served, minus a cost for every patient-hour waited and for every hour of doctor overtime. There is no right value for those costs, so three stated settings were tried, and each row below is the policy learned for one of them.</p>
 <table>
-  <thead><tr><th>Policy</th><th>Cost per patient-hour waited</th><th>Cost per overtime hour</th><th>Double-booked slots</th><th>Patients served</th><th>Mean wait (min)</th><th>Doctor overtime (min)</th><th>Doctor idle (min)</th><th>Best hand-made rule for these costs</th><th>Reward, learned minus that rule</th></tr></thead>
+  <thead><tr><th>Policy</th><th class="num">Cost per patient-hour waited</th><th class="num">Cost per overtime hour</th><th class="num">Double-booked slots</th><th class="num">Patients served</th><th class="num">Mean wait (min)</th><th class="num">Doctor overtime (min)</th><th class="num">Doctor idle (min)</th><th>Best hand-made rule for these costs</th><th class="num">Reward, learned minus that rule</th></tr></thead>
   <tbody>
     {% for p in page.learned %}
-      <tr><td class="nowrap"><strong>{{ p.policy }}</strong></td><td>{{ p.wait_cost }}</td><td>{{ p.overtime_cost }}</td><td>{{ p.double }}</td><td>{{ p.served }}</td><td>{{ p.wait }}</td><td>{{ p.overtime }}</td><td>{{ p.idle }}</td><td class="nowrap">{{ p.best }}</td><td class="nowrap">{{ p.gain }} ({{ p.gain_lo }} to {{ p.gain_hi }})</td></tr>
+      <tr><td class="nowrap"><strong>{{ p.policy }}</strong></td><td class="num">{{ p.wait_cost }}</td><td class="num">{{ p.overtime_cost }}</td><td class="num">{{ p.double }}</td><td class="num">{{ p.served }}</td><td class="num">{{ p.wait }}</td><td class="num">{{ p.overtime }}</td><td class="num">{{ p.idle }}</td><td class="nowrap">{{ p.best }}</td><td class="num nowrap">{{ p.gain }} ({{ p.gain_lo }} to {{ p.gain_hi }})</td></tr>
     {% endfor %}
   </tbody>
 </table>
