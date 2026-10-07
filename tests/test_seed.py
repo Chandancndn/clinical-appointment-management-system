@@ -11,7 +11,7 @@ from werkzeug.security import check_password_hash
 
 from app import clock
 from app.extensions import db
-from app.models import Booking, Doctor, PatientProfile, Slot, User
+from app.models import Booking, Doctor, PatientProfile, Slot, Standby, User
 from db.seed_synthetic import DOCTORS, PATIENTS, WEEKDAYS, AlreadySeeded, seed
 
 SEED_SOURCE = Path(__file__).resolve().parents[1] / "db" / "seed_synthetic.py"
@@ -79,11 +79,13 @@ def test_future_bookings_are_confirmed_or_cancelled_and_past_ones_have_outcomes(
     rows = db.session.execute(
         select(Booking.status, Slot.slot_date, Slot.slot_time, Booking.created_at)
         .join(Slot, Slot.id == Booking.slot_id)).all()
-    future = [r for r in rows if datetime.combine(r.slot_date, r.slot_time) > now]
+    ahead = [r for r in rows if datetime.combine(r.slot_date, r.slot_time) > now]
+    future = [r for r in ahead if r.status != "closed"]  # a slot closed for leave is not an appointment
     past = [r for r in rows if datetime.combine(r.slot_date, r.slot_time) <= now]
     assert {r.status for r in future} == {"confirmed", "cancelled"}
     assert {r.status for r in past} == {"completed", "no_show", "cancelled"}
-    assert len(future) == seeded["future_bookings"] and len(past) == seeded["past_bookings"]
+    assert len(future) == seeded["future_bookings"] + seeded["full_day_bookings"] and len(past) == seeded["past_bookings"]
+    assert len(ahead) - len(future) == seeded["closed_slots"]
     future_slots = sum(1 for r in db.session.execute(select(Slot.slot_date, Slot.slot_time))
                        if datetime.combine(*r) > now)
     assert 0.25 < len(future) / future_slots < 0.42  # about a third
@@ -129,3 +131,52 @@ def test_seeding_twice_needs_an_explicit_reset(seeded):
         seed("another-password")
     assert seed("another-password", reset=True)["patients"] == PATIENTS
     assert count(User) == 1 + len(DOCTORS) + PATIENTS
+
+
+# ---- leave and standby, so the demo shows both ---------------------------------------------------------------------
+def day_states(doctor_email, day):
+    """(slot time, status of the row holding it or None) for a doctor's day."""
+    return db.session.execute(
+        select(Slot.slot_time, Booking.status).select_from(Slot)
+        .join(Doctor, Doctor.id == Slot.doctor_id).join(User, User.id == Doctor.user_id)
+        .outerjoin(Booking, Booking.confirmed_slot_id == Slot.id)
+        .where(User.email == doctor_email, Slot.slot_date == day).order_by(Slot.slot_time)).all()
+
+
+def test_one_doctor_has_a_day_closed_for_leave_and_nobody_was_cancelled_for_it(seeded):
+    doctor_email, day = seeded["leave"]
+    states = day_states(doctor_email, day)
+    assert states and all(status in ("closed", "confirmed") for _, status in states)  # nothing left free
+    assert sum(status == "closed" for _, status in states) == seeded["closed_slots"] > 0
+    assert count(Booking) - db.session.execute(select(func.count()).select_from(Booking).where(Booking.status != "closed")).scalar_one() \
+        == seeded["closed_slots"]  # closed rows exist only on that day
+    closed_by_doctor = db.session.execute(
+        select(func.count()).select_from(Booking).join(User, User.id == Booking.patient_id)
+        .where(Booking.status == "closed", User.email == doctor_email)).scalar_one()
+    assert closed_by_doctor == seeded["closed_slots"]  # held in the doctor's own name
+
+
+def test_one_day_is_fully_booked_and_has_a_standby_list_with_the_demo_patient(seeded):
+    doctor_email, day = seeded["full_day"]
+    states = day_states(doctor_email, day)
+    assert states and all(status == "confirmed" for _, status in states)  # every slot is an appointment
+    waiting = db.session.execute(
+        select(User.email).select_from(Standby).join(User, User.id == Standby.patient_id)
+        .where(Standby.slot_date == day).order_by(Standby.id)).scalars().all()
+    assert len(waiting) == seeded["standby"] == 3 and seeded["patient"] in waiting
+    assert (doctor_email, day) != seeded["leave"]
+
+
+def test_nobody_on_standby_already_has_an_appointment_with_that_doctor_that_day(seeded):
+    doctor_email, day = seeded["full_day"]
+    clash = db.session.execute(
+        select(func.count()).select_from(Standby)
+        .join(Slot, (Slot.doctor_id == Standby.doctor_id) & (Slot.slot_date == Standby.slot_date))
+        .join(Booking, (Booking.confirmed_slot_id == Slot.id) & (Booking.patient_id == Standby.patient_id))).scalar_one()
+    assert clash == 0
+
+
+def test_resetting_also_clears_the_standby_list(seeded):
+    assert count(Standby) == 3
+    again = seed("another-password", reset=True)  # would fail on a foreign key if standby rows were left behind
+    assert count(Standby) == again["standby"] == 3

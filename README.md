@@ -61,7 +61,7 @@ cp .env.example .env        # then edit .env, see below
 
    ```bash
    python -m db.check_connection    # prints the server version and whether generated columns work
-   python -m db.init_db             # applies db/schema.sql to the database in DATABASE_URL
+   python -m db.init_db             # applies db/schema.sql to the database in DATABASE_URL; also upgrades an older database
    ```
 
 ## Run the app
@@ -90,11 +90,15 @@ Re-seeding needs `python -m db.seed_synthetic --reset`, which deletes every row 
 
 | Role | Can |
 |---|---|
-| Patient | Register, log in, browse doctors and free slots, book, cancel, reschedule, change own password |
-| Doctor | See own schedule with patient names and the advisory risk badge, create slots for a day, cancel an appointment, mark past appointments completed or no-show, change own password |
-| Admin | Add doctors, generate slots, see and cancel any booking, mark outcomes, see the risk flag status and the **Models and simulation** page |
+| Patient | Register, log in, browse doctors and free slots, book, cancel, reschedule, join the standby list for a day that is full, change own password |
+| Doctor | See own schedule with patient names and the advisory risk badge, create slots for a day, close and reopen free slots (leave), see who is on standby for a day, cancel an appointment, mark past appointments completed or no-show, change own password |
+| Admin | Add doctors, generate slots, close and reopen any doctor's free slots, see and cancel any booking, mark outcomes, see the risk flag status and the **Models and simulation** page |
 
 Rules the app enforces: a doctor's slot can never be booked twice (the database decides); a patient cannot hold two appointments whose times overlap (checked on the page, best effort); a started appointment cannot be cancelled or moved; a patient never sees another patient's booking (404) or any risk information. The app never overbooks.
+
+**Leave.** Closing a slot inserts a row with status `closed` in the doctor's name; it holds the slot through the same unique key that forbids double-booking, so a patient booking and a doctor closing the same slot are decided by the database, and exactly one wins. Closing only affects free slots that have not started and never cancels an appointment; reopening only touches closed slots.
+
+**Standby.** A patient can join the standby list for a doctor on a day with no free slot. Standby reserves nothing and gives no priority: when a slot on that day is free again the patient sees it on their own pages and books it the normal way, first come first served. Staff see who is waiting for a day.
 
 Safeguards: passwords are hashed; every POST carries a CSRF token; every route checks the role; five wrong passwords for one email from one address (twenty from one address) block further tries for fifteen minutes, also for emails that do not exist, and guessing the current password on the account page is limited the same way. The counters live in memory, per process, and use the address Flask sees, so behind a reverse proxy or several workers they bound an attacker per worker rather than globally. Set `SESSION_COOKIE_SECURE=true` in `.env` when serving over HTTPS. Ids and dates in URLs and forms are range-checked, so odd input gives a 404 or a message, never a server error (`tests/test_robustness.py` sends junk to every route as every role).
 
@@ -169,6 +173,16 @@ consultation time rounded up to the next 5), at least 1,000 replications with se
 numbers: every policy sees the same patients, attendance and consultation times. It uses the saved deployable model and
 never retrains. Tables and figures go to `results/` (`s2_policy_tradeoffs.csv` ... `s6_value_of_prediction.csv`) with
 manifest entries that record T, L, N and the replication count. The sanity tests (S1) are `tests/test_sim.py`.
+
+```bash
+python -m sim.rl              # S7: a policy learned by reinforcement learning, one per stated cost of delay (about a minute)
+```
+
+S7 (`sim/rl.py`) learns where to double-book instead of fixing a rule by hand: REINFORCE on simulated sessions, with a policy that
+sees the same predicted risk as P2 plus its own earlier choices. Learning needs one number to maximise, so three stated costs of
+waiting and overtime are fixed in the code and a policy is learned for each. The results (`s7_*.csv`) still report every metric for
+each learned policy, compare it with every hand-made rule under the same costs and at the same number of double-booked slots, and
+try it with a biased risk estimate. Training, validation and evaluation sessions use disjoint seeds. It rewrites nothing from S2 to S6.
 
 ## Report assets and the numbers audit
 

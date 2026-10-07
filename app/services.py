@@ -261,7 +261,8 @@ def close_slot(slot_id: int, actor_id: int) -> Booking:
     if datetime.combine(row.slot_date, row.slot_time) <= clock.now():
         raise _refuse(SlotInPast(f"slot {slot_id} has already started"))
 
-    closure = Booking(slot_id=slot_id, patient_id=row.user_id, status=CLOSED, reason=f"Closed for leave (by user {actor_id})")
+    who = "the doctor" if actor_id == row.user_id else "an admin"
+    closure = Booking(slot_id=slot_id, patient_id=row.user_id, status=CLOSED, reason=f"Closed for leave by {who}")
     db.session.add(closure)
     try:
         db.session.commit()  # the unique key on confirmed_slot_id decides: a booked or closed slot is a duplicate

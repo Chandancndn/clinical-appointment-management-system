@@ -63,6 +63,20 @@
 <p class="muted">P0 books nobody twice. P1 doubles every k-th slot. P2 doubles the slots whose booked patient has a predicted risk above a threshold (a number such as 0.3, or a percentile such as p90 of the predicted risks). More patients served always costs waiting and overtime, so no single score is computed. Source: results/s2_policy_tradeoffs.csv.</p>
 {% endif %}
 
+{% if page.learned %}
+<h2>A policy learned by reinforcement learning</h2>
+<p>Instead of fixing a rule by hand, P3 learns from simulated sessions where to add a second patient. It sees the same predicted risk as P2, plus its own earlier choices in the session. Learning needs one number to maximise, so a cost has to be put on delay: patients served, minus a cost for every patient-hour waited and for every hour of doctor overtime. There is no right value for those costs, so three stated settings were tried, and each row below is the policy learned for one of them.</p>
+<table>
+  <thead><tr><th>Policy</th><th>Cost per patient-hour waited</th><th>Cost per overtime hour</th><th>Double-booked slots</th><th>Patients served</th><th>Mean wait (min)</th><th>Doctor overtime (min)</th><th>Doctor idle (min)</th><th>Best hand-made rule for these costs</th><th>Reward, learned minus that rule</th></tr></thead>
+  <tbody>
+    {% for p in page.learned %}
+      <tr><td class="nowrap"><strong>{{ p.policy }}</strong></td><td>{{ p.wait_cost }}</td><td>{{ p.overtime_cost }}</td><td>{{ p.double }}</td><td>{{ p.served }}</td><td>{{ p.wait }}</td><td>{{ p.overtime }}</td><td>{{ p.idle }}</td><td class="nowrap">{{ p.best }}</td><td class="nowrap">{{ p.gain }} ({{ p.gain_lo }} to {{ p.gain_hi }})</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+<p class="muted">Costs are in patients served: a cost of 1 per patient-hour means one patient waiting an hour cancels out one extra patient served. The last column is the difference in that reward against the best of the P0, P1 and P2 rules for the same costs, with a 95% interval over the same {{ page.learned[0].n_reps }} sessions; an interval that includes zero means no clear difference. A higher cost of delay makes the learner double-book fewer slots. Source: results/s7_learned_policy.csv.</p>
+{% endif %}
+
 <div class="figures">
   {% for slug, caption, available in page.figures %}
     {% if available %}

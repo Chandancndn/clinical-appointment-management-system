@@ -121,5 +121,5 @@ def research_page():
 @bp.get("/research/figures/<slug>.png")
 @admin_only
 def research_figure(slug):
-    path = research.figure_path(slug, current_app.config["FIGURES_DIR"]) or abort(404)
+    path = research.figure_path(slug, current_app.config["FIGURES_DIR"], current_app.config["RESULTS_DIR"]) or abort(404)
     return send_file(path, mimetype="image/png", max_age=300)

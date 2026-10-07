@@ -16,8 +16,10 @@ What it creates (PLAN section 3):
     per-patient no-show propensity, so there is history for the risk flag later
   * age (normal, mean 38, sd 18, clipped to 1-90) and sex (55% F) for each patient
   * future bookings are back-dated: a third were made just now, the rest up to a month ago, so lead times vary
-  * every non-cancelled booking is scored by the SAVED risk model (ml/artifacts), so the demo shows Low, Medium and
+  * every appointment is scored by the SAVED risk model (ml/artifacts), so the demo shows Low, Medium and
     High badges to staff; without a model file the seed still works and simply has no flags
+  * one doctor's day is closed for leave (its free slots are closed; the appointments already on it stay), and one
+    doctor's day is filled up and has three patients on standby, the demo patient among them
 """
 from __future__ import annotations
 
@@ -30,9 +32,9 @@ from datetime import date, datetime, time, timedelta
 
 import sqlalchemy as sa
 
-from app import accounts, clock, create_app, risk, scheduling, services
+from app import accounts, clock, create_app, risk, scheduling, services, standby
 from app.extensions import db
-from app.models import Booking, Doctor, PatientProfile, RiskScore, Slot, User
+from app.models import Booking, Doctor, PatientProfile, RiskScore, Slot, Standby, User
 
 SEED = 20261006
 DOMAIN = "cams-demo.test"  # .test is a reserved TLD: these addresses can never be real
@@ -58,6 +60,9 @@ FUTURE_BOOKED_SHARE = 1 / 3
 FUTURE_CANCELLED_SHARE = 0.12
 PAST_BOOKED_SHARE = 0.40
 PAST_CANCELLED_SHARE = 0.10
+LEAVE_DOCTOR, LEAVE_DAY = 3, 3  # the fourth doctor's fourth weekday ahead is closed for leave
+FULL_DOCTOR, FULL_FIRST_DAY = 4, 2  # the fifth doctor has a fully booked day, from the third weekday ahead on
+STANDBY_PATIENTS = 3
 
 
 class AlreadySeeded(RuntimeError):
@@ -75,7 +80,7 @@ def _weekdays(start: date, count: int, step: int) -> list[date]:
 
 
 def _wipe() -> None:
-    for model in (RiskScore, Booking, Slot, PatientProfile, Doctor, User):  # children before parents
+    for model in (RiskScore, Standby, Booking, Slot, PatientProfile, Doctor, User):  # children before parents
         db.session.execute(sa.delete(model))
     db.session.commit()
 
@@ -167,6 +172,43 @@ def _book_past(rng: random.Random, patients, now: datetime) -> int:
     return len(rows)
 
 
+def _close_for_leave(doctor, day) -> int:
+    """Close the doctor's free slots on `day` (leave). Appointments already booked on it are left alone."""
+    return scheduling.close_free_slots(doctor.id, day, day, doctor.user_id).closed
+
+
+def _fill_day_with_standby(rng: random.Random, doctor, days, patients, now: datetime):
+    """Fill one of the doctor's days completely and put patients on standby for it. Returns (day, extra bookings, waiting).
+
+    The day is the first of `days` on which the demo patient has no appointment with this doctor, so the demo login can
+    be on the standby list. Standby patients are the first in the list who are not already booked there that day.
+    """
+    def booked_patients(day) -> set:
+        return set(db.session.execute(
+            sa.select(Booking.patient_id).join(Slot, Slot.id == Booking.confirmed_slot_id)
+            .where(Slot.doctor_id == doctor.id, Slot.slot_date == day)).scalars())
+
+    demo = patients[0][0]
+    day = next(d for d in days if demo.id not in booked_patients(d))
+    free = db.session.execute(
+        sa.select(Slot.id, Slot.slot_time).select_from(Slot).outerjoin(Booking, Booking.confirmed_slot_id == Slot.id)
+        .where(Slot.doctor_id == doctor.id, Slot.slot_date == day, Booking.id.is_(None)).order_by(Slot.slot_time)).all()
+    others = [user for user, _ in patients[1:]]
+    extra = 0
+    for slot in free:
+        if datetime.combine(day, slot.slot_time) <= now:
+            continue
+        booking = services.book(slot.id, rng.choice(others).id, reason=rng.choice(REASONS))
+        db.session.execute(sa.update(Booking).where(Booking.id == booking.id).values(created_at=_booked_at(rng, now)))
+        db.session.commit()
+        extra += 1
+    taken = booked_patients(day)
+    waiting = [user for user, _ in patients if user.id not in taken][:STANDBY_PATIENTS]
+    for user in waiting:
+        standby.join(user.id, doctor.id, day, now)
+    return day, extra, len(waiting)
+
+
 def seed(password: str, rng_seed: int = SEED, reset: bool = False) -> dict:
     """Seed the database in the current app context. Returns a summary including the demo logins."""
     if reset:
@@ -186,7 +228,12 @@ def seed(password: str, rng_seed: int = SEED, reset: bool = False) -> dict:
     past_slots = _generate_slots(doctors, past_days)
     future_booked, future_cancelled = _book_future(rng, patients, now)
     past_booked = _book_past(rng, patients, now)
-    flags = risk.score_many(db.session.execute(sa.select(Booking.id).where(Booking.status != "cancelled")).scalars().all())
+    full_doctor, leave_doctor = doctors[FULL_DOCTOR], doctors[LEAVE_DOCTOR]
+    full_day, full_day_bookings, waiting = _fill_day_with_standby(rng, full_doctor, future_days[FULL_FIRST_DAY:], patients, now)
+    leave_day = future_days[LEAVE_DAY]
+    closed_slots = _close_for_leave(leave_doctor, leave_day)
+    flags = risk.score_many(db.session.execute(
+        sa.select(Booking.id).where(Booking.status.in_(services.APPOINTMENT_STATUSES))).scalars().all())  # appointments only
 
     doctor_user = db.session.get(User, doctors[0].user_id)
     return {
@@ -194,6 +241,9 @@ def seed(password: str, rng_seed: int = SEED, reset: bool = False) -> dict:
         "doctors": len(doctors), "patients": len(patients),
         "slots": future_slots + past_slots, "future_slots": future_slots, "past_slots": past_slots,
         "future_bookings": future_booked, "future_cancelled": future_cancelled, "past_bookings": past_booked,
+        "full_day_bookings": full_day_bookings, "standby": waiting, "closed_slots": closed_slots,
+        "full_day": (db.session.get(User, full_doctor.user_id).email, full_day),
+        "leave": (db.session.get(User, leave_doctor.user_id).email, leave_day),
         "flags": flags,  # {"scored", "low", "medium", "high"} or None when there is no risk model
         "future_days": (future_days[0], future_days[-1]), "past_days": (past_days[0], past_days[-1]),
     }
@@ -227,6 +277,9 @@ def main(argv=None) -> int:
               f"{flags['medium']} Medium, {flags['high']} High")
     else:
         print("  no risk model found in ml/artifacts, so no risk flags (booking is unaffected)")
+    print(f"  leave: {summary['leave'][0]} has {summary['closed_slots']} free slots closed on {summary['leave'][1]}")
+    print(f"  standby: {summary['full_day'][0]} is fully booked on {summary['full_day'][1]}; "
+          f"{summary['standby']} patients are on standby, the demo patient among them")
     print("\nDemo logins (one shared password for every demo account):")
     print(f"  admin    {summary['admin']}")
     print(f"  doctor   {summary['doctor']}")

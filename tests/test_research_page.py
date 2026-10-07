@@ -105,3 +105,29 @@ def test_the_booking_code_does_not_know_this_page_exists():
     names = [n.id for n in ast.walk(ast.parse(Path(services.__file__).read_text())) if isinstance(n, ast.Name)]
     names += [a.name for n in ast.walk(ast.parse(Path(services.__file__).read_text())) if isinstance(n, (ast.Import, ast.ImportFrom)) for a in n.names]
     assert not [n for n in names if "research" in n.lower()]
+
+
+# ---- S7: the learned policies ------------------------------------------------------------------------------------
+needs_s7 = pytest.mark.skipif(not (ROOT / "results" / "s7_learned_policy.csv").exists(), reason="results/s7_learned_policy.csv missing")
+
+
+@needs_s7
+def test_the_learned_policies_are_shown_with_their_stated_costs_and_every_metric(scene, world, client):
+    world.login(client, scene.admin)
+    page = text(client.get("/admin/research"))
+    assert "reinforcement learning" in page.lower() and "results/s7_learned_policy.csv" in page
+    for row in rows("s7_learned_policy.csv"):
+        assert row["policy"] in page
+        for column, digits in (("patients_served", 2), ("mean_wait_min", 1), ("overtime_min", 1), ("double_slots_mean", 2)):
+            assert f"{float(row[column]):.{digits}f}" in page, (row["policy"], column)
+        assert f"{float(row['reward_vs_best_standard']):+.2f}" in page and row["best_standard_policy"] in page
+    lowered = page.lower()
+    assert "stated" in lowered and "no right value" in lowered  # the costs are an assumption, and the page says so
+
+
+@needs_s7
+def test_the_learned_policy_figure_comes_from_the_results_folder(scene, world, client):
+    world.login(client, scene.admin)
+    response = client.get("/admin/research/figures/learned-policy.png")
+    assert response.status_code == 200 and response.data[:4] == b"\x89PNG"
+    assert "/admin/research/figures/learned-policy.png" in text(client.get("/admin/research"))

@@ -11,26 +11,37 @@ import json
 from pathlib import Path
 from typing import Optional
 
-# slug used in the URL -> (file name, caption). A fixed list: nothing else can be served.
+# slug used in the URL -> (file name, caption, where it lives). A fixed list: nothing else can be served.
+# "assets" is docs/report_assets/figures (built from results/); "results" is results/figures (written by an experiment).
 FIGURES = {
     "policy-tradeoffs": ("f11_s2_tradeoffs.png",
-                         "What each booking policy trades away: more patients served always costs longer waits and more overtime."),
+                         "What each booking policy trades away: more patients served always costs longer waits and more overtime.", "assets"),
     "value-of-prediction": ("f16_s6_paired_differences.png",
-                            "At the same number of double-booked slots: does choosing by predicted risk beat spacing them evenly or at random?"),
+                            "At the same number of double-booked slots: does choosing by predicted risk beat spacing them evenly or at random?", "assets"),
+    "learned-policy": ("s7_learned_policy.png",
+                       "Where the policies learned by reinforcement learning land among the hand-made rules.", "results"),
     "thresholds": ("f10_e10_thresholds.png",
-                   "What each risk threshold catches, with the Medium and High cuts the app uses."),
+                   "What each risk threshold catches, with the Medium and High cuts the app uses.", "assets"),
     "reliability": ("f09_e8_reliability.png",
-                    "Predicted risk against the observed no-show rate on the held-out data."),
+                    "Predicted risk against the observed no-show rate on the held-out data.", "assets"),
 }
 
 
 FAMILIES = {"hist_gradient_boosting": "gradient-boosted tree", "random_forest": "random forest", "logistic_regression": "logistic regression"}
 
 
-def figure_path(slug: str, figures_dir) -> Optional[Path]:
+def figure_path(slug: str, figures_dir, results_dir=None) -> Optional[Path]:
     entry = FIGURES.get(slug)
-    path = Path(figures_dir) / entry[0] if entry else None
-    return path if path is not None and path.is_file() else None
+    if entry is None:
+        return None
+    name, _, source = entry
+    if source == "results":
+        if results_dir is None:
+            return None
+        path = Path(results_dir) / "figures" / name
+    else:
+        path = Path(figures_dir) / name
+    return path if path.is_file() else None
 
 
 def _table(path: Path) -> list:
@@ -49,7 +60,7 @@ def _percent(value) -> str:
 def load(results_dir, artifacts_dir, figures_dir) -> dict:
     """The page's content. Each part is read on its own, so one missing file only removes that part."""
     results, artifacts = Path(results_dir), Path(artifacts_dir)
-    page = {"card": None, "metrics": None, "bands": None, "policies": None, "figures": [], "missing": []}
+    page = {"card": None, "metrics": None, "bands": None, "policies": None, "learned": None, "figures": [], "missing": []}
 
     def attempt(label, build):
         try:
@@ -83,11 +94,21 @@ def load(results_dir, artifacts_dir, figures_dir) -> dict:
                  "wait": _number(r["mean_wait_min"], 1), "overtime": _number(r["overtime_min"], 1), "idle": _number(r["idle_min"], 1),
                  "both": _percent(r["share_sessions_both_attend"]), "family": r["family"]} for r in _table(results / "s2_policy_tradeoffs.csv")]
 
+    def learned():
+        return [{"policy": r["policy"], "wait_cost": f"{float(r['wait_cost_per_hour']):g}", "overtime_cost": f"{float(r['overtime_cost_per_hour']):g}",
+                 "double": _number(r["double_slots_mean"], 2), "served": _number(r["patients_served"], 2),
+                 "wait": _number(r["mean_wait_min"], 1), "overtime": _number(r["overtime_min"], 1), "idle": _number(r["idle_min"], 1),
+                 "best": r["best_standard_policy"], "gain": f"{float(r['reward_vs_best_standard']):+.2f}",
+                 "gain_lo": f"{float(r['reward_vs_best_standard_lo']):+.2f}", "gain_hi": f"{float(r['reward_vs_best_standard_hi']):+.2f}",
+                 "n_reps": f"{int(float(r['n_reps'])):,}"}
+                for r in _table(results / "s7_learned_policy.csv")]
+
     page["card"] = attempt("the model card (ml/artifacts/model_card.json)", card)
+    page["learned"] = attempt("results/s7_learned_policy.csv", learned)
     page["metrics"] = attempt("results/e9_deployable.csv", metrics)
     page["bands"] = attempt("results/e10_thresholds.csv", bands)
     page["policies"] = attempt("results/s2_policy_tradeoffs.csv", policies)
-    page["figures"] = [(slug, caption, figure_path(slug, figures_dir) is not None) for slug, (_, caption) in FIGURES.items()]
+    page["figures"] = [(slug, caption, figure_path(slug, figures_dir, results_dir) is not None) for slug, (_, caption, _) in FIGURES.items()]
     if not any(available for _, _, available in page["figures"]):
         page["missing"].append("the saved figures (docs/report_assets/figures)")
     return page

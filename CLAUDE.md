@@ -15,9 +15,10 @@ The guide allows and encourages ML and simulation. No real clinic data exists, s
    - `bookings.confirmed_slot_id` is a generated column equal to `slot_id` for every status except `cancelled` (NULL when cancelled), with its own UNIQUE constraint. A completed or no-show appointment keeps its slot; only cancelling frees it.
    - The app just tries to INSERT and treats a duplicate-key error as "slot taken" (HTTP 409). Never check-then-insert.
    - Reschedule = insert the new booking and cancel the old one in one transaction; if the new slot is taken, everything rolls back.
+   - Closing a slot for a doctor's leave = INSERT a `bookings` row with status `closed` in the doctor's own name. It holds the slot through the same unique key, so a patient booking and a doctor closing the same slot are decided by the database like two patients; `book()` stays a plain INSERT. Closing never cancels an appointment, and reopening only touches `closed` rows. A `closed` row is not an appointment: it is never listed, counted, scored or given an outcome.
    - Fallback if the MySQL version cannot do generated columns: a `slot_holds` table with `slot_id` as primary key, inserted and deleted in the same transaction as the booking. Keep the same tests.
    - Tests: two concurrent requests for one slot give exactly one success; six concurrent requests across 25 slots give one winner per slot; a direct SQL insert of a second active booking fails. Run them on SQLite **and on real MySQL**. Write these tests first and show them failing.
-2. **The app never overbooks.** Overbooking is studied in the simulation only. In the app, a high-risk booking is shown to staff as an advisory flag (and may feed a standby list), but the slot rule above is never relaxed. The risk model is never read by booking logic; if it is missing or fails, booking is unaffected.
+2. **The app never overbooks.** Overbooking is studied in the simulation only. In the app, a high-risk booking is shown to staff as an advisory flag (and may feed a standby list), but the slot rule above is never relaxed. The standby list books, holds and moves nothing: a patient waiting for a full day is told when a slot is free and books it the normal way, first come first served; `app/services.py` does not import it. The risk model is never read by booking logic; if it is missing or fails, booking is unaffected.
 3. **Every number in the report comes from a script** in this repo that writes to `results/`. Never type, estimate or invent a metric. If a result is missing, run the experiment. Each result file gets a `results/manifest.json` entry: seed, data file hash, date, git commit. Maintain `docs/numbers_audit.csv` (number, results file, column) and a script that fails if any quoted value no longer matches.
 4. **No real patient data anywhere.** The app is seeded with synthetic records (`db/seed_synthetic.py`, which never reads the public datasets). Public datasets are used for training only.
 5. **Never commit raw datasets.** Keep them in `data/raw/` (gitignored) and document the download steps in `data/README.md`.
@@ -33,8 +34,9 @@ The guide allows and encourages ML and simulation. No real clinic data exists, s
 | `patient_profiles` | user_id (unique), date_of_birth, sex |
 | `doctors` | id, user_id (unique), specialization, slot_minutes |
 | `slots` | id, doctor_id, slot_date, slot_time (UNIQUE on doctor, date, time) |
-| `bookings` | id, slot_id, patient_id, status (confirmed, completed, no_show, cancelled), reason, created_at, cancelled_at, cancelled_by, confirmed_slot_id (generated) |
+| `bookings` | id, slot_id, patient_id, status (confirmed, completed, no_show, cancelled; plus closed for a slot closed for leave), reason, created_at, cancelled_at, cancelled_by, confirmed_slot_id (generated) |
 | `risk_scores` (milestone M7) | booking_id, no_show_probability, model_version, scored_at |
+| `standby` | id, patient_id, doctor_id, slot_date, created_at (UNIQUE on patient, doctor, date) |
 
 Passwords hashed, CSRF token on every POST, role check on every route, patients get a 404 for other patients' bookings, all SQL through SQLAlchemy bound parameters. Doctors and admins mark past appointments completed or no_show.
 
@@ -94,23 +96,23 @@ Single provider, one half-day session of `T` minutes with slots of `L` minutes (
 - Patient no-show probabilities: bootstrap patient profiles from the Kaggle holdout, scored by the calibrated deployable model; attendance is drawn from that probability.
 - `T`, `L`, `N` are explicit parameters. Default `L` is Hangu's median service time rounded up to the next 5 minutes, computed by the script.
 
-Policies: (P0) no overbooking, (P1) uniform: every k-th slot gets a second patient, k = 2, 3, 4, 6, (P2) risk-threshold double-booking, grid = fixed 0.3 and 0.5 plus the 50th, 70th, 80th, 90th, 95th percentiles of predicted risk. Stretch only if time remains: a simple reinforcement-learning policy, following Amalina & An (2026, arXiv preprint).
+Policies: (P0) no overbooking, (P1) uniform: every k-th slot gets a second patient, k = 2, 3, 4, 6, (P2) risk-threshold double-booking, grid = fixed 0.3 and 0.5 plus the 50th, 70th, 80th, 90th, 95th percentiles of predicted risk. Stretch, done as S7: (P3) a policy learned by reinforcement learning (`sim/rl.py`, REINFORCE), in the spirit of Amalina & An (2026, arXiv preprint). It sees what P2 sees plus its own earlier choices. Learning needs a scalar reward, so three STATED costs of waiting and overtime are fixed in the code and a policy is learned for each; its results are still reported as the full trade-off table and at equal overbooking, never as a single score that picks a winner.
 
 Draw patients, attendance and service times once per replication (a primary and an extra patient per slot) and let each policy choose which extras to use. At least 1,000 replications per setting, `base_seed + r` per replication, 95% intervals (paired differences against P0).
 
 Metrics per policy: patients served, mean waiting time of attending patients, provider overtime, provider idle time, and share of sessions with both double-booked patients attending. **Report the trade-off table; do not collapse it to one weighted utility score**, since results depend on chosen weights (LaGanga & Lawrence, 2007).
 
-Experiments: S1 sanity tests (all attend with service = L gives zero wait and overtime; nobody attends gives zero served and idle = T; hand-worked 3-patient case; same seed gives identical results), S2 policy trade-offs, S3 predicted risk shifted by -0.10, -0.05, 0, +0.05, +0.10 (overestimation hurts more, per Amalina & An), S4 base no-show rate scaled 0.5, 1, 1.5, S5 service-time variability scaled 0.5, 1, 1.5 at the same mean, **S6 value of prediction: compare P2 with P1 and with random scores at the same number of double-booked slots, and against an oracle**. S6 is the headline: more overbooking always serves more patients, so only an equal-rate comparison shows whether prediction adds anything. Outputs: `s2_policy_tradeoffs.csv`, `s3_probability_error.csv`, `s4_base_rate.csv`, `s5_service_variability.csv`, `s6_value_of_prediction.csv`.
+Experiments: S1 sanity tests (all attend with service = L gives zero wait and overtime; nobody attends gives zero served and idle = T; hand-worked 3-patient case; same seed gives identical results), S2 policy trade-offs, S3 predicted risk shifted by -0.10, -0.05, 0, +0.05, +0.10 (overestimation hurts more, per Amalina & An), S4 base no-show rate scaled 0.5, 1, 1.5, S5 service-time variability scaled 0.5, 1, 1.5 at the same mean, **S6 value of prediction: compare P2 with P1 and with random scores at the same number of double-booked slots, and against an oracle**. S6 is the headline: more overbooking always serves more patients, so only an equal-rate comparison shows whether prediction adds anything. Outputs: `s2_policy_tradeoffs.csv`, `s3_probability_error.csv`, `s4_base_rate.csv`, `s5_service_variability.csv`, `s6_value_of_prediction.csv`. S7 (`python -m sim.rl`): `s7_learned_policy.csv`, `s7_reward_by_policy.csv`, `s7_matched.csv`, `s7_probability_error.csv`, `s7_training.csv`; training, validation and evaluation sessions use disjoint seeds, and the evaluation sessions are the ones S2 to S6 use.
 
 **Mismatch to disclose in the report:** no-show behaviour comes from a Brazilian public-clinic dataset and consultation times from a Chinese private traditional-medicine clinic. The simulation demonstrates a method and its trade-offs, not clinical outcomes.
 
 ## Repository layout
 
 ```
-app/        Flask app (blueprints: auth, patient, doctor, admin), services, risk.py, templates, static
-db/         schema.sql, seed_synthetic.py
+app/        Flask app (blueprints: auth, account, patient, doctor, admin), services, standby.py, risk.py, research.py, templates, static
+db/         schema.sql, migrations.py (upgrades an older database), seed_synthetic.py
 ml/         src/ (data, features, train, evaluate, calibrate), artifacts/, notebooks/
-sim/        clinic.py, policies.py, experiments.py
+sim/        clinic.py, policies.py, experiments.py, rl.py (S7, the learned policy)
 data/       raw/ (gitignored), README.md with download steps
 results/    tables, figures, manifest.json written by scripts
 tests/      booking concurrency and constraint tests, leakage tests, simulation sanity tests, risk flag tests
