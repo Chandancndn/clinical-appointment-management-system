@@ -1,0 +1,31 @@
+Test run: 2026-10-07T13:30:17+00:00
+Command: pytest --engine both --ignore=tests/test_report_numbers.py (bootstrap run before the report tests existed)
+Total: 463 tests, 463 passed, 0 failed, 0 skipped
+Engine sqlite: 98 database tests, 98 passed, 0 failed
+Engine mysql: 98 database tests, 98 passed, 0 failed
+
+tests/test_access.py                 20 tests   20 passed   0 failed
+tests/test_booking.py                30 tests   30 passed   0 failed
+tests/test_calibrate.py               5 tests    5 passed   0 failed
+tests/test_csrf.py                   24 tests   24 passed   0 failed
+tests/test_data_loaders.py           28 tests   28 passed   0 failed
+tests/test_data_splits.py            14 tests   14 passed   0 failed
+tests/test_deployable_features.py    16 tests   16 passed   0 failed
+tests/test_deployable_model.py       19 tests   19 passed   0 failed
+tests/test_e1.py                      9 tests    9 passed   0 failed
+tests/test_evaluate.py               13 tests   13 passed   0 failed
+tests/test_experiments.py            12 tests   12 passed   0 failed
+tests/test_features.py                7 tests    7 passed   0 failed
+tests/test_flow.py                    6 tests    6 passed   0 failed
+tests/test_leakage.py                19 tests   19 passed   0 failed
+tests/test_manifest.py               10 tests   10 passed   0 failed
+tests/test_patient_actions.py        20 tests   20 passed   0 failed
+tests/test_patient_isolation.py      12 tests   12 passed   0 failed
+tests/test_risk_flag.py              60 tests   60 passed   0 failed
+tests/test_scheduling.py             20 tests   20 passed   0 failed
+tests/test_schema.py                  3 tests    3 passed   0 failed
+tests/test_seed.py                   17 tests   17 passed   0 failed
+tests/test_sim.py                    31 tests   31 passed   0 failed
+tests/test_sim_experiments.py        16 tests   16 passed   0 failed
+tests/test_staff.py                  36 tests   36 passed   0 failed
+tests/test_time_rules.py             16 tests   16 passed   0 failed

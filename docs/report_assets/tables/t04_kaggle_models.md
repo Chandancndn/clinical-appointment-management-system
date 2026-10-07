@@ -1,0 +1,10 @@
+**Table 4 (E3). Model comparison on the Kaggle holdout, all features (95% bootstrap intervals)**
+
+| Model | AUC-ROC | Average precision | Brier score | Sensitivity at 30% precision | Sensitivity at 40% precision | Sensitivity at 50% precision |
+|---|---:|---:|---:|---:|---:|---:|
+| Logistic regression | 0.718 (0.710 to 0.726) | 0.314 (0.302 to 0.327) | 0.215 (0.212 to 0.217) | 0.676 (0.545 to 0.777) | 0.029 (0.001 to 0.103) | 0.006 (0.000 to 0.020) |
+| Random forest | 0.730 (0.722 to 0.738) | 0.333 (0.321 to 0.347) | 0.136 (0.133 to 0.139) | 0.743 (0.660 to 0.793) | 0.103 (0.027 to 0.241) | 0.014 (0.000 to 0.038) |
+| Gradient boosting | 0.732 (0.724 to 0.740) | 0.339 (0.325 to 0.355) | 0.136 (0.133 to 0.138) | 0.732 (0.668 to 0.792) | 0.118 (0.051 to 0.233) | 0.022 (0.007 to 0.055) |
+| Control: shuffled labels | 0.506 (0.496 to 0.517) | 0.196 (0.187 to 0.205) | 0.151 (0.148 to 0.154) | 0.002 (0.000 to 0.041) | 0.000 (0.000 to 0.006) | 0.000 (0.000 to 0.002) |
+
+Source: `results/e3_kaggle_models.csv`. The shuffled-label control should score no better than chance; the logistic regression uses class weights, so its Brier score is not comparable.

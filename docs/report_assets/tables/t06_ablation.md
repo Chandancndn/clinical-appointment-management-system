@@ -1,0 +1,18 @@
+**Table 6 (E4). Feature-group ablation: gradient boosting, patient-grouped cross-validation on the training part**
+
+| Variant | Features | Cross-validated AUC-ROC | Change in AUC-ROC vs all features (SD across folds) | Change in average precision |
+|---|---:|---:|---:|---:|
+| All features (reference) | 15 | 0.7375 | +0.0000 (SD 0.0000) | +0.0000 |
+| Without SMS reminder | 14 | 0.7351 | -0.0025 (SD 0.0009) | -0.0046 |
+| Without patient history | 12 | 0.7328 | -0.0048 (SD 0.0015) | -0.0069 |
+| Without lead time and weekday | 12 | 0.6232 | -0.1144 (SD 0.0048) | -0.0819 |
+| Without age and sex | 13 | 0.7263 | -0.0112 (SD 0.0016) | -0.0136 |
+| Without health flags | 9 | 0.7334 | -0.0041 (SD 0.0010) | -0.0081 |
+| Without neighbourhood | 14 | 0.7348 | -0.0027 (SD 0.0013) | -0.0090 |
+| Patient history only | 3 | 0.5454 | -0.1921 (SD 0.0046) | -0.1541 |
+| Lead time and weekday only | 3 | 0.7058 | -0.0318 (SD 0.0041) | -0.0476 |
+| Age and sex only | 2 | 0.5583 | -0.1793 (SD 0.0068) | -0.1424 |
+| Health flags only | 6 | 0.5768 | -0.1608 (SD 0.0047) | -0.1280 |
+| Neighbourhood only | 1 | 0.5237 | -0.2138 (SD 0.0069) | -0.1575 |
+
+Source: `results/e4_ablation.csv`. The holdout is not used here.

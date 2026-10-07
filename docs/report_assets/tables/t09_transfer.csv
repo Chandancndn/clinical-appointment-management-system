@@ -1,0 +1,5 @@
+Trained on → tested on,Model,AUC-ROC trained on the target's own training part,AUC-ROC after transfer,AUC-ROC drop,Average-precision drop
+Kaggle → OpenML,Logistic regression,0.540 (0.529 to 0.551),0.529 (0.518 to 0.539),+0.010 (-0.001 to +0.023),+0.013 (+0.004 to +0.022)
+Kaggle → OpenML,Gradient boosting,0.568 (0.558 to 0.579),0.538 (0.527 to 0.550),+0.030 (+0.018 to +0.042),+0.023 (+0.013 to +0.033)
+OpenML → Kaggle,Logistic regression,0.713 (0.705 to 0.721),0.640 (0.631 to 0.649),+0.072 (+0.062 to +0.082),+0.057 (+0.046 to +0.069)
+OpenML → Kaggle,Gradient boosting,0.723 (0.715 to 0.730),0.608 (0.598 to 0.618),+0.114 (+0.104 to +0.124),+0.064 (+0.052 to +0.075)

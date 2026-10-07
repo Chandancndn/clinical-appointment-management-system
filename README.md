@@ -152,6 +152,23 @@ numbers: every policy sees the same patients, attendance and consultation times.
 never retrains. Tables and figures go to `results/` (`s2_policy_tradeoffs.csv` ... `s6_value_of_prediction.csv`) with
 manifest entries that record T, L, N and the replication count. The sanity tests (S1) are `tests/test_sim.py`.
 
+## Report assets and the numbers audit
+
+Every number in the report comes from a file in `results/` (CLAUDE.md hard rule 3). Three scripts keep it that way; none of them trains a model or runs a simulation:
+
+```bash
+python -m scripts.run_test_summary       # whole test suite on SQLite and MySQL -> results/test_summary.csv and .txt
+python -m scripts.make_report_assets     # docs/report_assets/ (tables as CSV and Markdown, figures as PNG), docs/RESULTS_SUMMARY.md, docs/numbers_audit.csv
+python -m scripts.check_numbers --fresh  # fails if a quoted number no longer matches its results file, or docs/ was edited by hand
+```
+
+- `docs/report_assets/INDEX.md` lists every table and figure, the experiment it belongs to, its source file and the report chapter.
+- `docs/RESULTS_SUMMARY.md` is written from `scripts/results_summary.md.j2`: numbers can only enter through `q()`, `qci()` and `lit()`, so a bare number makes the build fail, and a sentence that the results stop supporting also makes it fail. To change the wording, edit the template and rebuild; do not edit the summary.
+- `docs/numbers_audit.csv` has one row per quoted number: the number as written, the results file, the row selector and column it comes from, and the document that shows it.
+- `docs/DEMO_SCRIPT.md` is the five-minute demo order.
+
+The raw datasets are not in the repository (CLAUDE.md hard rule 5), so the experiments cannot be re-run on a new machine until the files are downloaded as `data/README.md` describes. Everything above works without them, from the committed `results/`.
+
 ## Repository layout
 
 ```
@@ -162,8 +179,9 @@ ml/         src/, artifacts/, notebooks/      (M3 onwards)
 sim/        simulation                        (M6)
 data/       README.md with download steps; raw files go in data/raw/ (gitignored)
 results/    tables, figures, manifest.json written by scripts
-tests/      booking, leakage, simulation and risk-flag tests
-docs/       PLAN.pdf, numbers_audit.csv, report drafts
+scripts/    make_report_assets.py, check_numbers.py, run_test_summary.py, results_summary.md.j2
+tests/      booking, leakage, simulation, risk-flag and report-numbers tests
+docs/       PLAN.pdf, RESULTS_SUMMARY.md, DEMO_SCRIPT.md, numbers_audit.csv, report_assets/
 ```
 
 Raw datasets are never committed. Download steps will be in `data/README.md` (milestone M3).

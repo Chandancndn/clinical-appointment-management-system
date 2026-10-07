@@ -1,0 +1,25 @@
+Dataset,Step,Rule,Rows before,Rows after,Rows changed,What the rule does
+"Kaggle (Vitória, Brazil)",1,load,"110,527","110,527",0,"positive class no_show = 1 (No-show = 'Yes'): 22,319 rows (20.19%)"
+"Kaggle (Vitória, Brazil)",2,rename_columns,"110,527","110,527",0,"snake_case names; source typos fixed: Hipertension -> hypertension, Handcap -> handicap"
+"Kaggle (Vitória, Brazil)",3,drop_non_integer_patient_id,"110,527","110,522",5,a PatientId with a fractional part is malformed and cannot be cast to an integer without corrupting it
+"Kaggle (Vitória, Brazil)",4,cast_patient_id_to_int,"110,522","110,522",0,"float64 -> int64, lossless (all remaining ids are whole numbers below 2**53)"
+"Kaggle (Vitória, Brazil)",5,drop_impossible_age,"110,522","110,516",6,age < 0 or age > 110; age 0 (newborns) is kept
+"Kaggle (Vitória, Brazil)",6,drop_appointment_before_scheduled,"110,516","110,511",5,"compared by calendar date: AppointmentDay is stored at 00:00, so a same-day booking is valid"
+"Kaggle (Vitória, Brazil)",7,drop_exact_duplicates,"110,511","110,511",0,"rows identical in every column, including AppointmentID"
+"Kaggle (Vitória, Brazil)",8,report_duplicates_ignoring_appointment_id,"110,511","110,511",617,"rows identical to an earlier row in every column except AppointmentID; kept, because they may be genuine second appointments"
+"Kaggle (Vitória, Brazil)",9,derive_lead_days_and_weekday,"110,511","110,511",0,"lead_days = whole days from scheduled date to appointment date, ignoring time of day; appt_weekday: 0 = Monday"
+OpenML Medical-Appointment,1,load,"61,214","61,214",0,"positive class no_show = 1 (no_show = 1 - show): 12,868 rows (21.02%)"
+OpenML Medical-Appointment,2,drop_cosine_columns,"61,214","61,214",0,"cosine encodings of month, weekday and hour duplicate the discrete columns; discrete ones kept"
+OpenML Medical-Appointment,3,rename_and_cast_columns,"61,214","61,214",0,English names; float64 -> int64 (all values are whole numbers)
+OpenML Medical-Appointment,4,recode_sex,"61,214","61,214","61,214","1 -> M, 2 -> F, matching Kaggle's Gender"
+OpenML Medical-Appointment,5,recode_weekday,"61,214","61,214","61,214","1 = Monday ... 7 = Sunday  ->  0 = Monday ... 6 = Sunday, matching Kaggle's appt_weekday"
+OpenML Medical-Appointment,6,drop_negative_lead_days,"61,214","61,214",0,latencia is the number of days between booking and appointment
+OpenML Medical-Appointment,7,drop_impossible_age,"61,214","61,214",0,age < 0 or age > 110
+OpenML Medical-Appointment,8,drop_exact_duplicates,"61,214","60,990",224,"rows identical in every column; the file has no patient ID, so identical rows might be distinct appointments by similar patients. Dropped as the plan says; the share is small"
+OpenML Medical-Appointment,9,report_hours_outside_clinic_hours,"60,990","60,990",1,appointment hour outside 7-21; kept
+Hangu (consultation times),1,load,"6,637","6,637",0,consultation records of one physician; ServTime is in seconds
+Hangu (consultation times),2,rename_columns,"6,637","6,637",0,snake_case names; ServTime -> service_seconds
+Hangu (consultation times),3,drop_missing_or_nonpositive_service_time,"6,637","6,637",0,a consultation cannot take zero or negative time
+Hangu (consultation times),4,drop_service_time_above_limit,"6,637","6,637",0,over 4 hours is a recording error; the real long tail below it is kept
+Hangu (consultation times),5,drop_exact_duplicates,"6,637","6,637",0,rows identical in every column
+Hangu (consultation times),6,derive_service_minutes,"6,637","6,637",0,service_minutes = service_seconds / 60

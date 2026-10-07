@@ -17,7 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 # Untracked or modified files here make the code "dirty". results/ and data/ are outputs, not code, and neither is
 # ml/artifacts/ (the saved model and its card are written by a script, so they must not make the next run look dirty).
-CODE_PATHS = ("ml", "sim", "app", "db", "tests", "requirements.txt")
+CODE_PATHS = ("ml", "sim", "app", "db", "tests", "scripts", "requirements.txt")
 OUTPUT_PATHS = ("ml/artifacts",)
 
 
