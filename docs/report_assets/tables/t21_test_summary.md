@@ -2,9 +2,9 @@
 
 | Scope | Tests | Passed | Failed | Skipped |
 |---|---:|---:|---:|---:|
-| All tests | 635 | 635 | 0 | 0 |
-| Database tests on SQLite | 147 | 147 | 0 | 0 |
-| Database tests on MySQL | 147 | 147 | 0 | 0 |
+| All tests | 784 | 778 | 0 | 6 |
+| Database tests on SQLite | 202 | 197 | 0 | 5 |
+| Database tests on MySQL | 202 | 202 | 0 | 0 |
 | tests/test_access.py | 20 | 20 | 0 | 0 |
 | tests/test_account.py | 32 | 32 | 0 | 0 |
 | tests/test_booking.py | 30 | 30 | 0 | 0 |
@@ -20,22 +20,26 @@
 | tests/test_features.py | 7 | 7 | 0 | 0 |
 | tests/test_flow.py | 6 | 6 | 0 | 0 |
 | tests/test_leakage.py | 19 | 19 | 0 | 0 |
+| tests/test_leave.py | 69 | 69 | 0 | 0 |
 | tests/test_login_throttle.py | 22 | 22 | 0 | 0 |
 | tests/test_manifest.py | 10 | 10 | 0 | 0 |
+| tests/test_migrations.py | 10 | 5 | 0 | 5 |
 | tests/test_patient_actions.py | 20 | 20 | 0 | 0 |
 | tests/test_patient_isolation.py | 12 | 12 | 0 | 0 |
 | tests/test_patient_overlap.py | 26 | 26 | 0 | 0 |
-| tests/test_report_numbers.py | 23 | 23 | 0 | 0 |
-| tests/test_research_page.py | 29 | 29 | 0 | 0 |
+| tests/test_report_numbers.py | 23 | 22 | 0 | 1 |
+| tests/test_research_page.py | 33 | 33 | 0 | 0 |
 | tests/test_risk_flag.py | 60 | 60 | 0 | 0 |
 | tests/test_risk_status.py | 22 | 22 | 0 | 0 |
 | tests/test_robustness.py | 18 | 18 | 0 | 0 |
 | tests/test_scheduling.py | 20 | 20 | 0 | 0 |
 | tests/test_schema.py | 3 | 3 | 0 | 0 |
-| tests/test_seed.py | 17 | 17 | 0 | 0 |
+| tests/test_seed.py | 25 | 25 | 0 | 0 |
 | tests/test_sim.py | 31 | 31 | 0 | 0 |
 | tests/test_sim_experiments.py | 16 | 16 | 0 | 0 |
+| tests/test_sim_rl.py | 22 | 22 | 0 | 0 |
 | tests/test_staff.py | 36 | 36 | 0 | 0 |
+| tests/test_standby.py | 36 | 36 | 0 | 0 |
 | tests/test_time_rules.py | 16 | 16 | 0 | 0 |
 
 Source: `results/test_summary.csv`, `results/test_summary.txt`. Written by scripts/run_test_summary.py from a run of the whole suite on both engines.

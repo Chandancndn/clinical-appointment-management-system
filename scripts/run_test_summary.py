@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import os
 import re
 import subprocess
 import sys
@@ -82,7 +83,9 @@ def main(argv=None) -> int:
     with tempfile.TemporaryDirectory() as tmp:
         report = Path(tmp) / "junit.xml"
         command = [sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", f"--engine={args.engine}", f"--junitxml={report}"]
-        code = subprocess.run(command, cwd=ROOT).returncode
+        # tells the one test that inspects the PREVIOUS record to stand aside: this run is replacing that record, and without
+        # this a single red run would be recorded, fail that test on the next run, be recorded red again, and so on for ever
+        code = subprocess.run(command, cwd=ROOT, env={**os.environ, "CAMS_RECORDING_TEST_RUN": "1"}).returncode
         if not report.is_file():
             print("pytest wrote no report; nothing recorded")
             return code or 1

@@ -329,6 +329,10 @@ def test_the_junit_report_is_summarised_in_total_by_engine_and_by_module():
 
 
 def test_the_recorded_test_run_is_all_green_on_both_engines():
+    import os
+
+    if os.environ.get("CAMS_RECORDING_TEST_RUN"):
+        pytest.skip("scripts/run_test_summary.py is replacing the record this test inspects")
     rows = {(r["group"], r["name"]): r for r in read_csv(ROOT / "results" / "test_summary.csv")}
     total = rows[("total", "all")]
     assert int(total["failed"]) == 0 and int(total["tests"]) == int(total["passed"]) + int(total["skipped"])

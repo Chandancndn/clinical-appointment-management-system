@@ -495,8 +495,8 @@
   },
   "results/test_summary.csv": {
     "data_files": {},
-    "date": "2026-10-07T16:18:48+00:00",
-    "git_commit": "38391c9209e701d62f6cb64cd13fc368ad268616",
+    "date": "2026-10-07T17:34:23+00:00",
+    "git_commit": "31e087685850867e90c08139acab67b165076c99",
     "git_dirty": true,
     "note": "seeds are fixed inside the tests; this file records a run, not an experiment",
     "script": "scripts/run_test_summary.py",
@@ -504,8 +504,8 @@
   },
   "results/test_summary.txt": {
     "data_files": {},
-    "date": "2026-10-07T16:18:48+00:00",
-    "git_commit": "38391c9209e701d62f6cb64cd13fc368ad268616",
+    "date": "2026-10-07T17:34:23+00:00",
+    "git_commit": "31e087685850867e90c08139acab67b165076c99",
     "git_dirty": true,
     "note": "seeds are fixed inside the tests; this file records a run, not an experiment",
     "script": "scripts/run_test_summary.py",
