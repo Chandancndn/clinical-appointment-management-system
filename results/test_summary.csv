@@ -1,5 +1,5 @@
 group,name,tests,passed,failed,skipped
-total,all,463,463,0,0
+total,all,486,486,0,0
 engine,sqlite,98,98,0,0
 engine,mysql,98,98,0,0
 module,tests/test_access.py,20,20,0,0
@@ -19,6 +19,7 @@ module,tests/test_leakage.py,19,19,0,0
 module,tests/test_manifest.py,10,10,0,0
 module,tests/test_patient_actions.py,20,20,0,0
 module,tests/test_patient_isolation.py,12,12,0,0
+module,tests/test_report_numbers.py,23,23,0,0
 module,tests/test_risk_flag.py,60,60,0,0
 module,tests/test_scheduling.py,20,20,0,0
 module,tests/test_schema.py,3,3,0,0
