@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block title %}Doctors{% endblock %}
+{% from "_macros.html" import standby_notices with context %}
 {% block content %}
 <h1>Our doctors</h1>
+{{ standby_notices(waiting) }}
 {% if doctors %}
   <div class="cards">
     {% for d in doctors %}

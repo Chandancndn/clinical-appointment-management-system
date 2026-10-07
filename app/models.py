@@ -13,7 +13,9 @@ from .extensions import db
 
 ROLES = ("patient", "doctor", "admin")
 SEXES = ("F", "M")
-BOOKING_STATUSES = ("confirmed", "completed", "no_show", "cancelled")
+# "closed" is not an appointment: it is a slot the doctor has closed (leave), held in the doctor's own name so that the
+# same unique key that stops double-booking also stops a patient booking a closed slot. See services.close_slot().
+BOOKING_STATUSES = ("confirmed", "completed", "no_show", "cancelled", "closed")
 
 
 class User(db.Model):
@@ -80,7 +82,7 @@ class Booking(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, server_default=sa.func.now())
     cancelled_at = db.Column(db.DateTime)
     cancelled_by = db.Column(db.Integer, db.ForeignKey("users.id"))
-    # slot_id while the booking is active (confirmed, completed, no_show); NULL once cancelled.
+    # slot_id while the row holds the slot (confirmed, completed, no_show, closed); NULL once cancelled.
     # Computed by the database; the app never writes it.
     confirmed_slot_id = db.Column(
         db.Integer,
@@ -99,3 +101,18 @@ class RiskScore(db.Model):
     no_show_probability = db.Column(sa.Double, nullable=False)
     model_version = db.Column(db.String(40), nullable=False)
     scored_at = db.Column(db.DateTime, nullable=False, server_default=sa.func.now())
+
+
+class Standby(db.Model):
+    """A patient waiting for a slot with a doctor on a day that is full. It books nothing and holds nothing: the patient is
+    told on their own pages when a slot on that day is free, and then books it the normal way."""
+
+    __tablename__ = "standby"
+
+    id = db.Column(db.Integer, primary_key=True)
+    patient_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    doctor_id = db.Column(db.Integer, db.ForeignKey("doctors.id"), nullable=False)
+    slot_date = db.Column(db.Date, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, server_default=sa.func.now())
+
+    __table_args__ = (sa.UniqueConstraint("patient_id", "doctor_id", "slot_date", name="uq_standby_patient_doctor_day"),)

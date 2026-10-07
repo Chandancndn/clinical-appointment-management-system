@@ -29,12 +29,30 @@
             <button type="submit" name="slot_id" value="{{ s.id }}" class="slot slot-free">{{ s.time|time_short }}</button>
           {% elif s.state == 'taken' %}
             <span class="slot slot-taken">{{ s.time|time_short }}<small>Taken</small></span>
+          {% elif s.state == 'closed' %}
+            <span class="slot slot-closed">{{ s.time|time_short }}<small>Closed</small></span>
           {% else %}
             <span class="slot slot-past">{{ s.time|time_short }}<small>Past</small></span>
           {% endif %}
         {% endfor %}
       </div>
     </form>
+    {% if can_standby %}
+      <div class="standby">
+        {% if on_standby %}
+          <p>You are on the standby list for this day. <a href="{{ url_for('patient.bookings') }}">My appointments</a> will show you when a slot is free.</p>
+        {% else %}
+          <p>No slot is free on this day.</p>
+          <form method="post" action="{{ url_for('patient.join_standby') }}" class="inline">
+            {{ csrf_field() }}
+            <input type="hidden" name="doctor_id" value="{{ doctor.id }}">
+            <input type="hidden" name="date" value="{{ day.isoformat() }}">
+            <button type="submit" class="btn">Join the standby list</button>
+          </form>
+          <p class="muted small">We will show you when a slot on this day becomes free. Standby does not reserve it: the first person to book it gets it.</p>
+        {% endif %}
+      </div>
+    {% endif %}
   {% else %}
     <p class="empty">No slots on this day. Try another day above.</p>
   {% endif %}

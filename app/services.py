@@ -11,6 +11,10 @@ Rules (CLAUDE.md hard rule 1):
   * reschedule() inserts the new booking and cancels the old one in ONE transaction. If the new slot
     is taken, everything rolls back and the old booking stays confirmed.
   * Nothing here reads the risk model (hard rule 2). Booking never depends on it.
+  * close_slot() closes a free slot for the doctor's leave by INSERTing a row with status 'closed' in the doctor's own
+    name. That row holds the slot through the same unique key, so a patient's booking and a doctor's closing of one
+    slot are decided by the database exactly like two patients' bookings: one wins, the other gets SlotTaken.
+    book() is unchanged and still checks nothing about availability. reopen_slot() cancels the row, freeing the slot.
 
 Time rules (PLAN section 2): a slot whose start time has passed cannot be booked, and a started
 appointment cannot be cancelled (it is marked completed or no_show instead).
@@ -28,9 +32,11 @@ from sqlalchemy.exc import IntegrityError
 from . import clock
 from .dberrors import is_duplicate_key, is_missing_reference
 from .extensions import db
-from .models import Booking, Slot
+from .models import Booking, Doctor, Slot
 
 OUTCOMES = ("completed", "no_show")
+APPOINTMENT_STATUSES = ("confirmed", "completed", "no_show")
+CLOSED = "closed"  # a slot closed by the doctor (leave): a row that holds the slot but is not an appointment
 
 
 class BookingError(Exception):
@@ -228,8 +234,8 @@ def mark_outcome(booking_id: int, outcome: str) -> Booking:
     if state is None:
         raise _refuse(NotFound(f"booking {booking_id} does not exist"))
     status, start = state
-    if status == "cancelled":
-        raise _refuse(InvalidState(f"booking {booking_id} is cancelled"))
+    if status not in APPOINTMENT_STATUSES:  # cancelled, or a closed slot: neither is an appointment that can have an outcome
+        raise _refuse(InvalidState(f"booking {booking_id} is {status}"))
     if start > clock.now():
         raise _refuse(NotStarted(f"booking {booking_id} has not started yet"))
 
@@ -242,3 +248,49 @@ def mark_outcome(booking_id: int, outcome: str) -> Booking:
         db.session.rollback()
         raise
     return db.session.get(Booking, booking_id)
+
+
+def close_slot(slot_id: int, actor_id: int) -> Booking:
+    """Close a free slot that has not started (the doctor is unavailable). Raises SlotTaken if a patient holds it or it is
+    already closed. The row is held in the doctor's own name whoever closes it (the doctor or an admin)."""
+    row = db.session.execute(
+        sa.select(Slot.slot_date, Slot.slot_time, Doctor.user_id).join(Doctor, Doctor.id == Slot.doctor_id).where(Slot.id == slot_id)
+    ).one_or_none()
+    if row is None:
+        raise _refuse(NotFound(f"slot {slot_id} does not exist"))
+    if datetime.combine(row.slot_date, row.slot_time) <= clock.now():
+        raise _refuse(SlotInPast(f"slot {slot_id} has already started"))
+
+    closure = Booking(slot_id=slot_id, patient_id=row.user_id, status=CLOSED, reason=f"Closed for leave (by user {actor_id})")
+    db.session.add(closure)
+    try:
+        db.session.commit()  # the unique key on confirmed_slot_id decides: a booked or closed slot is a duplicate
+    except IntegrityError as exc:
+        db.session.rollback()
+        raise _translate(exc, slot_id) from exc
+    except Exception:
+        db.session.rollback()
+        raise
+    return closure
+
+
+def reopen_slot(slot_id: int, actor_id: int) -> None:
+    """Reopen a closed slot. Only a row with status 'closed' is touched, so this can never cancel a patient's booking."""
+    if _slot_start(slot_id) is None:
+        raise _refuse(NotFound(f"slot {slot_id} does not exist"))
+    statement = (
+        sa.update(Booking)
+        .where(Booking.slot_id == slot_id, Booking.status == CLOSED)
+        .values(status="cancelled", cancelled_at=sa.func.now(), cancelled_by=actor_id)
+        .execution_options(synchronize_session=False)
+    )
+    try:
+        if db.session.execute(statement).rowcount != 1:
+            raise InvalidState(f"slot {slot_id} is not closed")
+        db.session.commit()
+    except IntegrityError as exc:  # actor_id is not a user
+        db.session.rollback()
+        raise _translate(exc, None) from exc
+    except Exception:
+        db.session.rollback()
+        raise

@@ -5,7 +5,8 @@ from datetime import datetime, timedelta
 
 from flask import Blueprint, abort, flash, g, redirect, render_template, request, url_for
 
-from .. import clock, forms, queries, risk, services
+from .. import clock, forms, queries, risk, services, standby
+from ..extensions import db
 from ..security import roles_required
 
 bp = Blueprint("patient", __name__, url_prefix="/patient")
@@ -18,6 +19,8 @@ _CLASH = "You already have an appointment at that time with {doctor}. Cancel or 
 def _slot_page(template: str, doctor, day, error=None, status=200, **context):
     """Render a doctor's slots for one day, always from fresh data."""
     now = clock.now()
+    context.setdefault("can_standby", standby.is_full(doctor.id, day, now))  # full day: offer the standby list
+    context.setdefault("on_standby", context["can_standby"] and standby.is_waiting(g.user.id, doctor.id, day))
     return render_template(
         template, doctor=doctor, day=day, error=error, today=now.date(),
         slots=queries.day_slots(doctor.id, day, now),
@@ -41,13 +44,14 @@ def _bookings_page(error=None, status=200):
     upcoming = [r for r in rows if r.status == "confirmed" and datetime.combine(r.slot_date, r.slot_time) > now]
     history = [r for r in reversed(rows) if r not in upcoming]
     return render_template("patient/bookings.html", upcoming=upcoming, history=history,
-                           now=now, error=error), status
+                           now=now, error=error, waiting=standby.for_patient(g.user.id, now)), status
 
 
 @bp.get("/")
 @patient_only
 def index():
-    return render_template("patient/doctors.html", doctors=queries.list_doctors())
+    return render_template("patient/doctors.html", doctors=queries.list_doctors(),
+                           waiting=standby.for_patient(g.user.id, clock.now()))
 
 
 @bp.get("/doctors/<dbid:doctor_id>")
@@ -82,6 +86,7 @@ def book():
     except services.NotFound:
         abort(404)
     risk.score_after_commit(booking)  # advisory and staff-only: runs after the commit, can never change the outcome
+    _end_wait(slot.doctor_id, slot.slot_date)
     flash("Your appointment is booked.", "success")
     return redirect(url_for("patient.bookings"))
 
@@ -90,6 +95,39 @@ def book():
 @patient_only
 def bookings():
     return _bookings_page()
+
+
+def _end_wait(doctor_id, day) -> None:
+    """The patient now has an appointment with this doctor on this day: take them off standby. Never undoes the booking."""
+    try:
+        standby.clear_for(g.user.id, doctor_id, day)
+    except Exception:  # the booking is already committed; a leftover standby entry is harmless
+        db.session.rollback()
+
+
+@bp.post("/standby")
+@patient_only
+def join_standby():
+    doctor_id, day = forms.parse_int(request.form.get("doctor_id"), low=1), forms.parse_date(request.form.get("date"))
+    if doctor_id is None or day is None:
+        abort(400)
+    doctor = queries.get_doctor(doctor_id) or abort(404)
+    try:
+        standby.join(g.user.id, doctor_id, day, clock.now())
+    except standby.StandbyError as error:
+        return _slot_page("patient/doctor_slots.html", doctor, day, status=409, error=str(error))
+    flash(f"You are on standby for {doctor.name} on {day.strftime('%a %d %b %Y')}. "
+          "We will show you here when a slot on that day is free.", "success")
+    return redirect(url_for("patient.bookings"))
+
+
+@bp.post("/standby/<dbid:standby_id>/leave")
+@patient_only
+def leave_standby(standby_id):
+    if not standby.leave(standby_id, g.user.id):
+        abort(404)
+    flash("You have left the standby list for that day.", "success")
+    return redirect(url_for("patient.bookings"))
 
 
 @bp.post("/bookings/<dbid:booking_id>/cancel")
@@ -141,5 +179,8 @@ def reschedule(booking_id):
     except services.InvalidState as error:
         return _reschedule_page(booking, status=409, error=str(error))
     risk.score_after_commit(moved)  # the new booking, scored after its transaction committed
+    new_slot = queries.slot_info(new_slot_id)
+    if new_slot is not None:
+        _end_wait(new_slot.doctor_id, new_slot.slot_date)
     flash("Your appointment has been moved.", "success")
     return redirect(url_for("patient.bookings"))

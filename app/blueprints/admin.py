@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from flask import Blueprint, abort, current_app, flash, g, redirect, render_template, request, send_file, url_for
 
-from .. import accounts, clock, forms, queries, research, risk, scheduling, services
+from .. import accounts, clock, forms, queries, research, risk, scheduling, services, standby
 from ..security import roles_required
 
 bp = Blueprint("admin", __name__, url_prefix="/admin")
@@ -20,7 +20,7 @@ def dashboard():
     upcoming = queries.upcoming_bookings(25, now)
     return render_template("admin/dashboard.html", counts=queries.admin_counts(now), doctors=queries.list_doctors(),
                            upcoming=upcoming, now=now, flags=risk.flags_for(b.id for b in upcoming),
-                           risk_status=risk.status(), risk_monitor=risk.monitor())
+                           risk_status=risk.status(), risk_monitor=risk.monitor(), standby_count=standby.count_waiting(now))
 
 
 @bp.get("/bookings")
@@ -89,7 +89,25 @@ def generate_slots(doctor_id):
                 flash(f"Created {result.created} new slot(s); {result.existing} already existed.", "success")
                 return redirect(url_for("admin.dashboard"))
     return render_template("admin/generate_slots.html", doctor=doctor, form=request.form,
-                           errors=errors, today=clock.now().date()), status
+                           errors=errors, leave_errors=[], today=clock.now().date()), status
+
+
+@bp.post("/doctors/<dbid:doctor_id>/leave")
+@admin_only
+def leave(doctor_id):
+    """Close or reopen a doctor's slots for a date range (the doctor's leave)."""
+    from .doctor import leave_message
+
+    doctor = queries.get_doctor(doctor_id) or abort(404)
+    first, last, action, errors = forms.parse_leave(request.form)
+    if not errors:
+        try:
+            flash(leave_message(action, first, last, doctor_id, g.user.id), "success")
+            return redirect(url_for("admin.generate_slots", doctor_id=doctor_id))
+        except scheduling.ScheduleError as error:
+            errors = [str(error)]
+    return render_template("admin/generate_slots.html", doctor=doctor, form={}, errors=[], leave_errors=errors,
+                           today=clock.now().date()), 400
 
 
 @bp.get("/research")

@@ -11,6 +11,7 @@
   {% for status, n in counts.by_status.items() %}
     <div class="stat"><strong>{{ n }}</strong><span>{{ status|status_label|lower }}</span></div>
   {% endfor %}
+  <div class="stat"><strong>{{ standby_count }}</strong><span>on standby</span></div>
 </div>
 
 <h2>Doctors</h2>

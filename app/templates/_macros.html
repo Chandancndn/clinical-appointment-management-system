@@ -58,3 +58,18 @@
 {% macro risk_note(flags) %}
   {% if flags %}<p class="advisory">Risk badges are advisory only: they never decide who gets a slot, and no patient is refused or moved because of one.</p>{% endif %}
 {% endmacro %}
+
+{# A small button that POSTs to `url` (closing or reopening a slot, leaving the standby list). #}
+{% macro post_button(url, label, css='btn btn-small') %}
+  <form method="post" action="{{ url }}" class="inline">
+    {{ csrf_field() }}<button type="submit" class="{{ css }}">{{ label }}</button>
+  </form>
+{% endmacro %}
+
+{# PATIENT pages: a notice for each day the patient is on standby for that has a free slot right now. #}
+{% macro standby_notices(waiting) %}
+  {% for w in waiting if w.free %}
+    <div class="alert alert-success" role="status">A slot is free with {{ w.doctor_name }} on {{ w.slot_date|date_long }}, a day you are on standby for.
+      <a href="{{ url_for('patient.doctor_slots', doctor_id=w.doctor_id, date=w.slot_date.isoformat()) }}">See the free slots</a>. Standby does not hold it for you: book it to keep it.</div>
+  {% endfor %}
+{% endmacro %}

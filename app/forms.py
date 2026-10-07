@@ -88,3 +88,20 @@ def parse_time_window(form):
     elif end <= start:
         errors.append("The end time must be after the start time.")
     return start, end, errors
+
+
+LEAVE_ACTIONS = ("close", "reopen")
+
+
+def parse_leave(form):
+    """(first day, last day, action, errors) for the leave form: close or reopen a doctor's slots in a date range."""
+    errors: list[str] = []
+    first, last = parse_date(form.get("date_from")), parse_date(form.get("date_to"))
+    if first is None or last is None:
+        errors.append("Enter valid first and last dates.")
+    elif last < first:
+        errors.append("The last date is before the first date.")
+    action = form.get("action")
+    if action not in LEAVE_ACTIONS:
+        errors.append("Choose whether to close or reopen the slots.")
+    return first, last, action, errors

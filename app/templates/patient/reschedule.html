@@ -30,6 +30,8 @@
             <span class="slot slot-yours">{{ s.time|time_short }}<small>Yours</small></span>
           {% elif s.state == 'taken' %}
             <span class="slot slot-taken">{{ s.time|time_short }}<small>Taken</small></span>
+          {% elif s.state == 'closed' %}
+            <span class="slot slot-closed">{{ s.time|time_short }}<small>Closed</small></span>
           {% else %}
             <span class="slot slot-past">{{ s.time|time_short }}<small>Past</small></span>
           {% endif %}

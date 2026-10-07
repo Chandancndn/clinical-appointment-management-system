@@ -140,6 +140,9 @@ button.slot-free { background: var(--ok-bg); border-color: #9fd2b4; color: var(-
 button.slot-free:hover { background: #cdeedb; }
 .slot-taken { background: #e9edf1; color: var(--muted); }
 .slot-past { background: #f3f3f3; color: #9aa5b1; }
+.slot-closed { background: #f3f3f3; color: var(--muted); border-style: dashed; }
+.standby { margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--line); }
+.waiting { margin: 0.4rem 0 0; padding-left: 1.4rem; }
 .slot-yours { background: var(--info-bg); border-color: var(--brand); color: var(--brand-dark); }
 
 /* filters and pager */

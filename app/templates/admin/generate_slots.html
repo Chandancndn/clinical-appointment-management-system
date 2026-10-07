@@ -18,4 +18,19 @@
   </form>
   <p class="muted small">Safe to run again: slots that already exist are left alone, never duplicated.</p>
 </section>
+
+<section class="card narrow">
+  <h2>Close free slots (leave)</h2>
+  {{ error_list(leave_errors) }}
+  <form method="post" action="{{ url_for('admin.leave', doctor_id=doctor.id) }}" class="stack">
+    {{ csrf_field() }}
+    <label>First day <input type="date" name="date_from" value="{{ today.isoformat() }}" required></label>
+    <label>Last day <input type="date" name="date_to" value="{{ today.isoformat() }}" required></label>
+    <div class="row">
+      <button type="submit" name="action" value="close" class="btn">Close free slots</button>
+      <button type="submit" name="action" value="reopen" class="btn btn-small">Reopen closed slots</button>
+    </div>
+  </form>
+  <p class="muted small">Closing only affects free slots that have not started. It never cancels an appointment: booked slots stay booked.</p>
+</section>
 {% endblock %}

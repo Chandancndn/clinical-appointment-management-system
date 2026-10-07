@@ -15,7 +15,8 @@ BAD_PAGES = ["0", "-1", "abc", HUGE, "1.5", ""]
 JUNK = ["", "abc", "0", "-1", HUGE, "x" * 5000, "9999-12-31", "0001-01-01", "25:61", "\x00", "💥", "<script>alert(1)</script>",
         "'; DROP TABLE users;--", "2030-02-30", " "]
 FORM_FIELDS = ["slot_id", "new_slot_id", "reason", "date", "start_time", "end_time", "date_from", "date_to", "skip_weekends",
-               "name", "email", "password", "specialization", "slot_minutes", "outcome", "sex", "date_of_birth"]
+               "name", "email", "password", "specialization", "slot_minutes", "outcome", "sex", "date_of_birth",
+               "action", "doctor_id", "current_password", "new_password", "confirm_password"]
 
 
 def login_as(role, scene, world, client):
@@ -33,7 +34,7 @@ ODD_TEXT = ["nope", "..", "x" * 3000, "💥", "%00", "thresholds.png", "a b"]
 
 def urls_for(app, scene):
     """(method, url) for every non-static route, with each path value replaced by a valid, an odd and an enormous one."""
-    valid = {"booking_id": scene.booking, "doctor_id": scene.doctor, "slug": "thresholds"}
+    valid = {"booking_id": scene.booking, "doctor_id": scene.doctor, "slug": "thresholds", "slot_id": scene.slots[1], "standby_id": 1}
     adapter = app.url_map.bind("localhost")
     found = []
     for rule in app.url_map.iter_rules():
@@ -88,7 +89,8 @@ def test_no_route_answers_500_to_awkward_form_posts(role, app, scene, world, cli
         base = {"slot_id": str(scene.slots[1]), "new_slot_id": str(scene.slots[2]), "date": "2030-01-08", "start_time": "09:00",
                 "end_time": "10:00", "date_from": "2030-01-08", "date_to": "2030-01-09", "name": "Test Person",
                 "email": "someone.else@example.test", "password": "longenough1", "specialization": "General",
-                "slot_minutes": "15", "outcome": "completed", "sex": "F", "date_of_birth": "1990-01-01", "reason": "check-up"}
+                "slot_minutes": "15", "outcome": "completed", "sex": "F", "date_of_birth": "1990-01-01", "reason": "check-up",
+                "action": "close", "doctor_id": str(scene.doctor)}
         for field in base:
             for junk in JUNK:
                 response = client.post(url, data={**base, field: junk, "_csrf": token})

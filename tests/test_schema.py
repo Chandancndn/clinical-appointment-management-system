@@ -31,7 +31,7 @@ def test_schema_sql_has_the_same_tables_and_columns_as_the_models():
 
 
 def test_the_tables_are_the_documented_ones():
-    assert set(db.metadata.tables) == {"users", "patient_profiles", "doctors", "slots", "bookings", "risk_scores"}
+    assert set(db.metadata.tables) == {"users", "patient_profiles", "doctors", "slots", "bookings", "risk_scores", "standby"}
 
 
 def test_risk_scores_is_one_advisory_row_per_booking():

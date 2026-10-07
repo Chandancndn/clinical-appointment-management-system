@@ -9,6 +9,8 @@
 --   2. bookings.confirmed_slot_id equals slot_id for every status except 'cancelled', where it is NULL.
 --      Its UNIQUE key allows one active booking per slot (completed and no_show keep the slot)
 --      and any number of cancelled ones, because UNIQUE ignores NULLs.
+--      Status 'closed' is a slot the doctor has closed for leave, held in the doctor's own name. It uses the same
+--      key, so a patient cannot book a closed slot and a booked slot cannot be closed: the database decides both.
 --   3. The app just INSERTs a booking and treats a duplicate-key error as "slot taken" (HTTP 409).
 --
 -- Foreign keys keep the default RESTRICT on purpose: MySQL forbids CASCADE and SET NULL on the
@@ -59,7 +61,7 @@ CREATE TABLE bookings (
   id                INT          NOT NULL AUTO_INCREMENT,
   slot_id           INT          NOT NULL,
   patient_id        INT          NOT NULL,
-  status            ENUM('confirmed','completed','no_show','cancelled') NOT NULL DEFAULT 'confirmed',
+  status            ENUM('confirmed','completed','no_show','cancelled','closed') NOT NULL DEFAULT 'confirmed',
   reason            VARCHAR(500) NULL,
   created_at        DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   cancelled_at      DATETIME     NULL,
@@ -81,4 +83,18 @@ CREATE TABLE risk_scores (
   scored_at           DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (booking_id),
   CONSTRAINT fk_risk_scores_booking FOREIGN KEY (booking_id) REFERENCES bookings (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Standby list: a patient waiting for a slot with a doctor on a day that is full. It books and holds nothing.
+-- The patient is told when a slot on that day is free and then books it like anyone else.
+CREATE TABLE standby (
+  id         INT      NOT NULL AUTO_INCREMENT,
+  patient_id INT      NOT NULL,
+  doctor_id  INT      NOT NULL,
+  slot_date  DATE     NOT NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_standby_patient_doctor_day (patient_id, doctor_id, slot_date),
+  CONSTRAINT fk_standby_patient FOREIGN KEY (patient_id) REFERENCES users (id),
+  CONSTRAINT fk_standby_doctor FOREIGN KEY (doctor_id) REFERENCES doctors (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

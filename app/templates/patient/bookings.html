@@ -1,9 +1,10 @@
 {% extends "base.html" %}
-{% from "_macros.html" import badge, cancel_button with context %}
+{% from "_macros.html" import badge, cancel_button, post_button, standby_notices with context %}
 {% block title %}My appointments{% endblock %}
 {% block content %}
 <h1>My appointments</h1>
 {% if error %}<div class="alert alert-error" role="alert">{{ error }}</div>{% endif %}
+{{ standby_notices(waiting) }}
 
 <h2>Upcoming</h2>
 {% if upcoming %}
@@ -26,6 +27,23 @@
   </table>
 {% else %}
   <p class="empty">You have no upcoming appointments. <a href="{{ url_for('patient.index') }}">Book one</a>.</p>
+{% endif %}
+
+{% if waiting %}
+<h2>Standby</h2>
+<table>
+  <thead><tr><th>Day</th><th>Doctor</th><th>Right now</th><th></th></tr></thead>
+  <tbody>
+    {% for w in waiting %}
+      <tr>
+        <td>{{ w.slot_date|date_long }}</td>
+        <td>{{ w.doctor_name }}<br><small class="muted">{{ w.specialization }}</small></td>
+        <td>{% if w.free %}<a href="{{ url_for('patient.doctor_slots', doctor_id=w.doctor_id, date=w.slot_date.isoformat()) }}">{{ w.free }} free now</a>{% else %}Waiting: the day is full{% endif %}</td>
+        <td class="actions">{{ post_button(url_for('patient.leave_standby', standby_id=w.id), 'Leave standby') }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% endif %}
 
 <h2>Past and cancelled</h2>

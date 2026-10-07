@@ -1,7 +1,8 @@
 """Read-only queries used by the pages. Nothing here changes data.
 
 A slot is "taken" when an active booking points at it through bookings.confirmed_slot_id, the same
-generated column the database uses to forbid double-booking.
+generated column the database uses to forbid double-booking. A row with status 'closed' also holds its slot
+(the doctor closed it for leave); pages show it as closed, and it is never listed or counted as an appointment.
 """
 from __future__ import annotations
 
@@ -17,6 +18,7 @@ from .models import Booking, Doctor, Slot, User
 
 PatientUser = aliased(User)
 DoctorUser = aliased(User)
+CLOSED = "closed"  # services.CLOSED; repeated here so the read-only queries do not import the service layer
 
 
 def _start(row) -> datetime:
@@ -66,7 +68,7 @@ def slot_info(slot_id: int):
 
 def _slot_rows(doctor_id: int, first_day: date, last_day: date):
     return db.session.execute(
-        sa.select(Slot.id, Slot.slot_date, Slot.slot_time, Booking.id.label("booking_id"))
+        sa.select(Slot.id, Slot.slot_date, Slot.slot_time, Booking.id.label("booking_id"), Booking.status.label("status"))
         .select_from(Slot)
         .outerjoin(Booking, Booking.confirmed_slot_id == Slot.id)
         .where(Slot.doctor_id == doctor_id, Slot.slot_date.between(first_day, last_day))
@@ -75,11 +77,13 @@ def _slot_rows(doctor_id: int, first_day: date, last_day: date):
 
 
 def day_slots(doctor_id: int, day: date, now: datetime):
-    """A doctor's slots for one day, each with state 'free', 'taken' or 'past' and its booking id."""
+    """A doctor's slots for one day, each with state 'free', 'taken', 'closed' or 'past' and its booking id."""
     slots = []
     for row in _slot_rows(doctor_id, day, day):
         if datetime.combine(row.slot_date, row.slot_time) <= now:
             state = "past"
+        elif row.status == CLOSED:
+            state = "closed"
         else:
             state = "taken" if row.booking_id is not None else "free"
         slots.append(SimpleNamespace(id=row.id, time=row.slot_time, state=state, booking_id=row.booking_id))
@@ -176,7 +180,7 @@ def week_summary(doctor_id: int, day: date):
     monday = day - timedelta(days=day.weekday())
     sunday = monday + timedelta(days=6)
     rows = db.session.execute(
-        sa.select(Slot.slot_date, sa.func.count(Slot.id), sa.func.count(Booking.id))
+        sa.select(Slot.slot_date, sa.func.count(Slot.id), sa.func.count(sa.case((Booking.status != CLOSED, Booking.id))))
         .select_from(Slot)
         .outerjoin(Booking, Booking.confirmed_slot_id == Slot.id)
         .where(Slot.doctor_id == doctor_id, Slot.slot_date.between(monday, sunday))
@@ -219,8 +223,8 @@ def upcoming_bookings(limit: int, now: datetime):
 
 def bookings_page(page: int, per_page: int, status: Optional[str] = None):
     """(rows, total) for the admin's all-bookings list, newest appointment first."""
-    query = _booking_rows()
-    count = sa.select(sa.func.count()).select_from(Booking)
+    query = _booking_rows().where(Booking.status != CLOSED)  # a closed slot is not an appointment
+    count = sa.select(sa.func.count()).select_from(Booking).where(Booking.status != CLOSED)
     if status:
         query = query.where(Booking.status == status)
         count = count.where(Booking.status == status)

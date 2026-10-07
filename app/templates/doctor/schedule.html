@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "_macros.html" import csrf_field, error_list, badge, outcome_buttons, cancel_button, risk_badge, risk_note with context %}
+{% from "_macros.html" import csrf_field, error_list, badge, outcome_buttons, cancel_button, post_button, risk_badge, risk_note with context %}
 {% block title %}My schedule{% endblock %}
 {% block content %}
 <h1>My schedule</h1>
@@ -35,7 +35,10 @@
           {% set started = has_started(r.slot_date, r.slot_time) %}
           <tr>
             <td><strong>{{ r.slot_time|time_short }}</strong></td>
-            {% if r.booking_id %}
+            {% if r.booking_id and r.status == 'closed' %}
+              <td class="muted" colspan="{{ 4 if flags else 3 }}">Closed</td>
+              <td class="actions">{% if not started %}{{ post_button(url_for('doctor.reopen_slot', slot_id=r.slot_id), 'Reopen') }}{% endif %}</td>
+            {% elif r.booking_id %}
               <td>{{ r.patient_name }}</td>
               <td>{{ r.reason or '—' }}</td>
               <td>{{ badge(r.status) }}</td>
@@ -48,7 +51,8 @@
                 {% endif %}
               </td>
             {% else %}
-              <td class="muted" colspan="{{ 5 if flags else 4 }}">{{ 'Unbooked (past)' if started else 'Free' }}</td>
+              <td class="muted" colspan="{{ 4 if flags else 3 }}">{{ 'Unbooked (past)' if started else 'Free' }}</td>
+              <td class="actions">{% if not started %}{{ post_button(url_for('doctor.close_slot', slot_id=r.slot_id), 'Close') }}{% endif %}</td>
             {% endif %}
           </tr>
         {% endfor %}
@@ -57,6 +61,29 @@
   {% else %}
     <p class="empty">No slots on this day. Create them below.</p>
   {% endif %}
+</section>
+
+{% if waiting %}
+<section class="card">
+  <h2>On standby for this day</h2>
+  <p class="muted">These patients asked to be told if a slot on this day becomes free. Standby reserves nothing: whoever books a freed slot first gets it.{% if flags and 'high' in flags.values()|map(attribute='band')|list %} Appointments flagged High are the likeliest to free one.{% endif %}</p>
+  <ol class="waiting">
+    {% for w in waiting %}<li>{{ w.patient_name }} <small class="muted">joined {{ w.created_at|datetime_short }}</small></li>{% endfor %}
+  </ol>
+</section>
+{% endif %}
+
+<section class="card">
+  <h2>Leave: close free slots</h2>
+  {{ error_list(leave_errors) }}
+  <form method="post" action="{{ url_for('doctor.leave') }}" class="row">
+    {{ csrf_field() }}
+    <label>First day <input type="date" name="date_from" value="{{ day.isoformat() }}" required></label>
+    <label>Last day <input type="date" name="date_to" value="{{ day.isoformat() }}" required></label>
+    <button type="submit" name="action" value="close" class="btn">Close free slots</button>
+    <button type="submit" name="action" value="reopen" class="btn btn-small">Reopen closed slots</button>
+  </form>
+  <p class="muted small">Closing only affects free slots that have not started. It never cancels an appointment: booked slots stay booked, and you can cancel those one by one above.</p>
 </section>
 
 <section class="card">

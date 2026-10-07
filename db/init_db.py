@@ -2,8 +2,9 @@
 
     python -m db.init_db
 
-Applies db/schema.sql. Tables that already exist are left alone, so it is safe to re-run; it
-never drops anything.
+Applies db/schema.sql, then the small upgrades in db/migrations.py that an older database still needs
+(a new status, a new table). Tables that already exist are left alone, so it is safe to re-run; it never
+drops anything and never rewrites a row.
 """
 from __future__ import annotations
 
@@ -14,7 +15,7 @@ import sqlalchemy as sa
 
 from app import create_app
 from app.extensions import db
-from db import schema_statements
+from db import migrations, schema_statements
 
 
 def main() -> int:
@@ -36,6 +37,9 @@ def main() -> int:
                     continue
                 conn.exec_driver_sql(statement)
                 print(f"  {table}: created")
+        with db.engine.begin() as conn:
+            for step in migrations.apply(conn):
+                print(f"  upgraded: {step}")
     return 0
 
 
