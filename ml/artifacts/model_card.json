@@ -1,0 +1,231 @@
+{
+  "name": "CAMS no-show risk model",
+  "version": "1.0.0",
+  "created": "2026-10-07",
+  "seed": 42,
+  "target": "no_show = 1 when the patient did not attend the appointment (Kaggle 'No-show' = Yes)",
+  "features": [
+    {
+      "name": "age",
+      "description": "Age in completed years on the appointment date",
+      "how_computed": "years; the app derives it from date_of_birth"
+    },
+    {
+      "name": "is_female",
+      "description": "Sex coded 1 for F, 0 for M",
+      "how_computed": "from patient_profiles.sex"
+    },
+    {
+      "name": "lead_days",
+      "description": "Whole days from the booking date to the appointment date",
+      "how_computed": "appointment date minus the date the booking was made"
+    },
+    {
+      "name": "appt_weekday",
+      "description": "Weekday of the appointment, Monday = 0",
+      "how_computed": "Python date.weekday()"
+    },
+    {
+      "name": "prev_appointments",
+      "description": "Number of the patient's earlier appointments whose outcome was known at booking time",
+      "how_computed": "appointments dated strictly before the booking date"
+    },
+    {
+      "name": "prev_no_show_rate",
+      "description": "Share of those earlier appointments that were no-shows; missing when there are none",
+      "how_computed": "no-shows divided by prev_appointments; NaN with no history"
+    }
+  ],
+  "feature_function": "ml/src/features.py: deployable_features() and age_in_years(); training calls the same function",
+  "training_data": {
+    "dataset": "Kaggle 'Medical Appointment No Shows' (joniarroba/noshowappointments), Vit\u00f3ria, Brazil",
+    "file": "KaggleV2-May-2016.csv",
+    "sha256": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d",
+    "rows_cleaned": 110511,
+    "rows_train": 88527,
+    "rows_holdout": 21984,
+    "training_appointment_dates": {
+      "first": "2016-04-29",
+      "last": "2016-06-01"
+    },
+    "holdout_appointment_dates": {
+      "first": "2016-06-02",
+      "last": "2016-06-08"
+    },
+    "no_show_rate_train": 0.20605013159826946,
+    "no_show_rate_holdout": 0.18513464337700145,
+    "cleaning": "results/cleaning_log.csv"
+  },
+  "model": {
+    "family": "hist_gradient_boosting",
+    "params": {
+      "l2_regularization": 1.0,
+      "learning_rate": 0.1,
+      "max_iter": 200,
+      "max_leaf_nodes": 15
+    },
+    "tuned_by": "patient-grouped 5-fold cross-validation on the training part, by average precision; family chosen in E3",
+    "hyperparameter_search": {
+      "learning_rate": [
+        0.05,
+        0.1
+      ],
+      "max_leaf_nodes": [
+        15,
+        31
+      ],
+      "max_iter": [
+        200
+      ],
+      "l2_regularization": [
+        0.0,
+        1.0
+      ]
+    },
+    "cv_average_precision": 0.360771007143748,
+    "cv_auc_roc": 0.729952730878884
+  },
+  "calibration": {
+    "method": "uncalibrated",
+    "chosen_in": "E8",
+    "cv_brier_check": {
+      "uncalibrated": 0.146063438689641,
+      "sigmoid": 0.1459594905785532,
+      "isotonic": 0.1459955537315539
+    },
+    "best_in_this_check": "sigmoid",
+    "note": "E8 found no calibration needed for the all-features model, because the out-of-fold Brier scores were the same to four decimals; the same comparison on this model is recorded in cv_brier_check"
+  },
+  "metrics": {
+    "holdout": {
+      "auc_roc": {
+        "value": 0.7270619810895571,
+        "lo": 0.7190109745854609,
+        "hi": 0.7347759946426833
+      },
+      "avg_precision": {
+        "value": 0.33033200348481684,
+        "lo": 0.3159009513737944,
+        "hi": 0.344689860801113
+      },
+      "brier": {
+        "value": 0.1366708540585869,
+        "lo": 0.13386586555900148,
+        "hi": 0.13941941980984912
+      },
+      "sens_at_prec_30": {
+        "value": 0.7199017199017199,
+        "lo": 0.622443574932859,
+        "hi": 0.7968666031864782
+      },
+      "sens_at_prec_40": {
+        "value": 0.06167076167076167,
+        "lo": 0.01645200296678204,
+        "hi": 0.18876357330022261
+      },
+      "sens_at_prec_50": {
+        "value": 0.014742014742014743,
+        "lo": 0.006120939646469645,
+        "hi": 0.04023791280189444
+      },
+      "n": 21984,
+      "n_positive": 4070,
+      "n_boot": 1000
+    },
+    "comparison_with_research_model": {
+      "research_model": "hist_gradient_boosting on all 15 Kaggle features (E3)",
+      "research_auc_roc": {
+        "value": 0.7320694231434435,
+        "lo": 0.7237276512472445,
+        "hi": 0.7400565129088309
+      },
+      "delta_auc_roc": {
+        "value": -0.005007442053886368,
+        "lo": -0.008526925924972398,
+        "hi": -0.0016969849519529018
+      },
+      "delta_avg_precision": {
+        "value": -0.009003594872920018,
+        "lo": -0.017660699982644273,
+        "hi": -0.0010571383475788529
+      },
+      "note": "paired bootstrap, deployable minus research, same resampled patients"
+    }
+  },
+  "thresholds": {
+    "bands": {
+      "low": "predicted risk below the Medium threshold",
+      "medium": "risk at or above Medium and below High",
+      "high": "risk at or above the High threshold"
+    },
+    "chosen_on": "out-of-fold predictions of the training part (patient-grouped CV); the holdout only reports the result",
+    "min_flagged_share": 0.01,
+    "medium": {
+      "threshold": 0.19,
+      "target_precision": 0.3,
+      "oof_precision": 0.30221158015799693,
+      "oof_share_flagged": 0.5991279496650739,
+      "holdout_precision": 0.2740257723955907,
+      "holdout_sensitivity": 0.8673218673218673,
+      "holdout_share_flagged": 0.585971615720524,
+      "holdout_precision_95ci": [
+        0.2665920319456752,
+        0.2819601152791591
+      ],
+      "holdout_sensitivity_95ci": [
+        0.8562788769466246,
+        0.8787022467982749
+      ]
+    },
+    "high": {
+      "threshold": 0.38,
+      "target_precision": 0.4,
+      "oof_precision": 0.4029329608938548,
+      "oof_share_flagged": 0.09705513572130536,
+      "holdout_precision": 0.37123287671232874,
+      "holdout_sensitivity": 0.19975429975429976,
+      "holdout_share_flagged": 0.09961790393013101,
+      "holdout_precision_95ci": [
+        0.35127238637443503,
+        0.39172648902821317
+      ],
+      "holdout_sensitivity_95ci": [
+        0.18743888785221122,
+        0.21223969755347308
+      ]
+    },
+    "reasoning": "The targets are the plan's: High is the lowest cut-off at which at least 40% of flagged bookings were no-shows (about twice the 20.6% training base rate) and Medium the same for 30%, both measured on out-of-fold predictions of the training part, never on the holdout, so the holdout stays an honest test. A cut-off must flag at least 1% of bookings so a lucky handful of top scores cannot set it, and precision must stay at or above the target at every higher cut-off. On the holdout, High flags 10.0% of bookings, 37.1% of them no-shows, catching 20.0% of all no-shows; Medium flags 58.6%, 27.4% precise, catching 86.7%. Holdout precision sits below the training figure because the holdout's base rate is lower and it has more patient history (see limitations). The model's ranking is modest (holdout AUC 0.727), so High is a short list for a reminder call and Medium is a broad 'above average' band. The flag is advisory: staff see Low, Medium or High next to a booking, the slot rule never changes, and no patient is refused or moved because of it.",
+    "table": "results/e10_thresholds.csv",
+    "percentile_thresholds_on_training_oof": {
+      "p50": 0.22592787674136305,
+      "p70": 0.29579305331407,
+      "p80": 0.338670828196752,
+      "p90": 0.3789601589792081,
+      "p95": 0.405489273930482
+    }
+  },
+  "intended_use": "An ADVISORY flag shown to doctors and admins next to a booking (Low, Medium or High) so staff can decide whether to send a reminder or prepare a standby. It never decides who gets a slot: the slot rule is enforced by the database and is never relaxed, no patient is refused, moved or deprioritised because of the flag, and booking works unchanged if this model is missing or fails.",
+  "limitations": [
+    "Uses age and sex as inputs. The flag is advisory only and must never be a reason to refuse, move or deprioritise a booking.",
+    "Trained on one public clinic dataset from Vit\u00f3ria, Brazil (Kaggle, appointments 29 April to 8 June 2016). It has not been validated on any other clinic. E6 shows that models using these same kinds of features lose a lot of AUC when moved between two datasets.",
+    "Patient history only exists from 29 April 2016, so it is sparse: 23.5% of training bookings had any earlier appointment, against 45.9% of holdout bookings. The app's history will be a different mix.",
+    "Probabilities are calibrated to this dataset's base rate (no-show rate 20.6% in the training part, 18.5% in the holdout). A clinic with a different base rate needs recalibrating before the probabilities are read as risks.",
+    "The ranking is modest (see metrics.holdout.auc_roc), so even the High band catches only a small share of all no-shows (see thresholds). Treat it as a nudge for a reminder call, not a prediction about one person.",
+    "No-shows in the training data are missed appointments only: the data has no cancellations, so the app's cancelled bookings are not modelled and are excluded from history.",
+    "No SMS, health-flag or neighbourhood information is used, because the app cannot collect it in version 1; the research models (E3, E4) show these add only a little AUC.",
+    "Scored on one time-based holdout (the latest 20% of appointment dates); intervals reflect sampling of patients, not a change of clinic or season."
+  ],
+  "environment": {
+    "python": "3.14.6",
+    "scikit-learn": "1.9.1",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "joblib": "1.6.0"
+  },
+  "code": {
+    "script": "ml/src/e9_deployable.py",
+    "git_commit": "ac8bbd6a4c20609d1dd0d130b9eee2018d8a969e",
+    "git_dirty": true
+  },
+  "artifact_sha256": "350b60edd6e2bf9ff2a891e5ddbc1df6134094d9bcb68c2a4cb7d8ad893fceb6"
+}

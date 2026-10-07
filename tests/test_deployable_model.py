@@ -230,6 +230,20 @@ def test_a_higher_threshold_flags_fewer_bookings(e10, workdir):
     assert (pct["oof_share_flagged"] - (1 - pct["percentile"] / 100)).abs().max() < 0.02  # p-th percentile flags the rest
 
 
+def test_the_three_bands_partition_the_bookings_and_get_riskier(e10, workdir):
+    table = pd.read_csv(workdir / "results" / "e10_thresholds.csv")
+    bands = table[table["kind"] == "band"].set_index("label").loc[["low", "medium", "high"]]
+    assert bands["share_flagged"].sum() == pytest.approx(1.0)  # every booking is in exactly one band
+    assert bands["sensitivity"].sum() == pytest.approx(1.0)  # and so is every no-show
+    assert bands["flagged_n"].sum() == bands["n"].iloc[0]
+    assert bands["precision"].is_monotonic_increasing  # the no-show rate rises from Low to High
+    assert bands["precision_lo"].iloc[0] <= bands["precision"].iloc[0] <= bands["precision_hi"].iloc[0]
+    card_bands = card(workdir)["thresholds"]["bands"]
+    assert card_bands["low"]["holdout_no_show_rate"] == pytest.approx(bands.loc["low", "precision"])
+    assert card_bands["medium"]["lower"] == card(workdir)["thresholds"]["medium"]["threshold"]
+    assert card_bands["high"]["upper"] is None
+
+
 def test_the_card_gets_medium_and_high_thresholds_with_their_reasoning(e10, workdir):
     t = card(workdir)["thresholds"]
     assert 0 < t["medium"]["threshold"] < t["high"]["threshold"] < 1
