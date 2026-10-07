@@ -8,7 +8,7 @@ import pytest
 from app import clock
 from app.extensions import db
 from app.models import User
-from helpers import PASSWORD, csrf_token, form_token, post, text
+from helpers import PASSWORD, csrf_token, post, text
 
 NEW = "a brand new passphrase"
 ROLES = ("patient", "doctor", "admin")

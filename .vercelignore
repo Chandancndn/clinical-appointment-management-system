@@ -1,0 +1,19 @@
+# Files `vercel deploy` must never upload. (A Git-connected deploy only sees committed files, so this matters for the CLI.)
+.env
+.env.*
+!.env.example
+venv/
+.venv/
+.claude/
+.pytest_cache/
+**/__pycache__/
+*.sqlite3
+.DS_Store
+
+# Raw datasets are never uploaded (and never committed).
+data/raw/
+datasets/
+
+# Not needed to run the app.
+tests/
+*.pdf

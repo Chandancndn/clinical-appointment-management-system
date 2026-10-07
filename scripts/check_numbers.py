@@ -17,7 +17,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-from .reportlib import ROOT, Registry, read_table, render
+from .reportlib import ROOT, read_table, render
 
 
 def shows(document: str, number: str) -> bool:

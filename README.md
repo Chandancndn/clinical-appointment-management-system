@@ -18,9 +18,11 @@ fine). Developed and tested with Python 3.14.6 and MySQL 26.7.0 (Homebrew, Octob
 ```bash
 python3 -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env        # then edit .env, see below
+pip install -r requirements-research.txt   # the web app, the experiments, the simulation and the tests
+cp .env.example .env                       # then edit .env, see below
 ```
+
+`requirements.txt` alone is what the web app needs (and what Vercel installs, see "Deploy to Vercel"); `requirements-research.txt` adds the experiment, simulation, plotting and test tools.
 
 **Saved model and scikit-learn.** `ml/artifacts/risk_model.joblib` was written with the library versions recorded in `ml/artifacts/model_card.json` (`environment`). `requirements.txt` pins scikit-learn, numpy and joblib to those versions wherever they can be installed (Python 3.11 and later). On Python 3.9 or 3.10 the app still works, but scikit-learn warns on load, a few bookings near a threshold may get a different badge, and the admin overview says which versions differ.
 
@@ -123,6 +125,60 @@ To see the badges: `python -m db.init_db` (adds `risk_scores` if missing), `pyth
 Log in as a patient to confirm there is nothing to see. The admin **Overview** also has a *Risk flag status* panel (model version, thresholds, whether the flag is on and why not, and the observed no-show rate per band on recorded outcomes), and **Models and simulation** shows the model card, the three bands and the booking-policy simulation with its figures, all read from the saved result files. Re-running E9 and E10 changes the model version, and the next
 staff page view re-scores what it shows.
 
+## Deploy to Vercel
+
+On Vercel the app is one Python function (`index.py`, which builds the same app as `flask --app app run`) and the database
+is a **hosted MySQL**. Use a real MySQL 8 service: the no-double-booking rule rests on MySQL's unique generated column,
+and Vercel has no database that offers it. Vercel installs `requirements.txt` only (the research tools stay out, which
+keeps the bundle well under Vercel's 500 MB limit) and uses the Python version in `.python-version`.
+
+**1. A database.** Create a MySQL 8 database and note the host, port, user, password and database name. If the provider
+requires TLS, save its CA certificate (a public file) as `certs/ca.pem`. The URL looks like:
+
+```
+mysql+pymysql://USER:PASSWORD@HOST:PORT/DBNAME?charset=utf8mb4&ssl_ca=certs/ca.pem
+```
+
+(URL-encode special characters in the password; drop `&ssl_ca=...` if the provider does not use TLS.)
+
+**2. Prepare that database from your laptop, once.** Never from Vercel. The first line prints the server version and
+whether generated columns work; the last one fills it with synthetic demo data (obviously fake people, no dataset is read):
+
+```bash
+export DATABASE_URL='mysql+pymysql://...'      # the URL from step 1
+python -m db.check_connection
+python -m db.init_db
+SEED_PASSWORD='pick-a-demo-password' python -m db.seed_synthetic
+```
+
+To prove the booking rule on that host before you rely on it, create a second, empty database whose name ends in
+`_test` on the same server and run the booking tests there: `TEST_DATABASE_URL='...' pytest --engine mysql`.
+
+**3. The Vercel project.** Import the repository, leave the framework as **Flask** (set it by hand if it was not detected),
+and add these environment variables:
+
+| Variable | Value |
+|---|---|
+| `DATABASE_URL` | the URL from step 1 |
+| `SECRET_KEY` | a new random value: `python -c "import secrets; print(secrets.token_hex(32))"` (not the one in your local `.env`) |
+| `CLINIC_TIMEZONE` | `Asia/Kolkata` (or your clinic's zone). Vercel's servers run on UTC; without this, "has this slot started?" would be wrong by hours |
+
+Do not add `SEED_PASSWORD` there. `index.py` already turns on secure cookies, tells the app to trust Vercel's proxy
+(so the login throttle sees each visitor's own address) and makes database connections survive a frozen instance.
+
+**Good to know.**
+- Vercel serves static files from `public/`, not from `app/static/`. After changing anything in `app/static/` run
+  `python -m scripts.sync_public` and commit `public/`; a test fails if the two differ.
+- The login throttle counts in memory, per serverless instance, so on Vercel it slows guessing rather than stopping it.
+- The demo slots are relative to the day you seeded. Before showing the app on a later day, re-run step 2's last line
+  with `--reset` added.
+- The risk flag ships with the app (the saved model plus scikit-learn, pandas and numpy). If the bundle ever hits the
+  size limit, delete those lines from `requirements.txt`: the app still runs, the admin overview says the flag is off,
+  and booking is unaffected by design.
+- `tests/test_vercel_ready.py` checks the entry point, the static mirror, the proxy handling and that secrets and raw
+  data are never uploaded. A real deployment has not been run from this repository; check the first deploy's build log
+  and open `/login`.
+
 ## Tests
 
 ```bash
@@ -204,16 +260,20 @@ The raw datasets are not in the repository (CLAUDE.md hard rule 5), so the exper
 ## Repository layout
 
 ```
-app/        Flask app: blueprints/ (auth, patient, doctor, admin), services.py (bookings),
-            accounts.py, scheduling.py, queries.py (read-only), security.py, risk.py (advisory flag), templates/, static/
-db/         schema.sql (MySQL), init_db.py, check_connection.py, seed_synthetic.py
-ml/         src/, artifacts/, notebooks/      (M3 onwards)
-sim/        simulation                        (M6)
+app/        Flask app: blueprints/ (auth, account, patient, doctor, admin), services.py (bookings), standby.py,
+            accounts.py, scheduling.py, queries.py (read-only), security.py, risk.py (advisory flag), research.py,
+            clock.py, templates/, static/
+db/         schema.sql (MySQL), migrations.py, init_db.py, check_connection.py, seed_synthetic.py
+ml/         src/ (data, features, training and the E1 to E10 experiments), artifacts/ (saved model and card)
+sim/        the booking-policy simulation (S1 to S6) and the learned policy (S7, rl.py)
 data/       README.md with download steps; raw files go in data/raw/ (gitignored)
 results/    tables, figures, manifest.json written by scripts
-scripts/    make_report_assets.py, check_numbers.py, run_test_summary.py, results_summary.md.j2
-tests/      booking, leakage, simulation, risk-flag and report-numbers tests
-docs/       PLAN.pdf, RESULTS_SUMMARY.md, DEMO_SCRIPT.md, numbers_audit.csv, report_assets/
+scripts/    make_report_assets.py, check_numbers.py, run_test_summary.py, sync_public.py, results_summary.md.j2
+tests/      booking, leakage, simulation, risk-flag, report-numbers and deployment tests
+docs/       PLAN.pdf, RESULTS_SUMMARY.md, DEMO_SCRIPT.md, numbers_audit.csv, report_assets/, ENTIRE_PROJECT_REPORT.html (the whole project explained for readers new to it)
+index.py    Vercel entry point (not used locally)
+vercel.json, .vercelignore, .python-version, public/    Vercel settings; public/static is a copy of app/static
+requirements.txt (the web app), requirements-research.txt (adds the experiment, simulation and test tools)
 ```
 
-Raw datasets are never committed. Download steps will be in `data/README.md` (milestone M3).
+Raw datasets are never committed. Download steps are in `data/README.md`.

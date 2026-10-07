@@ -12,7 +12,6 @@ from pathlib import Path
 import pytest
 
 from app import risk
-from app.extensions import db
 from helpers import text
 
 REAL = Path(__file__).resolve().parents[1] / "ml" / "artifacts"

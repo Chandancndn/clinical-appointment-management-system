@@ -1,0 +1,8 @@
+# Everything for working on the project on a laptop: the web app (requirements.txt) plus the experiments,
+# the simulation, the figures and the test suite. Vercel does not install this file.
+-r requirements.txt
+
+pytest
+imbalanced-learn
+simpy
+matplotlib
