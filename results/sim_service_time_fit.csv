@@ -1,0 +1,3 @@
+family,param_1_name,param_1,param_2_name,param_2,log_likelihood,aic,ks_statistic,mean_fitted,mean_data,n,chosen,choice_reason,median_service_min,slot_minutes_default,session_minutes_default
+lognormal,mu,2.496085449764025,sigma,0.4384551499098071,-20511.82258758331,41027.64517516662,0.007215962347594723,13.359221681052764,13.365182562402692,6637,True,"lognormal has the lower AIC (41,027.6 against 41,268.5, a difference of 240.8); QQ plots in results/figures/sim_service_time_qq.png",12.083333333333334,15,240
+gamma,shape,5.33880235640061,scale,2.5034046346329673,-20632.23840941612,41268.47681883224,0.03469650002731256,13.365182562402692,13.365182562402692,6637,False,,12.083333333333334,15,240

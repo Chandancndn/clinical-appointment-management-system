@@ -284,5 +284,135 @@
     "git_dirty": false,
     "script": "ml/src/e8_calibration.py",
     "seed": 42
+  },
+  "results/figures/s2_tradeoffs.png": {
+    "data_files": {
+      "data/raw/hangu/Data.csv": "bf4e377c0fd9b4adf65a53b2b2a53d60391808dfdc6d752877c28b6b05956bc8",
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d",
+      "ml/artifacts/risk_model.joblib": "350b60edd6e2bf9ff2a891e5ddbc1df6134094d9bcb68c2a4cb7d8ad893fceb6"
+    },
+    "date": "2026-10-07T12:47:04+00:00",
+    "git_commit": "f60a08e8217b26cc22804e4b1969387a2eb9ed34",
+    "git_dirty": false,
+    "note": "{\"base_seed\": 42, \"n_reps\": 1000, \"n_slots_N\": 16, \"service_time_family\": \"lognormal\", \"session_minutes_T\": 240, \"slot_minutes_L\": 15}",
+    "script": "sim/experiments.py",
+    "seed": 42
+  },
+  "results/figures/s6_value_of_prediction.png": {
+    "data_files": {
+      "data/raw/hangu/Data.csv": "bf4e377c0fd9b4adf65a53b2b2a53d60391808dfdc6d752877c28b6b05956bc8",
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d",
+      "ml/artifacts/risk_model.joblib": "350b60edd6e2bf9ff2a891e5ddbc1df6134094d9bcb68c2a4cb7d8ad893fceb6"
+    },
+    "date": "2026-10-07T12:47:04+00:00",
+    "git_commit": "f60a08e8217b26cc22804e4b1969387a2eb9ed34",
+    "git_dirty": false,
+    "note": "{\"base_seed\": 42, \"n_reps\": 1000, \"n_slots_N\": 16, \"service_time_family\": \"lognormal\", \"session_minutes_T\": 240, \"slot_minutes_L\": 15}",
+    "script": "sim/experiments.py",
+    "seed": 42
+  },
+  "results/figures/sim_service_time_fit.png": {
+    "data_files": {
+      "data/raw/hangu/Data.csv": "bf4e377c0fd9b4adf65a53b2b2a53d60391808dfdc6d752877c28b6b05956bc8",
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d",
+      "ml/artifacts/risk_model.joblib": "350b60edd6e2bf9ff2a891e5ddbc1df6134094d9bcb68c2a4cb7d8ad893fceb6"
+    },
+    "date": "2026-10-07T12:46:48+00:00",
+    "git_commit": "f60a08e8217b26cc22804e4b1969387a2eb9ed34",
+    "git_dirty": false,
+    "note": "{\"base_seed\": 42, \"n_reps\": 1000, \"n_slots_N\": 16, \"service_time_family\": \"lognormal\", \"session_minutes_T\": 240, \"slot_minutes_L\": 15}",
+    "script": "sim/experiments.py",
+    "seed": 42
+  },
+  "results/figures/sim_service_time_qq.png": {
+    "data_files": {
+      "data/raw/hangu/Data.csv": "bf4e377c0fd9b4adf65a53b2b2a53d60391808dfdc6d752877c28b6b05956bc8",
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d",
+      "ml/artifacts/risk_model.joblib": "350b60edd6e2bf9ff2a891e5ddbc1df6134094d9bcb68c2a4cb7d8ad893fceb6"
+    },
+    "date": "2026-10-07T12:46:48+00:00",
+    "git_commit": "f60a08e8217b26cc22804e4b1969387a2eb9ed34",
+    "git_dirty": false,
+    "note": "{\"base_seed\": 42, \"n_reps\": 1000, \"n_slots_N\": 16, \"service_time_family\": \"lognormal\", \"session_minutes_T\": 240, \"slot_minutes_L\": 15}",
+    "script": "sim/experiments.py",
+    "seed": 42
+  },
+  "results/s2_policy_tradeoffs.csv": {
+    "data_files": {
+      "data/raw/hangu/Data.csv": "bf4e377c0fd9b4adf65a53b2b2a53d60391808dfdc6d752877c28b6b05956bc8",
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d",
+      "ml/artifacts/risk_model.joblib": "350b60edd6e2bf9ff2a891e5ddbc1df6134094d9bcb68c2a4cb7d8ad893fceb6"
+    },
+    "date": "2026-10-07T12:47:04+00:00",
+    "git_commit": "f60a08e8217b26cc22804e4b1969387a2eb9ed34",
+    "git_dirty": false,
+    "note": "{\"base_seed\": 42, \"n_reps\": 1000, \"n_slots_N\": 16, \"service_time_family\": \"lognormal\", \"session_minutes_T\": 240, \"slot_minutes_L\": 15}",
+    "script": "sim/experiments.py",
+    "seed": 42
+  },
+  "results/s3_probability_error.csv": {
+    "data_files": {
+      "data/raw/hangu/Data.csv": "bf4e377c0fd9b4adf65a53b2b2a53d60391808dfdc6d752877c28b6b05956bc8",
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d",
+      "ml/artifacts/risk_model.joblib": "350b60edd6e2bf9ff2a891e5ddbc1df6134094d9bcb68c2a4cb7d8ad893fceb6"
+    },
+    "date": "2026-10-07T12:47:04+00:00",
+    "git_commit": "f60a08e8217b26cc22804e4b1969387a2eb9ed34",
+    "git_dirty": false,
+    "note": "{\"base_seed\": 42, \"n_reps\": 1000, \"n_slots_N\": 16, \"service_time_family\": \"lognormal\", \"session_minutes_T\": 240, \"slot_minutes_L\": 15}",
+    "script": "sim/experiments.py",
+    "seed": 42
+  },
+  "results/s4_base_rate.csv": {
+    "data_files": {
+      "data/raw/hangu/Data.csv": "bf4e377c0fd9b4adf65a53b2b2a53d60391808dfdc6d752877c28b6b05956bc8",
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d",
+      "ml/artifacts/risk_model.joblib": "350b60edd6e2bf9ff2a891e5ddbc1df6134094d9bcb68c2a4cb7d8ad893fceb6"
+    },
+    "date": "2026-10-07T12:47:04+00:00",
+    "git_commit": "f60a08e8217b26cc22804e4b1969387a2eb9ed34",
+    "git_dirty": false,
+    "note": "{\"base_seed\": 42, \"n_reps\": 1000, \"n_slots_N\": 16, \"service_time_family\": \"lognormal\", \"session_minutes_T\": 240, \"slot_minutes_L\": 15}",
+    "script": "sim/experiments.py",
+    "seed": 42
+  },
+  "results/s5_service_variability.csv": {
+    "data_files": {
+      "data/raw/hangu/Data.csv": "bf4e377c0fd9b4adf65a53b2b2a53d60391808dfdc6d752877c28b6b05956bc8",
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d",
+      "ml/artifacts/risk_model.joblib": "350b60edd6e2bf9ff2a891e5ddbc1df6134094d9bcb68c2a4cb7d8ad893fceb6"
+    },
+    "date": "2026-10-07T12:47:04+00:00",
+    "git_commit": "f60a08e8217b26cc22804e4b1969387a2eb9ed34",
+    "git_dirty": false,
+    "note": "{\"base_seed\": 42, \"n_reps\": 1000, \"n_slots_N\": 16, \"service_time_family\": \"lognormal\", \"session_minutes_T\": 240, \"slot_minutes_L\": 15}",
+    "script": "sim/experiments.py",
+    "seed": 42
+  },
+  "results/s6_value_of_prediction.csv": {
+    "data_files": {
+      "data/raw/hangu/Data.csv": "bf4e377c0fd9b4adf65a53b2b2a53d60391808dfdc6d752877c28b6b05956bc8",
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d",
+      "ml/artifacts/risk_model.joblib": "350b60edd6e2bf9ff2a891e5ddbc1df6134094d9bcb68c2a4cb7d8ad893fceb6"
+    },
+    "date": "2026-10-07T12:47:04+00:00",
+    "git_commit": "f60a08e8217b26cc22804e4b1969387a2eb9ed34",
+    "git_dirty": false,
+    "note": "{\"base_seed\": 42, \"n_reps\": 1000, \"n_slots_N\": 16, \"service_time_family\": \"lognormal\", \"session_minutes_T\": 240, \"slot_minutes_L\": 15}",
+    "script": "sim/experiments.py",
+    "seed": 42
+  },
+  "results/sim_service_time_fit.csv": {
+    "data_files": {
+      "data/raw/hangu/Data.csv": "bf4e377c0fd9b4adf65a53b2b2a53d60391808dfdc6d752877c28b6b05956bc8",
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d",
+      "ml/artifacts/risk_model.joblib": "350b60edd6e2bf9ff2a891e5ddbc1df6134094d9bcb68c2a4cb7d8ad893fceb6"
+    },
+    "date": "2026-10-07T12:46:48+00:00",
+    "git_commit": "f60a08e8217b26cc22804e4b1969387a2eb9ed34",
+    "git_dirty": false,
+    "note": "{\"base_seed\": 42, \"n_reps\": 1000, \"n_slots_N\": 16, \"service_time_family\": \"lognormal\", \"session_minutes_T\": 240, \"slot_minutes_L\": 15}",
+    "script": "sim/experiments.py",
+    "seed": 42
   }
 }
