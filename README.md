@@ -13,7 +13,7 @@ The **database** enforces it (a unique key on `slots` and a unique generated col
 ## Setup
 
 Requires Python 3.9 or newer and MySQL 5.7 or newer (generated columns need 5.7+; 8.x is
-fine). Tested with Python 3.14.6 and MySQL 26.7.0 (Homebrew, October 2026).
+fine). Developed and tested with Python 3.14.6 and MySQL 26.7.0 (Homebrew, October 2026). A fresh clone was also set up from these steps on the macOS system Python 3.9.6, with the older library versions pip chooses for it (for example pandas 2.3 and scikit-learn 1.6): the whole test suite passed on both engines, apart from the tests that need the raw datasets, which are skipped.
 
 ```bash
 python3 -m venv venv
@@ -21,6 +21,8 @@ source venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env        # then edit .env, see below
 ```
+
+**Saved model and scikit-learn.** `ml/artifacts/risk_model.joblib` was written with the library versions recorded in `ml/artifacts/model_card.json` (`environment`: scikit-learn 1.9.1). Other scikit-learn versions load it with an `InconsistentVersionWarning` and may score a few bookings slightly differently (a different Low, Medium or High badge near a threshold); the app still works. Install the versions on the card for identical scores.
 
 ## MySQL setup
 
@@ -113,6 +115,8 @@ pytest --engine both         # both engines
 
 The booking tests must pass on MySQL, not only SQLite, because the double-booking
 constraint has to be proven on the engine the project actually uses.
+
+A few tests (loaders, a leakage check and the simulation experiments) need the raw datasets in `data/raw/` and are skipped without them; the skip message names the file. `python -m scripts.run_test_summary` runs everything on both engines and writes the summary the report quotes.
 
 ## Research experiments (ML)
 
