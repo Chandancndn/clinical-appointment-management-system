@@ -1,4 +1,24 @@
 {
+  "ml/artifacts/model_card.json": {
+    "data_files": {
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d"
+    },
+    "date": "2026-10-07T12:27:21+00:00",
+    "git_commit": "1e1b52a3024ec667cd625b4b09ec938e5830df31",
+    "git_dirty": false,
+    "script": "ml/src/e10_thresholds.py",
+    "seed": 42
+  },
+  "ml/artifacts/risk_model.joblib": {
+    "data_files": {
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d"
+    },
+    "date": "2026-10-07T12:27:11+00:00",
+    "git_commit": "1e1b52a3024ec667cd625b4b09ec938e5830df31",
+    "git_dirty": false,
+    "script": "ml/src/e9_deployable.py",
+    "seed": 42
+  },
   "results/cleaning_log.csv": {
     "data_files": {
       "data/raw/hangu/Data.csv": "bf4e377c0fd9b4adf65a53b2b2a53d60391808dfdc6d752877c28b6b05956bc8",
@@ -21,6 +41,16 @@
     "git_commit": "ac74fa17beec53cb881b6f174f39e307671dda5e",
     "git_dirty": false,
     "script": "ml/src/e1_profile.py",
+    "seed": 42
+  },
+  "results/e10_thresholds.csv": {
+    "data_files": {
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d"
+    },
+    "date": "2026-10-07T12:27:21+00:00",
+    "git_commit": "1e1b52a3024ec667cd625b4b09ec938e5830df31",
+    "git_dirty": false,
+    "script": "ml/src/e10_thresholds.py",
     "seed": 42
   },
   "results/e1_eda_rates.csv": {
@@ -165,6 +195,16 @@
     "git_commit": "72dde9645016c660984bcb932e446379aa8fe777",
     "git_dirty": false,
     "script": "ml/src/e8_calibration.py",
+    "seed": 42
+  },
+  "results/e9_deployable.csv": {
+    "data_files": {
+      "data/raw/kaggle/KaggleV2-May-2016.csv": "9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d"
+    },
+    "date": "2026-10-07T12:27:11+00:00",
+    "git_commit": "1e1b52a3024ec667cd625b4b09ec938e5830df31",
+    "git_dirty": false,
+    "script": "ml/src/e9_deployable.py",
     "seed": 42
   },
   "results/figures/e1_noshow_by_age_band.png": {
