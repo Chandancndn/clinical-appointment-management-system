@@ -55,6 +55,9 @@ main { padding-bottom: 2rem; }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.2rem; margin: 1rem 0; }
 .card h1, .card h2 { margin-top: 0.2rem; }
 .narrow { max-width: 460px; margin-left: auto; margin-right: auto; }
+.details { display: grid; grid-template-columns: max-content 1fr; gap: 0.35rem 1.2rem; margin: 0; }
+.details dt { color: var(--muted); }
+.details dd { margin: 0; }
 .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
 .cards .card { margin: 0; }
 .bigcode { font-size: 3rem; font-weight: 700; color: var(--brand); margin: 0; }
@@ -97,7 +100,19 @@ th { background: #eef2f6; font-size: 0.85rem; color: var(--muted); }
 tr:last-child td { border-bottom: 0; }
 td.actions { white-space: nowrap; text-align: right; }
 td.actions > * { margin-left: 0.3rem; }
-@media (max-width: 700px) { table { display: block; overflow-x: auto; } }
+/* on a phone each table row becomes a labelled card (the labels come from the column headings, see app.js) */
+@media (max-width: 700px) {
+  table, tbody, tr, td { display: block; }
+  table { border: 0; background: none; }
+  thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }  /* still read by screen readers */
+  tr { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); margin: 0 0 0.7rem; padding: 0.35rem 0.8rem; }
+  td { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; border: 0; padding: 0.28rem 0; text-align: right; }
+  td::before { content: attr(data-label); flex: 0 0 auto; color: var(--muted); font-weight: 600; font-size: 0.85rem; text-align: left; }
+  td[data-label=""]::before, td.actions::before { content: none; }
+  td.actions { flex-wrap: wrap; justify-content: flex-start; white-space: normal; }
+  td.actions > * { margin: 0.15rem 0.4rem 0.15rem 0; }
+  td[colspan] { justify-content: flex-start; }
+}
 
 /* status badges */
 .badge { display: inline-block; padding: 0.1rem 0.55rem; border-radius: 999px; font-size: 0.8rem; font-weight: 600; white-space: nowrap; }
@@ -139,3 +154,12 @@ button.slot-free:hover { background: #cdeedb; }
 .risk-medium { background: var(--warn-bg); color: var(--warn); }
 .risk-low { background: #e9edf1; color: var(--muted); }
 .advisory { margin: 0.6rem 0; color: var(--muted); font-size: 0.88rem; }
+
+/* models and simulation page */
+.figures { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1rem; margin-top: 1rem; }
+.figures figure { margin: 0; }
+.figures img { width: 100%; height: auto; display: block; border-radius: 6px; }
+.figures figcaption { font-size: 0.88rem; color: var(--muted); margin-top: 0.5rem; }
+details.card summary { cursor: pointer; }
+code { background: #eef2f6; padding: 0.05rem 0.35rem; border-radius: 4px; font-size: 0.88em; }
+.nowrap { white-space: nowrap; }

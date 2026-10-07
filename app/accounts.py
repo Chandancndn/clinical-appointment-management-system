@@ -90,3 +90,15 @@ def create_doctor(name: str, email: str, password: str, specialization: str, slo
                 role="doctor")
     return _save_user(user, lambda u: Doctor(user_id=u.id, specialization=specialization.strip(),
                                              slot_minutes=slot_minutes))
+
+
+def password_is_right(user_id: int, password: str) -> bool:
+    user = db.session.get(User, user_id)
+    return user is not None and check_password_hash(user.password_hash, password)
+
+
+def change_password(user_id: int, new_password: str) -> None:
+    """Store a new hash for the user. The caller has already checked the current password."""
+    user = db.session.get(User, user_id)
+    user.password_hash = hash_password(new_password)
+    db.session.commit()

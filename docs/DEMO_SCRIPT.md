@@ -39,7 +39,10 @@ Accounts (all in the seeded database):
 **3:30 The risk badges (45 seconds).** Still as the doctor, go to a day with several bookings: each row has a **Low**, **Medium** or **High** badge and the note "Risk badges are advisory only". Then log in as the admin and show **Overview** and **All bookings**. Finally open a patient's **My appointments** page: no risk anywhere.
 *Say:* the flag comes from the deployable model with the six features the app can collect, using the cut-offs on the model card. It is computed after a booking is saved, inside a try/except. Booking never reads it: if the model file is missing or scoring fails, booking works exactly as before (`tests/test_risk_flag.py` proves both). Nobody is refused or moved because of a flag.
 
-**4:15 Results (45 seconds).** Switch to the figures.
+**4:15 Models and simulation (45 seconds).** Log in as the admin and open **Models and simulation** (and the *Risk flag status* panel at the bottom of **Overview**): the model card, the three bands with their measured no-show rates, the policy trade-off table and the figures, all read from the saved result files. Scroll the page to the figures below.
+*Say:* the model is a gradient-boosted tree on six inputs the app can collect; the simulation is one doctor and one half-day session, with consultation times from one clinic and no-show risk from another, so it shows a method and its trade-offs, not clinical outcomes. The app itself never overbooks.
+
+**5:00 Results files (optional).** Switch to the figures.
 1. `f16_s6_paired_differences.png` is the headline of the simulation: at the same number of double-booked slots, does choosing by predicted risk beat spacing them evenly or choosing at random? Read the answer straight off the plot: the gain is modest and not uniform, and an oracle shows how much more perfect knowledge would give.
 2. `f11_s2_tradeoffs.png` shows that more patients served always costs more waiting and overtime, so no single score is given.
 3. `f10_e10_thresholds.png` shows what each Low, Medium and High threshold catches.

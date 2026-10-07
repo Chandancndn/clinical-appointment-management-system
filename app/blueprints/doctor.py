@@ -57,7 +57,7 @@ def generate():
     return redirect(url_for("doctor.schedule", date=day.isoformat()))
 
 
-@bp.post("/bookings/<int:booking_id>/outcome")
+@bp.post("/bookings/<dbid:booking_id>/outcome")
 @roles_required("doctor", "admin")
 def outcome(booking_id):
     is_admin = g.user.role == "admin"
@@ -81,7 +81,7 @@ def outcome(booking_id):
     return redirect(url_for("doctor.schedule", date=booking.slot_date.isoformat()))
 
 
-@bp.post("/bookings/<int:booking_id>/cancel")
+@bp.post("/bookings/<dbid:booking_id>/cancel")
 @doctor_only
 def cancel(booking_id):
     booking = queries.booking_for_doctor(booking_id, _my_profile().id) or abort(404)

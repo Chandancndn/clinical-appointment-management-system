@@ -52,4 +52,29 @@
 {% else %}
   <p class="empty">No upcoming appointments.</p>
 {% endif %}
+<h2>Risk flag status</h2>
+<section class="card">
+  {% if risk_status.on %}
+    <p>The flag is <strong>on</strong>: model version {{ risk_status.version }}. Medium from {{ '%.2f' % risk_status.medium }}, High from {{ '%.2f' % risk_status.high }} (read from the model card).
+      It is advisory only: it never decides who gets a slot, and booking does not read it.</p>
+    {% if risk_status.note %}<p class="alert alert-info">{{ risk_status.note }}</p>{% endif %}
+    {% if risk_monitor %}
+      <table>
+        <thead><tr><th>Flagged as</th><th>Past appointments with an outcome</th><th>No-shows</th><th>Observed no-show rate</th></tr></thead>
+        <tbody>
+          {% for row in risk_monitor %}
+            <tr>
+              <td><span class="risk risk-{{ row.band }}">{{ row.band|capitalize }}</span></td>
+              <td>{{ row.bookings }}</td><td>{{ row.no_shows }}</td>
+              <td>{% if row.rate is none %}—{% else %}{{ '%.0f' % (row.rate * 100) }}%{% endif %}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <p class="muted">Grouped by the band each booking was flagged with when it was made. A flag that works shows a higher rate in High than in Low. The demo outcomes are synthetic, so this shows how the check works, not how a clinic would do.</p>
+    {% endif %}
+  {% else %}
+    <p>The flag is <strong>off</strong>: {{ risk_status.reason }}. Booking, cancelling and rescheduling work exactly as before; staff pages simply show no badges.</p>
+  {% endif %}
+</section>
 {% endblock %}

@@ -2,10 +2,11 @@
 
 | Scope | Tests | Passed | Failed | Skipped |
 |---|---:|---:|---:|---:|
-| All tests | 486 | 486 | 0 | 0 |
-| Database tests on SQLite | 98 | 98 | 0 | 0 |
-| Database tests on MySQL | 98 | 98 | 0 | 0 |
+| All tests | 635 | 635 | 0 | 0 |
+| Database tests on SQLite | 147 | 147 | 0 | 0 |
+| Database tests on MySQL | 147 | 147 | 0 | 0 |
 | tests/test_access.py | 20 | 20 | 0 | 0 |
+| tests/test_account.py | 32 | 32 | 0 | 0 |
 | tests/test_booking.py | 30 | 30 | 0 | 0 |
 | tests/test_calibrate.py | 5 | 5 | 0 | 0 |
 | tests/test_csrf.py | 24 | 24 | 0 | 0 |
@@ -19,11 +20,16 @@
 | tests/test_features.py | 7 | 7 | 0 | 0 |
 | tests/test_flow.py | 6 | 6 | 0 | 0 |
 | tests/test_leakage.py | 19 | 19 | 0 | 0 |
+| tests/test_login_throttle.py | 22 | 22 | 0 | 0 |
 | tests/test_manifest.py | 10 | 10 | 0 | 0 |
 | tests/test_patient_actions.py | 20 | 20 | 0 | 0 |
 | tests/test_patient_isolation.py | 12 | 12 | 0 | 0 |
+| tests/test_patient_overlap.py | 26 | 26 | 0 | 0 |
 | tests/test_report_numbers.py | 23 | 23 | 0 | 0 |
+| tests/test_research_page.py | 29 | 29 | 0 | 0 |
 | tests/test_risk_flag.py | 60 | 60 | 0 | 0 |
+| tests/test_risk_status.py | 22 | 22 | 0 | 0 |
+| tests/test_robustness.py | 18 | 18 | 0 | 0 |
 | tests/test_scheduling.py | 20 | 20 | 0 | 0 |
 | tests/test_schema.py | 3 | 3 | 0 | 0 |
 | tests/test_seed.py | 17 | 17 | 0 | 0 |

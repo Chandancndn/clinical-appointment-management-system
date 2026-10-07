@@ -3599,365 +3599,389 @@ N3597,"6,637",results/sim_service_time_fit.csv,"{""family"": ""lognormal""}",n,"
 N3598,12.1,results/sim_service_time_fit.csv,"{""family"": ""lognormal""}",median_service_min,{:.1f},docs/report_assets/tables/t20_service_time_fit.md
 N3599,15,results/sim_service_time_fit.csv,"{""family"": ""lognormal""}",slot_minutes_default,{:.0f},docs/report_assets/tables/t20_service_time_fit.md
 N3600,240,results/sim_service_time_fit.csv,"{""family"": ""lognormal""}",session_minutes_default,{:.0f},docs/report_assets/tables/t20_service_time_fit.md
-N3601,486,results/test_summary.csv,"{""group"": ""total"", ""name"": ""all""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3602,486,results/test_summary.csv,"{""group"": ""total"", ""name"": ""all""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3601,635,results/test_summary.csv,"{""group"": ""total"", ""name"": ""all""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3602,635,results/test_summary.csv,"{""group"": ""total"", ""name"": ""all""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
 N3603,0,results/test_summary.csv,"{""group"": ""total"", ""name"": ""all""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
 N3604,0,results/test_summary.csv,"{""group"": ""total"", ""name"": ""all""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3605,98,results/test_summary.csv,"{""group"": ""engine"", ""name"": ""sqlite""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3606,98,results/test_summary.csv,"{""group"": ""engine"", ""name"": ""sqlite""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3605,147,results/test_summary.csv,"{""group"": ""engine"", ""name"": ""sqlite""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3606,147,results/test_summary.csv,"{""group"": ""engine"", ""name"": ""sqlite""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
 N3607,0,results/test_summary.csv,"{""group"": ""engine"", ""name"": ""sqlite""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
 N3608,0,results/test_summary.csv,"{""group"": ""engine"", ""name"": ""sqlite""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3609,98,results/test_summary.csv,"{""group"": ""engine"", ""name"": ""mysql""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3610,98,results/test_summary.csv,"{""group"": ""engine"", ""name"": ""mysql""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3609,147,results/test_summary.csv,"{""group"": ""engine"", ""name"": ""mysql""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3610,147,results/test_summary.csv,"{""group"": ""engine"", ""name"": ""mysql""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
 N3611,0,results/test_summary.csv,"{""group"": ""engine"", ""name"": ""mysql""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
 N3612,0,results/test_summary.csv,"{""group"": ""engine"", ""name"": ""mysql""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
 N3613,20,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_access.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
 N3614,20,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_access.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
 N3615,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_access.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
 N3616,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_access.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3617,30,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_booking.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3618,30,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_booking.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3619,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_booking.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3620,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_booking.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3621,5,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_calibrate.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3622,5,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_calibrate.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3623,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_calibrate.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3624,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_calibrate.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3625,24,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_csrf.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3626,24,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_csrf.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3627,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_csrf.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3628,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_csrf.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3629,28,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_data_loaders.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3630,28,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_data_loaders.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3631,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_data_loaders.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3632,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_data_loaders.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3633,14,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_data_splits.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3634,14,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_data_splits.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3635,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_data_splits.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3636,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_data_splits.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3637,16,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_deployable_features.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3638,16,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_deployable_features.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3639,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_deployable_features.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3640,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_deployable_features.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3641,19,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_deployable_model.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3642,19,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_deployable_model.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3643,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_deployable_model.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3644,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_deployable_model.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3645,9,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_e1.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3646,9,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_e1.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3647,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_e1.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3648,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_e1.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3649,13,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_evaluate.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3650,13,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_evaluate.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3651,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_evaluate.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3652,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_evaluate.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3653,12,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_experiments.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3654,12,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_experiments.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3655,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_experiments.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3656,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_experiments.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3657,7,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_features.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3658,7,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_features.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3659,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_features.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3660,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_features.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3661,6,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_flow.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3662,6,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_flow.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3663,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_flow.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3664,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_flow.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3665,19,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_leakage.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3666,19,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_leakage.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3667,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_leakage.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3668,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_leakage.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3669,10,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_manifest.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3670,10,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_manifest.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3671,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_manifest.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3672,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_manifest.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3673,20,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_patient_actions.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3674,20,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_patient_actions.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3675,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_patient_actions.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3676,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_patient_actions.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3677,12,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_patient_isolation.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3678,12,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_patient_isolation.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3679,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_patient_isolation.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3680,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_patient_isolation.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3681,23,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_report_numbers.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3682,23,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_report_numbers.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3683,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_report_numbers.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3684,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_report_numbers.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3685,60,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_risk_flag.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3686,60,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_risk_flag.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3687,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_risk_flag.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3688,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_risk_flag.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3689,20,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_scheduling.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3690,20,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_scheduling.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3691,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_scheduling.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3692,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_scheduling.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3693,3,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_schema.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3694,3,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_schema.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3695,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_schema.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3696,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_schema.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3697,17,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_seed.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3698,17,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_seed.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3699,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_seed.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3700,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_seed.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3701,31,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_sim.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3702,31,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_sim.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3703,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_sim.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3704,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_sim.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3705,16,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_sim_experiments.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3706,16,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_sim_experiments.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3707,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_sim_experiments.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3708,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_sim_experiments.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3709,36,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_staff.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3710,36,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_staff.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3711,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_staff.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3712,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_staff.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3713,16,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_time_rules.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3714,16,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_time_rules.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3715,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_time_rules.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3716,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_time_rules.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
-N3717,"110,527",results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""rows_raw""}",value,"{:,.0f}",docs/RESULTS_SUMMARY.md
-N3718,16,results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""rows_removed""}",value,"{:,.0f}",docs/RESULTS_SUMMARY.md
-N3719,5,results/cleaning_log.csv,"{""dataset"": ""kaggle"", ""step"": ""3""}",rows_changed,"{:,.0f}",docs/RESULTS_SUMMARY.md
-N3720,6,results/cleaning_log.csv,"{""dataset"": ""kaggle"", ""step"": ""5""}",rows_changed,"{:,.0f}",docs/RESULTS_SUMMARY.md
-N3721,5,results/cleaning_log.csv,"{""dataset"": ""kaggle"", ""step"": ""6""}",rows_changed,"{:,.0f}",docs/RESULTS_SUMMARY.md
-N3722,"110,511",results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""rows_clean""}",value,"{:,.0f}",docs/RESULTS_SUMMARY.md
-N3723,"62,291",results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""unique_patients_clean""}",value,"{:,.0f}",docs/RESULTS_SUMMARY.md
-N3724,2016-04-29,results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""appointment_date_min""}",value,{},docs/RESULTS_SUMMARY.md
-N3725,2016-06-08,results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""appointment_date_max""}",value,{},docs/RESULTS_SUMMARY.md
-N3726,20.2%,results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""no_show_rate_clean""}",value,{:.1%},docs/RESULTS_SUMMARY.md
-N3727,34.9%,results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""share_same_day_booking""}",value,{:.1%},docs/RESULTS_SUMMARY.md
-N3728,4.8%,results/e1_eda_rates.csv,"{""dataset"": ""kaggle"", ""group"": ""0 (same day)"", ""variable"": ""lead_time_band""}",rate,{:.1%},docs/RESULTS_SUMMARY.md
-N3729,33.9%,results/e1_eda_rates.csv,"{""dataset"": ""kaggle"", ""group"": ""15-30"", ""variable"": ""lead_time_band""}",rate,{:.1%},docs/RESULTS_SUMMARY.md
-N3730,"61,214",results/dataset_summary.csv,"{""dataset"": ""openml"", ""metric"": ""rows_raw""}",value,"{:,.0f}",docs/RESULTS_SUMMARY.md
-N3731,"60,990",results/dataset_summary.csv,"{""dataset"": ""openml"", ""metric"": ""rows_clean""}",value,"{:,.0f}",docs/RESULTS_SUMMARY.md
-N3732,21.0%,results/dataset_summary.csv,"{""dataset"": ""openml"", ""metric"": ""no_show_rate_clean""}",value,{:.1%},docs/RESULTS_SUMMARY.md
-N3733,"6,637",results/dataset_summary.csv,"{""dataset"": ""hangu"", ""metric"": ""rows_raw""}",value,"{:,.0f}",docs/RESULTS_SUMMARY.md
-N3734,381,results/dataset_summary.csv,"{""dataset"": ""hangu"", ""metric"": ""sessions""}",value,"{:,.0f}",docs/RESULTS_SUMMARY.md
-N3735,12.1,results/dataset_summary.csv,"{""dataset"": ""hangu"", ""metric"": ""service_minutes_median""}",value,{:.1f},docs/RESULTS_SUMMARY.md
-N3736,13.4,results/dataset_summary.csv,"{""dataset"": ""hangu"", ""metric"": ""service_minutes_mean""}",value,{:.1f},docs/RESULTS_SUMMARY.md
-N3737,5,results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""n_holdout_dates""}",value,{:.0f},docs/RESULTS_SUMMARY.md
-N3738,27,results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""n_appointment_dates""}",value,{:.0f},docs/RESULTS_SUMMARY.md
-N3739,"21,984",results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""n_holdout_rows""}",value,"{:,.0f}",docs/RESULTS_SUMMARY.md
-N3740,0,results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""cv_patients_in_both_sides""}",value,{:.0f},docs/RESULTS_SUMMARY.md
-N3741,0.815,results/e2_baselines.csv,"{""dataset"": ""kaggle"", ""model"": ""always_show""}",accuracy,{:.3f},docs/RESULTS_SUMMARY.md
-N3742,0.500,results/e2_baselines.csv,"{""dataset"": ""kaggle"", ""model"": ""always_show""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
-N3743,0.185,results/e2_baselines.csv,"{""dataset"": ""kaggle"", ""model"": ""always_show""}",avg_precision,{:.3f},docs/RESULTS_SUMMARY.md
-N3744,0.518,results/e2_baselines.csv,"{""dataset"": ""kaggle"", ""model"": ""earlier_no_show_rate_rule""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
-N3745,0.511,results/e2_baselines.csv,"{""dataset"": ""kaggle"", ""model"": ""earlier_no_show_rate_rule""}",auc_roc_lo,{:.3f},docs/RESULTS_SUMMARY.md
-N3746,0.525,results/e2_baselines.csv,"{""dataset"": ""kaggle"", ""model"": ""earlier_no_show_rate_rule""}",auc_roc_hi,{:.3f},docs/RESULTS_SUMMARY.md
-N3747,1.77,results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""mean_appointments_per_patient""}",value,{:.2f},docs/RESULTS_SUMMARY.md
-N3748,0.718,results/e3_kaggle_models.csv,"{""model"": ""logistic_regression""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
-N3749,0.710,results/e3_kaggle_models.csv,"{""model"": ""logistic_regression""}",auc_roc_lo,{:.3f},docs/RESULTS_SUMMARY.md
-N3750,0.726,results/e3_kaggle_models.csv,"{""model"": ""logistic_regression""}",auc_roc_hi,{:.3f},docs/RESULTS_SUMMARY.md
-N3751,0.730,results/e3_kaggle_models.csv,"{""model"": ""random_forest""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
-N3752,0.722,results/e3_kaggle_models.csv,"{""model"": ""random_forest""}",auc_roc_lo,{:.3f},docs/RESULTS_SUMMARY.md
-N3753,0.738,results/e3_kaggle_models.csv,"{""model"": ""random_forest""}",auc_roc_hi,{:.3f},docs/RESULTS_SUMMARY.md
-N3754,0.732,results/e3_kaggle_models.csv,"{""model"": ""hist_gradient_boosting""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
-N3755,0.724,results/e3_kaggle_models.csv,"{""model"": ""hist_gradient_boosting""}",auc_roc_lo,{:.3f},docs/RESULTS_SUMMARY.md
-N3756,0.740,results/e3_kaggle_models.csv,"{""model"": ""hist_gradient_boosting""}",auc_roc_hi,{:.3f},docs/RESULTS_SUMMARY.md
-N3757,0.506,results/e3_kaggle_models.csv,"{""model"": ""control_shuffled_labels""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
-N3758,+0.200,results/e3_ladder.csv,"{""step"": ""earlier_no_show_rate_rule -> logistic_regression""}",delta_auc_roc,{:+.3f},docs/RESULTS_SUMMARY.md
-N3759,+0.190,results/e3_ladder.csv,"{""step"": ""earlier_no_show_rate_rule -> logistic_regression""}",delta_auc_roc_lo,{:+.3f},docs/RESULTS_SUMMARY.md
-N3760,+0.210,results/e3_ladder.csv,"{""step"": ""earlier_no_show_rate_rule -> logistic_regression""}",delta_auc_roc_hi,{:+.3f},docs/RESULTS_SUMMARY.md
-N3761,+0.012,results/e3_ladder.csv,"{""step"": ""logistic_regression -> random_forest""}",delta_auc_roc,{:+.3f},docs/RESULTS_SUMMARY.md
-N3762,+0.007,results/e3_ladder.csv,"{""step"": ""logistic_regression -> random_forest""}",delta_auc_roc_lo,{:+.3f},docs/RESULTS_SUMMARY.md
-N3763,+0.018,results/e3_ladder.csv,"{""step"": ""logistic_regression -> random_forest""}",delta_auc_roc_hi,{:+.3f},docs/RESULTS_SUMMARY.md
-N3764,+0.002,results/e3_ladder.csv,"{""step"": ""random_forest -> hist_gradient_boosting""}",delta_auc_roc,{:+.3f},docs/RESULTS_SUMMARY.md
-N3765,-0.001,results/e3_ladder.csv,"{""step"": ""random_forest -> hist_gradient_boosting""}",delta_auc_roc_lo,{:+.3f},docs/RESULTS_SUMMARY.md
-N3766,+0.004,results/e3_ladder.csv,"{""step"": ""random_forest -> hist_gradient_boosting""}",delta_auc_roc_hi,{:+.3f},docs/RESULTS_SUMMARY.md
-N3767,0.136,results/e3_kaggle_models.csv,"{""model"": ""random_forest""}",brier,{:.3f},docs/RESULTS_SUMMARY.md
-N3768,0.136,results/e3_kaggle_models.csv,"{""model"": ""hist_gradient_boosting""}",brier,{:.3f},docs/RESULTS_SUMMARY.md
-N3769,0.215,results/e3_kaggle_models.csv,"{""model"": ""logistic_regression""}",brier,{:.3f},docs/RESULTS_SUMMARY.md
-N3770,0.118,results/e3_kaggle_models.csv,"{""model"": ""hist_gradient_boosting""}",sens_at_prec_40,{:.3f},docs/RESULTS_SUMMARY.md
-N3771,0.022,results/e3_kaggle_models.csv,"{""model"": ""hist_gradient_boosting""}",sens_at_prec_50,{:.3f},docs/RESULTS_SUMMARY.md
-N3772,0.738,results/e4_ablation.csv,"{""variant"": ""all_features""}",cv_auc_mean,{:.3f},docs/RESULTS_SUMMARY.md
-N3773,-0.114,results/e4_ablation.csv,"{""variant"": ""drop_lead_calendar""}",delta_auc_vs_all,{:+.3f},docs/RESULTS_SUMMARY.md
-N3774,0.706,results/e4_ablation.csv,"{""variant"": ""only_lead_calendar""}",cv_auc_mean,{:.3f},docs/RESULTS_SUMMARY.md
-N3775,-0.011,results/e4_ablation.csv,"{""variant"": ""drop_demographics""}",delta_auc_vs_all,{:+.3f},docs/RESULTS_SUMMARY.md
-N3776,-0.005,results/e4_ablation.csv,"{""variant"": ""drop_history""}",delta_auc_vs_all,{:+.3f},docs/RESULTS_SUMMARY.md
-N3777,-0.002,results/e4_ablation.csv,"{""variant"": ""no_sms_received""}",delta_auc_vs_all,{:+.3f},docs/RESULTS_SUMMARY.md
-N3778,0.545,results/e4_ablation.csv,"{""variant"": ""only_history""}",cv_auc_mean,{:.3f},docs/RESULTS_SUMMARY.md
-N3779,4.5%,results/e4_sms_crosstab.csv,"{""lead_time_band"": ""1-3"", ""sms_received"": ""1""}",share_of_band_with_sms,{:.1%},docs/RESULTS_SUMMARY.md
-N3780,55.6%,results/e4_sms_crosstab.csv,"{""lead_time_band"": ""4-7"", ""sms_received"": ""1""}",share_of_band_with_sms,{:.1%},docs/RESULTS_SUMMARY.md
-N3781,-2.0,results/e4_sms_crosstab.csv,"{""lead_time_band"": ""1-3"", ""sms_received"": ""1""}",rate_difference_sms_minus_none,{pp},docs/RESULTS_SUMMARY.md
-N3782,-8.1,results/e4_sms_crosstab.csv,"{""lead_time_band"": ""31+"", ""sms_received"": ""1""}",rate_difference_sms_minus_none,{pp},docs/RESULTS_SUMMARY.md
-N3783,0.612,results/e5_openml_models.csv,"{""model"": ""logistic_regression""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
-N3784,0.602,results/e5_openml_models.csv,"{""model"": ""logistic_regression""}",auc_roc_lo,{:.3f},docs/RESULTS_SUMMARY.md
-N3785,0.623,results/e5_openml_models.csv,"{""model"": ""logistic_regression""}",auc_roc_hi,{:.3f},docs/RESULTS_SUMMARY.md
-N3786,0.648,results/e5_openml_models.csv,"{""model"": ""random_forest""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
-N3787,0.638,results/e5_openml_models.csv,"{""model"": ""random_forest""}",auc_roc_lo,{:.3f},docs/RESULTS_SUMMARY.md
-N3788,0.658,results/e5_openml_models.csv,"{""model"": ""random_forest""}",auc_roc_hi,{:.3f},docs/RESULTS_SUMMARY.md
-N3789,0.646,results/e5_openml_models.csv,"{""model"": ""hist_gradient_boosting""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
-N3790,0.636,results/e5_openml_models.csv,"{""model"": ""hist_gradient_boosting""}",auc_roc_lo,{:.3f},docs/RESULTS_SUMMARY.md
-N3791,0.655,results/e5_openml_models.csv,"{""model"": ""hist_gradient_boosting""}",auc_roc_hi,{:.3f},docs/RESULTS_SUMMARY.md
-N3792,0.529,results/e6_transfer.csv,"{""direction"": ""kaggle_to_openml"", ""model"": ""logistic_regression""}",auc_transfer,{:.3f},docs/RESULTS_SUMMARY.md
-N3793,0.538,results/e6_transfer.csv,"{""direction"": ""kaggle_to_openml"", ""model"": ""hist_gradient_boosting""}",auc_transfer,{:.3f},docs/RESULTS_SUMMARY.md
-N3794,0.540,results/e6_transfer.csv,"{""direction"": ""kaggle_to_openml"", ""model"": ""logistic_regression""}",auc_within_target,{:.3f},docs/RESULTS_SUMMARY.md
-N3795,0.568,results/e6_transfer.csv,"{""direction"": ""kaggle_to_openml"", ""model"": ""hist_gradient_boosting""}",auc_within_target,{:.3f},docs/RESULTS_SUMMARY.md
-N3796,+0.010,results/e6_transfer.csv,"{""direction"": ""kaggle_to_openml"", ""model"": ""logistic_regression""}",auc_drop,{:+.3f},docs/RESULTS_SUMMARY.md
-N3797,-0.001,results/e6_transfer.csv,"{""direction"": ""kaggle_to_openml"", ""model"": ""logistic_regression""}",auc_drop_lo,{:+.3f},docs/RESULTS_SUMMARY.md
-N3798,+0.023,results/e6_transfer.csv,"{""direction"": ""kaggle_to_openml"", ""model"": ""logistic_regression""}",auc_drop_hi,{:+.3f},docs/RESULTS_SUMMARY.md
-N3799,+0.030,results/e6_transfer.csv,"{""direction"": ""kaggle_to_openml"", ""model"": ""hist_gradient_boosting""}",auc_drop,{:+.3f},docs/RESULTS_SUMMARY.md
-N3800,+0.018,results/e6_transfer.csv,"{""direction"": ""kaggle_to_openml"", ""model"": ""hist_gradient_boosting""}",auc_drop_lo,{:+.3f},docs/RESULTS_SUMMARY.md
-N3801,+0.042,results/e6_transfer.csv,"{""direction"": ""kaggle_to_openml"", ""model"": ""hist_gradient_boosting""}",auc_drop_hi,{:+.3f},docs/RESULTS_SUMMARY.md
-N3802,0.640,results/e6_transfer.csv,"{""direction"": ""openml_to_kaggle"", ""model"": ""logistic_regression""}",auc_transfer,{:.3f},docs/RESULTS_SUMMARY.md
-N3803,0.608,results/e6_transfer.csv,"{""direction"": ""openml_to_kaggle"", ""model"": ""hist_gradient_boosting""}",auc_transfer,{:.3f},docs/RESULTS_SUMMARY.md
-N3804,0.713,results/e6_transfer.csv,"{""direction"": ""openml_to_kaggle"", ""model"": ""logistic_regression""}",auc_within_target,{:.3f},docs/RESULTS_SUMMARY.md
-N3805,0.723,results/e6_transfer.csv,"{""direction"": ""openml_to_kaggle"", ""model"": ""hist_gradient_boosting""}",auc_within_target,{:.3f},docs/RESULTS_SUMMARY.md
-N3806,+0.072,results/e6_transfer.csv,"{""direction"": ""openml_to_kaggle"", ""model"": ""logistic_regression""}",auc_drop,{:+.3f},docs/RESULTS_SUMMARY.md
-N3807,+0.062,results/e6_transfer.csv,"{""direction"": ""openml_to_kaggle"", ""model"": ""logistic_regression""}",auc_drop_lo,{:+.3f},docs/RESULTS_SUMMARY.md
-N3808,+0.082,results/e6_transfer.csv,"{""direction"": ""openml_to_kaggle"", ""model"": ""logistic_regression""}",auc_drop_hi,{:+.3f},docs/RESULTS_SUMMARY.md
-N3809,+0.114,results/e6_transfer.csv,"{""direction"": ""openml_to_kaggle"", ""model"": ""hist_gradient_boosting""}",auc_drop,{:+.3f},docs/RESULTS_SUMMARY.md
-N3810,+0.104,results/e6_transfer.csv,"{""direction"": ""openml_to_kaggle"", ""model"": ""hist_gradient_boosting""}",auc_drop_lo,{:+.3f},docs/RESULTS_SUMMARY.md
-N3811,+0.124,results/e6_transfer.csv,"{""direction"": ""openml_to_kaggle"", ""model"": ""hist_gradient_boosting""}",auc_drop_hi,{:+.3f},docs/RESULTS_SUMMARY.md
-N3812,17.3%,results/e1_eda_rates.csv,"{""dataset"": ""openml"", ""group"": ""0 (same day)"", ""variable"": ""lead_time_band""}",rate,{:.1%},docs/RESULTS_SUMMARY.md
-N3813,0.718,results/e7_imbalance.csv,"{""base_model"": ""logistic_regression"", ""strategy"": ""none""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
-N3814,0.718,results/e7_imbalance.csv,"{""base_model"": ""logistic_regression"", ""strategy"": ""class_weights""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
-N3815,0.442,results/e7_imbalance.csv,"{""base_model"": ""logistic_regression"", ""strategy"": ""class_weights""}",mean_predicted,{:.3f},docs/RESULTS_SUMMARY.md
-N3816,0.185,results/e7_imbalance.csv,"{""base_model"": ""logistic_regression"", ""strategy"": ""none""}",prevalence,{:.3f},docs/RESULTS_SUMMARY.md
-N3817,0.138,results/e7_imbalance.csv,"{""base_model"": ""logistic_regression"", ""strategy"": ""none""}",brier,{:.3f},docs/RESULTS_SUMMARY.md
-N3818,0.215,results/e7_imbalance.csv,"{""base_model"": ""logistic_regression"", ""strategy"": ""class_weights""}",brier,{:.3f},docs/RESULTS_SUMMARY.md
-N3819,0.720,results/e7_imbalance.csv,"{""base_model"": ""hist_gradient_boosting"", ""strategy"": ""smote""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
-N3820,0.156,results/e7_imbalance.csv,"{""base_model"": ""hist_gradient_boosting"", ""strategy"": ""smote""}",brier,{:.3f},docs/RESULTS_SUMMARY.md
-N3821,0.566,results/e7_imbalance.csv,"{""base_model"": ""logistic_regression"", ""strategy"": ""nearmiss""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
-N3822,0.635,results/e7_imbalance.csv,"{""base_model"": ""hist_gradient_boosting"", ""strategy"": ""nearmiss""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
-N3823,0.1448,results/e8_calibration.csv,"{""method"": ""uncalibrated"", ""stage"": ""grouped_cv""}",brier_cv,{:.4f},docs/RESULTS_SUMMARY.md
-N3824,0.1448,results/e8_calibration.csv,"{""method"": ""sigmoid"", ""stage"": ""grouped_cv""}",brier_cv,{:.4f},docs/RESULTS_SUMMARY.md
-N3825,0.1448,results/e8_calibration.csv,"{""method"": ""isotonic"", ""stage"": ""grouped_cv""}",brier_cv,{:.4f},docs/RESULTS_SUMMARY.md
-N3826,0.0124,results/e8_calibration.csv,"{""method"": ""uncalibrated"", ""stage"": ""holdout""}",ece,{:.4f},docs/RESULTS_SUMMARY.md
-N3827,0.1357,results/e8_calibration.csv,"{""method"": ""uncalibrated"", ""stage"": ""holdout""}",brier,{:.4f},docs/RESULTS_SUMMARY.md
-N3828,0.1328,results/e8_calibration.csv,"{""method"": ""uncalibrated"", ""stage"": ""holdout""}",brier_lo,{:.4f},docs/RESULTS_SUMMARY.md
-N3829,0.1385,results/e8_calibration.csv,"{""method"": ""uncalibrated"", ""stage"": ""holdout""}",brier_hi,{:.4f},docs/RESULTS_SUMMARY.md
-N3830,40.9%,results/e8_reliability.csv,"{""bin"": ""10"", ""version"": ""uncalibrated""}",mean_predicted,{:.1%},docs/RESULTS_SUMMARY.md
-N3831,37.4%,results/e8_reliability.csv,"{""bin"": ""10"", ""version"": ""uncalibrated""}",observed_rate,{:.1%},docs/RESULTS_SUMMARY.md
-N3832,0.727,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
-N3833,0.719,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",auc_roc_lo,{:.3f},docs/RESULTS_SUMMARY.md
-N3834,0.735,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",auc_roc_hi,{:.3f},docs/RESULTS_SUMMARY.md
-N3835,0.330,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",avg_precision,{:.3f},docs/RESULTS_SUMMARY.md
-N3836,0.316,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",avg_precision_lo,{:.3f},docs/RESULTS_SUMMARY.md
-N3837,0.345,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",avg_precision_hi,{:.3f},docs/RESULTS_SUMMARY.md
-N3838,0.137,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",brier,{:.3f},docs/RESULTS_SUMMARY.md
-N3839,0.134,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",brier_lo,{:.3f},docs/RESULTS_SUMMARY.md
-N3840,0.139,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",brier_hi,{:.3f},docs/RESULTS_SUMMARY.md
-N3841,0.732,results/e9_deployable.csv,"{""model"": ""research_all_features"", ""stage"": ""holdout""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
-N3842,0.724,results/e9_deployable.csv,"{""model"": ""research_all_features"", ""stage"": ""holdout""}",auc_roc_lo,{:.3f},docs/RESULTS_SUMMARY.md
-N3843,0.740,results/e9_deployable.csv,"{""model"": ""research_all_features"", ""stage"": ""holdout""}",auc_roc_hi,{:.3f},docs/RESULTS_SUMMARY.md
-N3844,-0.005,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",delta_auc_roc_vs_research,{:+.3f},docs/RESULTS_SUMMARY.md
-N3845,-0.009,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",delta_auc_roc_vs_research_lo,{:+.3f},docs/RESULTS_SUMMARY.md
-N3846,-0.002,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",delta_auc_roc_vs_research_hi,{:+.3f},docs/RESULTS_SUMMARY.md
-N3847,0.062,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",sens_at_prec_40,{:.3f},docs/RESULTS_SUMMARY.md
-N3848,0.016,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",sens_at_prec_40_lo,{:.3f},docs/RESULTS_SUMMARY.md
-N3849,0.189,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",sens_at_prec_40_hi,{:.3f},docs/RESULTS_SUMMARY.md
-N3850,0.118,results/e9_deployable.csv,"{""model"": ""research_all_features"", ""stage"": ""holdout""}",sens_at_prec_40,{:.3f},docs/RESULTS_SUMMARY.md
-N3851,0.051,results/e9_deployable.csv,"{""model"": ""research_all_features"", ""stage"": ""holdout""}",sens_at_prec_40_lo,{:.3f},docs/RESULTS_SUMMARY.md
-N3852,0.233,results/e9_deployable.csv,"{""model"": ""research_all_features"", ""stage"": ""holdout""}",sens_at_prec_40_hi,{:.3f},docs/RESULTS_SUMMARY.md
-N3853,0.19,results/e10_thresholds.csv,"{""kind"": ""chosen"", ""label"": ""medium""}",threshold,{:.2f},docs/RESULTS_SUMMARY.md
-N3854,0.38,results/e10_thresholds.csv,"{""kind"": ""chosen"", ""label"": ""high""}",threshold,{:.2f},docs/RESULTS_SUMMARY.md
-N3855,41.4%,results/e10_thresholds.csv,"{""kind"": ""band"", ""label"": ""low""}",share_flagged,{:.1%},docs/RESULTS_SUMMARY.md
-N3856,5.9%,results/e10_thresholds.csv,"{""kind"": ""band"", ""label"": ""low""}",precision,{:.1%},docs/RESULTS_SUMMARY.md
-N3857,48.6%,results/e10_thresholds.csv,"{""kind"": ""band"", ""label"": ""medium""}",share_flagged,{:.1%},docs/RESULTS_SUMMARY.md
-N3858,25.4%,results/e10_thresholds.csv,"{""kind"": ""band"", ""label"": ""medium""}",precision,{:.1%},docs/RESULTS_SUMMARY.md
-N3859,10.0%,results/e10_thresholds.csv,"{""kind"": ""band"", ""label"": ""high""}",share_flagged,{:.1%},docs/RESULTS_SUMMARY.md
-N3860,37.1%,results/e10_thresholds.csv,"{""kind"": ""band"", ""label"": ""high""}",precision,{:.1%},docs/RESULTS_SUMMARY.md
-N3861,27.4%,results/e10_thresholds.csv,"{""kind"": ""chosen"", ""label"": ""medium""}",precision,{:.1%},docs/RESULTS_SUMMARY.md
-N3862,37.1%,results/e10_thresholds.csv,"{""kind"": ""chosen"", ""label"": ""high""}",precision,{:.1%},docs/RESULTS_SUMMARY.md
-N3863,20.0%,results/e10_thresholds.csv,"{""kind"": ""band"", ""label"": ""high""}",sensitivity,{:.1%},docs/RESULTS_SUMMARY.md
-N3864,86.7%,results/e10_thresholds.csv,"{""kind"": ""chosen"", ""label"": ""medium""}",sensitivity,{:.1%},docs/RESULTS_SUMMARY.md
-N3865,18.5%,results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""holdout_no_show_rate""}",value,{:.1%},docs/RESULTS_SUMMARY.md
-N3866,31,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_sim.py""}",passed,"{:,.0f}",docs/RESULTS_SUMMARY.md
-N3867,16,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_sim_experiments.py""}",passed,"{:,.0f}",docs/RESULTS_SUMMARY.md
-N3868,"41,027.6",results/sim_service_time_fit.csv,"{""family"": ""lognormal""}",aic,"{:,.1f}",docs/RESULTS_SUMMARY.md
-N3869,"41,268.5",results/sim_service_time_fit.csv,"{""family"": ""gamma""}",aic,"{:,.1f}",docs/RESULTS_SUMMARY.md
-N3870,12.1,results/sim_service_time_fit.csv,"{""family"": ""lognormal""}",median_service_min,{:.1f},docs/RESULTS_SUMMARY.md
-N3871,15,results/sim_service_time_fit.csv,"{""family"": ""lognormal""}",slot_minutes_default,{:.0f},docs/RESULTS_SUMMARY.md
-N3872,240,results/sim_service_time_fit.csv,"{""family"": ""lognormal""}",session_minutes_default,{:.0f},docs/RESULTS_SUMMARY.md
-N3873,16,results/s2_policy_tradeoffs.csv,"{""policy"": ""P0""}",n_slots,{:.0f},docs/RESULTS_SUMMARY.md
-N3874,"1,000",results/s2_policy_tradeoffs.csv,"{""policy"": ""P0""}",n_reps,"{:,.0f}",docs/RESULTS_SUMMARY.md
-N3875,42,results/s2_policy_tradeoffs.csv,"{""policy"": ""P0""}",base_seed,{:.0f},docs/RESULTS_SUMMARY.md
-N3876,12.75,results/s2_policy_tradeoffs.csv,"{""policy"": ""P0""}",patients_served,{:.2f},docs/RESULTS_SUMMARY.md
-N3877,2.9,results/s2_policy_tradeoffs.csv,"{""policy"": ""P0""}",mean_wait_min,{:.1f},docs/RESULTS_SUMMARY.md
-N3878,3.7,results/s2_policy_tradeoffs.csv,"{""policy"": ""P0""}",overtime_min,{:.1f},docs/RESULTS_SUMMARY.md
-N3879,72.1,results/s2_policy_tradeoffs.csv,"{""policy"": ""P0""}",idle_min,{:.1f},docs/RESULTS_SUMMARY.md
-N3880,19.16,results/s2_policy_tradeoffs.csv,"{""policy"": ""P1 k=2""}",patients_served,{:.2f},docs/RESULTS_SUMMARY.md
-N3881,21.4,results/s2_policy_tradeoffs.csv,"{""policy"": ""P1 k=2""}",mean_wait_min,{:.1f},docs/RESULTS_SUMMARY.md
-N3882,37.3,results/s2_policy_tradeoffs.csv,"{""policy"": ""P1 k=2""}",overtime_min,{:.1f},docs/RESULTS_SUMMARY.md
-N3883,19.7,results/s2_policy_tradeoffs.csv,"{""policy"": ""P1 k=2""}",idle_min,{:.1f},docs/RESULTS_SUMMARY.md
-N3884,1.52,results/s2_policy_tradeoffs.csv,"{""policy"": ""P2 p90""}",double_slots_mean,{:.2f},docs/RESULTS_SUMMARY.md
-N3885,13.99,results/s2_policy_tradeoffs.csv,"{""policy"": ""P2 p90""}",patients_served,{:.2f},docs/RESULTS_SUMMARY.md
-N3886,5.2,results/s2_policy_tradeoffs.csv,"{""policy"": ""P2 p90""}",mean_wait_min,{:.1f},docs/RESULTS_SUMMARY.md
-N3887,6.6,results/s2_policy_tradeoffs.csv,"{""policy"": ""P2 p90""}",overtime_min,{:.1f},docs/RESULTS_SUMMARY.md
-N3888,4.36,results/s3_probability_error.csv,"{""policy"": ""P2 0.3"", ""risk_shift"": ""0.0""}",double_slots_mean,{:.2f},docs/RESULTS_SUMMARY.md
-N3889,11.0,results/s3_probability_error.csv,"{""policy"": ""P2 0.3"", ""risk_shift"": ""0.0""}",mean_wait_min,{:.1f},docs/RESULTS_SUMMARY.md
-N3890,8.94,results/s3_probability_error.csv,"{""policy"": ""P2 0.3"", ""risk_shift"": ""0.1""}",double_slots_mean,{:.2f},docs/RESULTS_SUMMARY.md
-N3891,24.8,results/s3_probability_error.csv,"{""policy"": ""P2 0.3"", ""risk_shift"": ""0.1""}",mean_wait_min,{:.1f},docs/RESULTS_SUMMARY.md
-N3892,42.5,results/s3_probability_error.csv,"{""policy"": ""P2 0.3"", ""risk_shift"": ""0.1""}",overtime_min,{:.1f},docs/RESULTS_SUMMARY.md
-N3893,0.93,results/s3_probability_error.csv,"{""policy"": ""P2 0.3"", ""risk_shift"": ""-0.1""}",double_slots_mean,{:.2f},docs/RESULTS_SUMMARY.md
-N3894,4.3,results/s3_probability_error.csv,"{""policy"": ""P2 0.3"", ""risk_shift"": ""-0.1""}",mean_wait_min,{:.1f},docs/RESULTS_SUMMARY.md
-N3895,13.51,results/s3_probability_error.csv,"{""policy"": ""P2 0.3"", ""risk_shift"": ""-0.1""}",patients_served,{:.2f},docs/RESULTS_SUMMARY.md
-N3896,10.2%,results/s4_base_rate.csv,"{""base_rate_scale"": ""0.5"", ""policy"": ""P0""}",base_no_show_rate,{:.1%},docs/RESULTS_SUMMARY.md
-N3897,30.6%,results/s4_base_rate.csv,"{""base_rate_scale"": ""1.5"", ""policy"": ""P0""}",base_no_show_rate,{:.1%},docs/RESULTS_SUMMARY.md
-N3898,14.38,results/s4_base_rate.csv,"{""base_rate_scale"": ""0.5"", ""policy"": ""P0""}",patients_served,{:.2f},docs/RESULTS_SUMMARY.md
-N3899,11.18,results/s4_base_rate.csv,"{""base_rate_scale"": ""1.5"", ""policy"": ""P0""}",patients_served,{:.2f},docs/RESULTS_SUMMARY.md
-N3900,30.9,results/s4_base_rate.csv,"{""base_rate_scale"": ""0.5"", ""policy"": ""P1 k=2""}",mean_wait_min,{:.1f},docs/RESULTS_SUMMARY.md
-N3901,14.4,results/s4_base_rate.csv,"{""base_rate_scale"": ""1.5"", ""policy"": ""P1 k=2""}",mean_wait_min,{:.1f},docs/RESULTS_SUMMARY.md
-N3902,0.03,results/s4_base_rate.csv,"{""base_rate_scale"": ""0.5"", ""policy"": ""P2 0.3""}",double_slots_mean,{:.2f},docs/RESULTS_SUMMARY.md
-N3903,8.94,results/s4_base_rate.csv,"{""base_rate_scale"": ""1.5"", ""policy"": ""P2 0.3""}",double_slots_mean,{:.2f},docs/RESULTS_SUMMARY.md
-N3904,13.4,results/s5_service_variability.csv,"{""policy"": ""P0"", ""variability_scale"": ""1.0""}",service_mean_min,{:.1f},docs/RESULTS_SUMMARY.md
-N3905,3.1,results/s5_service_variability.csv,"{""policy"": ""P0"", ""variability_scale"": ""0.5""}",service_sd_min,{:.1f},docs/RESULTS_SUMMARY.md
-N3906,6.1,results/s5_service_variability.csv,"{""policy"": ""P0"", ""variability_scale"": ""1.0""}",service_sd_min,{:.1f},docs/RESULTS_SUMMARY.md
-N3907,9.2,results/s5_service_variability.csv,"{""policy"": ""P0"", ""variability_scale"": ""1.5""}",service_sd_min,{:.1f},docs/RESULTS_SUMMARY.md
-N3908,0.81,results/s5_service_variability.csv,"{""policy"": ""P0"", ""variability_scale"": ""0.5""}",mean_wait_min,{:.2f},docs/RESULTS_SUMMARY.md
-N3909,2.90,results/s5_service_variability.csv,"{""policy"": ""P0"", ""variability_scale"": ""1.0""}",mean_wait_min,{:.2f},docs/RESULTS_SUMMARY.md
-N3910,5.56,results/s5_service_variability.csv,"{""policy"": ""P0"", ""variability_scale"": ""1.5""}",mean_wait_min,{:.2f},docs/RESULTS_SUMMARY.md
-N3911,10.1,results/s5_service_variability.csv,"{""policy"": ""P1 k=3"", ""variability_scale"": ""0.5""}",mean_wait_min,{:.1f},docs/RESULTS_SUMMARY.md
-N3912,13.1,results/s5_service_variability.csv,"{""policy"": ""P1 k=3"", ""variability_scale"": ""1.0""}",mean_wait_min,{:.1f},docs/RESULTS_SUMMARY.md
-N3913,16.8,results/s5_service_variability.csv,"{""policy"": ""P1 k=3"", ""variability_scale"": ""1.5""}",mean_wait_min,{:.1f},docs/RESULTS_SUMMARY.md
-N3914,0.80,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=2""}",served_gain_per_double_slot,{:.2f},docs/RESULTS_SUMMARY.md
-N3915,-0.412,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""0.3""}",mean_wait_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
-N3916,-0.678,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""0.3""}",mean_wait_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
-N3917,-0.145,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""0.3""}",mean_wait_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
-N3918,-0.528,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p70""}",mean_wait_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
-N3919,-0.808,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p70""}",mean_wait_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
-N3920,-0.249,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p70""}",mean_wait_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
-N3921,-0.456,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p80""}",mean_wait_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
-N3922,-0.674,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p80""}",mean_wait_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
-N3923,-0.237,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p80""}",mean_wait_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
-N3924,-0.572,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p90""}",mean_wait_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
-N3925,-0.734,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p90""}",mean_wait_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
-N3926,-0.409,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p90""}",mean_wait_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
-N3927,-0.370,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p95""}",mean_wait_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
-N3928,-0.489,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p95""}",mean_wait_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
-N3929,-0.251,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p95""}",mean_wait_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
-N3930,-0.148,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p50""}",mean_wait_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
-N3931,-0.456,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p50""}",mean_wait_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
-N3932,+0.161,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p50""}",mean_wait_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
-N3933,+0.240,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p95""}",overtime_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
-N3934,+0.025,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p95""}",overtime_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
-N3935,+0.455,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p95""}",overtime_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
-N3936,-1.301,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p50""}",mean_wait_min_vs_random,{:+.3f},docs/RESULTS_SUMMARY.md
-N3937,-1.688,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p50""}",mean_wait_min_vs_random_lo,{:+.3f},docs/RESULTS_SUMMARY.md
-N3938,-0.914,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p50""}",mean_wait_min_vs_random_hi,{:+.3f},docs/RESULTS_SUMMARY.md
-N3939,50.7%,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""0.3""}",share_double_slots_both_attend,{:.1%},docs/RESULTS_SUMMARY.md
-N3940,63.2%,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""uniform"", ""setting"": ""0.3""}",share_double_slots_both_attend,{:.1%},docs/RESULTS_SUMMARY.md
-N3941,63.3%,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""random"", ""setting"": ""0.3""}",share_double_slots_both_attend,{:.1%},docs/RESULTS_SUMMARY.md
-N3942,26.8%,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""oracle"", ""setting"": ""0.3""}",share_double_slots_both_attend,{:.1%},docs/RESULTS_SUMMARY.md
-N3943,-2.477,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""oracle"", ""setting"": ""p80""}",mean_wait_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
-N3944,-2.695,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""oracle"", ""setting"": ""p80""}",mean_wait_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
-N3945,-2.259,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""oracle"", ""setting"": ""p80""}",mean_wait_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
-N3946,-0.578,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=3""}",mean_wait_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
-N3947,-0.863,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=3""}",mean_wait_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
-N3948,-0.292,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=3""}",mean_wait_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
-N3949,-0.807,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=6""}",mean_wait_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
-N3950,-0.999,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=6""}",mean_wait_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
-N3951,-0.616,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=6""}",mean_wait_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
-N3952,+0.136,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=2""}",mean_wait_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
-N3953,-0.195,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=2""}",mean_wait_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
-N3954,+0.467,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=2""}",mean_wait_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
-N3955,+0.148,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=4""}",mean_wait_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
-N3956,-0.111,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=4""}",mean_wait_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
-N3957,+0.407,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=4""}",mean_wait_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
-N3958,+0.563,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=6""}",overtime_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
-N3959,+0.238,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=6""}",overtime_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
-N3960,+0.888,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=6""}",overtime_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
-N3961,1,results/dataset_summary.csv,"{""dataset"": ""openml"", ""metric"": ""appt_month_min""}",value,{:.0f},docs/RESULTS_SUMMARY.md
-N3962,4,results/dataset_summary.csv,"{""dataset"": ""openml"", ""metric"": ""appt_month_max""}",value,{:.0f},docs/RESULTS_SUMMARY.md
+N3617,32,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_account.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3618,32,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_account.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3619,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_account.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3620,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_account.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3621,30,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_booking.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3622,30,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_booking.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3623,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_booking.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3624,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_booking.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3625,5,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_calibrate.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3626,5,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_calibrate.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3627,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_calibrate.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3628,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_calibrate.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3629,24,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_csrf.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3630,24,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_csrf.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3631,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_csrf.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3632,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_csrf.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3633,28,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_data_loaders.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3634,28,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_data_loaders.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3635,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_data_loaders.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3636,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_data_loaders.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3637,14,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_data_splits.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3638,14,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_data_splits.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3639,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_data_splits.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3640,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_data_splits.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3641,16,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_deployable_features.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3642,16,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_deployable_features.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3643,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_deployable_features.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3644,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_deployable_features.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3645,19,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_deployable_model.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3646,19,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_deployable_model.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3647,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_deployable_model.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3648,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_deployable_model.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3649,9,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_e1.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3650,9,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_e1.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3651,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_e1.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3652,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_e1.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3653,13,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_evaluate.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3654,13,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_evaluate.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3655,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_evaluate.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3656,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_evaluate.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3657,12,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_experiments.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3658,12,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_experiments.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3659,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_experiments.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3660,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_experiments.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3661,7,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_features.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3662,7,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_features.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3663,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_features.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3664,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_features.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3665,6,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_flow.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3666,6,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_flow.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3667,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_flow.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3668,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_flow.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3669,19,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_leakage.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3670,19,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_leakage.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3671,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_leakage.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3672,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_leakage.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3673,22,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_login_throttle.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3674,22,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_login_throttle.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3675,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_login_throttle.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3676,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_login_throttle.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3677,10,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_manifest.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3678,10,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_manifest.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3679,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_manifest.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3680,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_manifest.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3681,20,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_patient_actions.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3682,20,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_patient_actions.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3683,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_patient_actions.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3684,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_patient_actions.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3685,12,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_patient_isolation.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3686,12,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_patient_isolation.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3687,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_patient_isolation.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3688,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_patient_isolation.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3689,26,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_patient_overlap.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3690,26,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_patient_overlap.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3691,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_patient_overlap.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3692,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_patient_overlap.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3693,23,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_report_numbers.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3694,23,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_report_numbers.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3695,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_report_numbers.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3696,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_report_numbers.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3697,29,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_research_page.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3698,29,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_research_page.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3699,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_research_page.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3700,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_research_page.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3701,60,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_risk_flag.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3702,60,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_risk_flag.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3703,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_risk_flag.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3704,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_risk_flag.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3705,22,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_risk_status.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3706,22,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_risk_status.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3707,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_risk_status.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3708,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_risk_status.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3709,18,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_robustness.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3710,18,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_robustness.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3711,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_robustness.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3712,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_robustness.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3713,20,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_scheduling.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3714,20,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_scheduling.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3715,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_scheduling.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3716,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_scheduling.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3717,3,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_schema.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3718,3,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_schema.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3719,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_schema.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3720,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_schema.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3721,17,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_seed.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3722,17,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_seed.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3723,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_seed.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3724,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_seed.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3725,31,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_sim.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3726,31,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_sim.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3727,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_sim.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3728,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_sim.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3729,16,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_sim_experiments.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3730,16,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_sim_experiments.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3731,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_sim_experiments.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3732,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_sim_experiments.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3733,36,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_staff.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3734,36,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_staff.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3735,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_staff.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3736,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_staff.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3737,16,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_time_rules.py""}",tests,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3738,16,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_time_rules.py""}",passed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3739,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_time_rules.py""}",failed,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3740,0,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_time_rules.py""}",skipped,"{:,.0f}",docs/report_assets/tables/t21_test_summary.md
+N3741,"110,527",results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""rows_raw""}",value,"{:,.0f}",docs/RESULTS_SUMMARY.md
+N3742,16,results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""rows_removed""}",value,"{:,.0f}",docs/RESULTS_SUMMARY.md
+N3743,5,results/cleaning_log.csv,"{""dataset"": ""kaggle"", ""step"": ""3""}",rows_changed,"{:,.0f}",docs/RESULTS_SUMMARY.md
+N3744,6,results/cleaning_log.csv,"{""dataset"": ""kaggle"", ""step"": ""5""}",rows_changed,"{:,.0f}",docs/RESULTS_SUMMARY.md
+N3745,5,results/cleaning_log.csv,"{""dataset"": ""kaggle"", ""step"": ""6""}",rows_changed,"{:,.0f}",docs/RESULTS_SUMMARY.md
+N3746,"110,511",results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""rows_clean""}",value,"{:,.0f}",docs/RESULTS_SUMMARY.md
+N3747,"62,291",results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""unique_patients_clean""}",value,"{:,.0f}",docs/RESULTS_SUMMARY.md
+N3748,2016-04-29,results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""appointment_date_min""}",value,{},docs/RESULTS_SUMMARY.md
+N3749,2016-06-08,results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""appointment_date_max""}",value,{},docs/RESULTS_SUMMARY.md
+N3750,20.2%,results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""no_show_rate_clean""}",value,{:.1%},docs/RESULTS_SUMMARY.md
+N3751,34.9%,results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""share_same_day_booking""}",value,{:.1%},docs/RESULTS_SUMMARY.md
+N3752,4.8%,results/e1_eda_rates.csv,"{""dataset"": ""kaggle"", ""group"": ""0 (same day)"", ""variable"": ""lead_time_band""}",rate,{:.1%},docs/RESULTS_SUMMARY.md
+N3753,33.9%,results/e1_eda_rates.csv,"{""dataset"": ""kaggle"", ""group"": ""15-30"", ""variable"": ""lead_time_band""}",rate,{:.1%},docs/RESULTS_SUMMARY.md
+N3754,"61,214",results/dataset_summary.csv,"{""dataset"": ""openml"", ""metric"": ""rows_raw""}",value,"{:,.0f}",docs/RESULTS_SUMMARY.md
+N3755,"60,990",results/dataset_summary.csv,"{""dataset"": ""openml"", ""metric"": ""rows_clean""}",value,"{:,.0f}",docs/RESULTS_SUMMARY.md
+N3756,21.0%,results/dataset_summary.csv,"{""dataset"": ""openml"", ""metric"": ""no_show_rate_clean""}",value,{:.1%},docs/RESULTS_SUMMARY.md
+N3757,"6,637",results/dataset_summary.csv,"{""dataset"": ""hangu"", ""metric"": ""rows_raw""}",value,"{:,.0f}",docs/RESULTS_SUMMARY.md
+N3758,381,results/dataset_summary.csv,"{""dataset"": ""hangu"", ""metric"": ""sessions""}",value,"{:,.0f}",docs/RESULTS_SUMMARY.md
+N3759,12.1,results/dataset_summary.csv,"{""dataset"": ""hangu"", ""metric"": ""service_minutes_median""}",value,{:.1f},docs/RESULTS_SUMMARY.md
+N3760,13.4,results/dataset_summary.csv,"{""dataset"": ""hangu"", ""metric"": ""service_minutes_mean""}",value,{:.1f},docs/RESULTS_SUMMARY.md
+N3761,5,results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""n_holdout_dates""}",value,{:.0f},docs/RESULTS_SUMMARY.md
+N3762,27,results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""n_appointment_dates""}",value,{:.0f},docs/RESULTS_SUMMARY.md
+N3763,"21,984",results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""n_holdout_rows""}",value,"{:,.0f}",docs/RESULTS_SUMMARY.md
+N3764,0,results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""cv_patients_in_both_sides""}",value,{:.0f},docs/RESULTS_SUMMARY.md
+N3765,0.815,results/e2_baselines.csv,"{""dataset"": ""kaggle"", ""model"": ""always_show""}",accuracy,{:.3f},docs/RESULTS_SUMMARY.md
+N3766,0.500,results/e2_baselines.csv,"{""dataset"": ""kaggle"", ""model"": ""always_show""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
+N3767,0.185,results/e2_baselines.csv,"{""dataset"": ""kaggle"", ""model"": ""always_show""}",avg_precision,{:.3f},docs/RESULTS_SUMMARY.md
+N3768,0.518,results/e2_baselines.csv,"{""dataset"": ""kaggle"", ""model"": ""earlier_no_show_rate_rule""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
+N3769,0.511,results/e2_baselines.csv,"{""dataset"": ""kaggle"", ""model"": ""earlier_no_show_rate_rule""}",auc_roc_lo,{:.3f},docs/RESULTS_SUMMARY.md
+N3770,0.525,results/e2_baselines.csv,"{""dataset"": ""kaggle"", ""model"": ""earlier_no_show_rate_rule""}",auc_roc_hi,{:.3f},docs/RESULTS_SUMMARY.md
+N3771,1.77,results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""mean_appointments_per_patient""}",value,{:.2f},docs/RESULTS_SUMMARY.md
+N3772,0.718,results/e3_kaggle_models.csv,"{""model"": ""logistic_regression""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
+N3773,0.710,results/e3_kaggle_models.csv,"{""model"": ""logistic_regression""}",auc_roc_lo,{:.3f},docs/RESULTS_SUMMARY.md
+N3774,0.726,results/e3_kaggle_models.csv,"{""model"": ""logistic_regression""}",auc_roc_hi,{:.3f},docs/RESULTS_SUMMARY.md
+N3775,0.730,results/e3_kaggle_models.csv,"{""model"": ""random_forest""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
+N3776,0.722,results/e3_kaggle_models.csv,"{""model"": ""random_forest""}",auc_roc_lo,{:.3f},docs/RESULTS_SUMMARY.md
+N3777,0.738,results/e3_kaggle_models.csv,"{""model"": ""random_forest""}",auc_roc_hi,{:.3f},docs/RESULTS_SUMMARY.md
+N3778,0.732,results/e3_kaggle_models.csv,"{""model"": ""hist_gradient_boosting""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
+N3779,0.724,results/e3_kaggle_models.csv,"{""model"": ""hist_gradient_boosting""}",auc_roc_lo,{:.3f},docs/RESULTS_SUMMARY.md
+N3780,0.740,results/e3_kaggle_models.csv,"{""model"": ""hist_gradient_boosting""}",auc_roc_hi,{:.3f},docs/RESULTS_SUMMARY.md
+N3781,0.506,results/e3_kaggle_models.csv,"{""model"": ""control_shuffled_labels""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
+N3782,+0.200,results/e3_ladder.csv,"{""step"": ""earlier_no_show_rate_rule -> logistic_regression""}",delta_auc_roc,{:+.3f},docs/RESULTS_SUMMARY.md
+N3783,+0.190,results/e3_ladder.csv,"{""step"": ""earlier_no_show_rate_rule -> logistic_regression""}",delta_auc_roc_lo,{:+.3f},docs/RESULTS_SUMMARY.md
+N3784,+0.210,results/e3_ladder.csv,"{""step"": ""earlier_no_show_rate_rule -> logistic_regression""}",delta_auc_roc_hi,{:+.3f},docs/RESULTS_SUMMARY.md
+N3785,+0.012,results/e3_ladder.csv,"{""step"": ""logistic_regression -> random_forest""}",delta_auc_roc,{:+.3f},docs/RESULTS_SUMMARY.md
+N3786,+0.007,results/e3_ladder.csv,"{""step"": ""logistic_regression -> random_forest""}",delta_auc_roc_lo,{:+.3f},docs/RESULTS_SUMMARY.md
+N3787,+0.018,results/e3_ladder.csv,"{""step"": ""logistic_regression -> random_forest""}",delta_auc_roc_hi,{:+.3f},docs/RESULTS_SUMMARY.md
+N3788,+0.002,results/e3_ladder.csv,"{""step"": ""random_forest -> hist_gradient_boosting""}",delta_auc_roc,{:+.3f},docs/RESULTS_SUMMARY.md
+N3789,-0.001,results/e3_ladder.csv,"{""step"": ""random_forest -> hist_gradient_boosting""}",delta_auc_roc_lo,{:+.3f},docs/RESULTS_SUMMARY.md
+N3790,+0.004,results/e3_ladder.csv,"{""step"": ""random_forest -> hist_gradient_boosting""}",delta_auc_roc_hi,{:+.3f},docs/RESULTS_SUMMARY.md
+N3791,0.136,results/e3_kaggle_models.csv,"{""model"": ""random_forest""}",brier,{:.3f},docs/RESULTS_SUMMARY.md
+N3792,0.136,results/e3_kaggle_models.csv,"{""model"": ""hist_gradient_boosting""}",brier,{:.3f},docs/RESULTS_SUMMARY.md
+N3793,0.215,results/e3_kaggle_models.csv,"{""model"": ""logistic_regression""}",brier,{:.3f},docs/RESULTS_SUMMARY.md
+N3794,0.118,results/e3_kaggle_models.csv,"{""model"": ""hist_gradient_boosting""}",sens_at_prec_40,{:.3f},docs/RESULTS_SUMMARY.md
+N3795,0.022,results/e3_kaggle_models.csv,"{""model"": ""hist_gradient_boosting""}",sens_at_prec_50,{:.3f},docs/RESULTS_SUMMARY.md
+N3796,0.738,results/e4_ablation.csv,"{""variant"": ""all_features""}",cv_auc_mean,{:.3f},docs/RESULTS_SUMMARY.md
+N3797,-0.114,results/e4_ablation.csv,"{""variant"": ""drop_lead_calendar""}",delta_auc_vs_all,{:+.3f},docs/RESULTS_SUMMARY.md
+N3798,0.706,results/e4_ablation.csv,"{""variant"": ""only_lead_calendar""}",cv_auc_mean,{:.3f},docs/RESULTS_SUMMARY.md
+N3799,-0.011,results/e4_ablation.csv,"{""variant"": ""drop_demographics""}",delta_auc_vs_all,{:+.3f},docs/RESULTS_SUMMARY.md
+N3800,-0.005,results/e4_ablation.csv,"{""variant"": ""drop_history""}",delta_auc_vs_all,{:+.3f},docs/RESULTS_SUMMARY.md
+N3801,-0.002,results/e4_ablation.csv,"{""variant"": ""no_sms_received""}",delta_auc_vs_all,{:+.3f},docs/RESULTS_SUMMARY.md
+N3802,0.545,results/e4_ablation.csv,"{""variant"": ""only_history""}",cv_auc_mean,{:.3f},docs/RESULTS_SUMMARY.md
+N3803,4.5%,results/e4_sms_crosstab.csv,"{""lead_time_band"": ""1-3"", ""sms_received"": ""1""}",share_of_band_with_sms,{:.1%},docs/RESULTS_SUMMARY.md
+N3804,55.6%,results/e4_sms_crosstab.csv,"{""lead_time_band"": ""4-7"", ""sms_received"": ""1""}",share_of_band_with_sms,{:.1%},docs/RESULTS_SUMMARY.md
+N3805,-2.0,results/e4_sms_crosstab.csv,"{""lead_time_band"": ""1-3"", ""sms_received"": ""1""}",rate_difference_sms_minus_none,{pp},docs/RESULTS_SUMMARY.md
+N3806,-8.1,results/e4_sms_crosstab.csv,"{""lead_time_band"": ""31+"", ""sms_received"": ""1""}",rate_difference_sms_minus_none,{pp},docs/RESULTS_SUMMARY.md
+N3807,0.612,results/e5_openml_models.csv,"{""model"": ""logistic_regression""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
+N3808,0.602,results/e5_openml_models.csv,"{""model"": ""logistic_regression""}",auc_roc_lo,{:.3f},docs/RESULTS_SUMMARY.md
+N3809,0.623,results/e5_openml_models.csv,"{""model"": ""logistic_regression""}",auc_roc_hi,{:.3f},docs/RESULTS_SUMMARY.md
+N3810,0.648,results/e5_openml_models.csv,"{""model"": ""random_forest""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
+N3811,0.638,results/e5_openml_models.csv,"{""model"": ""random_forest""}",auc_roc_lo,{:.3f},docs/RESULTS_SUMMARY.md
+N3812,0.658,results/e5_openml_models.csv,"{""model"": ""random_forest""}",auc_roc_hi,{:.3f},docs/RESULTS_SUMMARY.md
+N3813,0.646,results/e5_openml_models.csv,"{""model"": ""hist_gradient_boosting""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
+N3814,0.636,results/e5_openml_models.csv,"{""model"": ""hist_gradient_boosting""}",auc_roc_lo,{:.3f},docs/RESULTS_SUMMARY.md
+N3815,0.655,results/e5_openml_models.csv,"{""model"": ""hist_gradient_boosting""}",auc_roc_hi,{:.3f},docs/RESULTS_SUMMARY.md
+N3816,0.529,results/e6_transfer.csv,"{""direction"": ""kaggle_to_openml"", ""model"": ""logistic_regression""}",auc_transfer,{:.3f},docs/RESULTS_SUMMARY.md
+N3817,0.538,results/e6_transfer.csv,"{""direction"": ""kaggle_to_openml"", ""model"": ""hist_gradient_boosting""}",auc_transfer,{:.3f},docs/RESULTS_SUMMARY.md
+N3818,0.540,results/e6_transfer.csv,"{""direction"": ""kaggle_to_openml"", ""model"": ""logistic_regression""}",auc_within_target,{:.3f},docs/RESULTS_SUMMARY.md
+N3819,0.568,results/e6_transfer.csv,"{""direction"": ""kaggle_to_openml"", ""model"": ""hist_gradient_boosting""}",auc_within_target,{:.3f},docs/RESULTS_SUMMARY.md
+N3820,+0.010,results/e6_transfer.csv,"{""direction"": ""kaggle_to_openml"", ""model"": ""logistic_regression""}",auc_drop,{:+.3f},docs/RESULTS_SUMMARY.md
+N3821,-0.001,results/e6_transfer.csv,"{""direction"": ""kaggle_to_openml"", ""model"": ""logistic_regression""}",auc_drop_lo,{:+.3f},docs/RESULTS_SUMMARY.md
+N3822,+0.023,results/e6_transfer.csv,"{""direction"": ""kaggle_to_openml"", ""model"": ""logistic_regression""}",auc_drop_hi,{:+.3f},docs/RESULTS_SUMMARY.md
+N3823,+0.030,results/e6_transfer.csv,"{""direction"": ""kaggle_to_openml"", ""model"": ""hist_gradient_boosting""}",auc_drop,{:+.3f},docs/RESULTS_SUMMARY.md
+N3824,+0.018,results/e6_transfer.csv,"{""direction"": ""kaggle_to_openml"", ""model"": ""hist_gradient_boosting""}",auc_drop_lo,{:+.3f},docs/RESULTS_SUMMARY.md
+N3825,+0.042,results/e6_transfer.csv,"{""direction"": ""kaggle_to_openml"", ""model"": ""hist_gradient_boosting""}",auc_drop_hi,{:+.3f},docs/RESULTS_SUMMARY.md
+N3826,0.640,results/e6_transfer.csv,"{""direction"": ""openml_to_kaggle"", ""model"": ""logistic_regression""}",auc_transfer,{:.3f},docs/RESULTS_SUMMARY.md
+N3827,0.608,results/e6_transfer.csv,"{""direction"": ""openml_to_kaggle"", ""model"": ""hist_gradient_boosting""}",auc_transfer,{:.3f},docs/RESULTS_SUMMARY.md
+N3828,0.713,results/e6_transfer.csv,"{""direction"": ""openml_to_kaggle"", ""model"": ""logistic_regression""}",auc_within_target,{:.3f},docs/RESULTS_SUMMARY.md
+N3829,0.723,results/e6_transfer.csv,"{""direction"": ""openml_to_kaggle"", ""model"": ""hist_gradient_boosting""}",auc_within_target,{:.3f},docs/RESULTS_SUMMARY.md
+N3830,+0.072,results/e6_transfer.csv,"{""direction"": ""openml_to_kaggle"", ""model"": ""logistic_regression""}",auc_drop,{:+.3f},docs/RESULTS_SUMMARY.md
+N3831,+0.062,results/e6_transfer.csv,"{""direction"": ""openml_to_kaggle"", ""model"": ""logistic_regression""}",auc_drop_lo,{:+.3f},docs/RESULTS_SUMMARY.md
+N3832,+0.082,results/e6_transfer.csv,"{""direction"": ""openml_to_kaggle"", ""model"": ""logistic_regression""}",auc_drop_hi,{:+.3f},docs/RESULTS_SUMMARY.md
+N3833,+0.114,results/e6_transfer.csv,"{""direction"": ""openml_to_kaggle"", ""model"": ""hist_gradient_boosting""}",auc_drop,{:+.3f},docs/RESULTS_SUMMARY.md
+N3834,+0.104,results/e6_transfer.csv,"{""direction"": ""openml_to_kaggle"", ""model"": ""hist_gradient_boosting""}",auc_drop_lo,{:+.3f},docs/RESULTS_SUMMARY.md
+N3835,+0.124,results/e6_transfer.csv,"{""direction"": ""openml_to_kaggle"", ""model"": ""hist_gradient_boosting""}",auc_drop_hi,{:+.3f},docs/RESULTS_SUMMARY.md
+N3836,17.3%,results/e1_eda_rates.csv,"{""dataset"": ""openml"", ""group"": ""0 (same day)"", ""variable"": ""lead_time_band""}",rate,{:.1%},docs/RESULTS_SUMMARY.md
+N3837,0.718,results/e7_imbalance.csv,"{""base_model"": ""logistic_regression"", ""strategy"": ""none""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
+N3838,0.718,results/e7_imbalance.csv,"{""base_model"": ""logistic_regression"", ""strategy"": ""class_weights""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
+N3839,0.442,results/e7_imbalance.csv,"{""base_model"": ""logistic_regression"", ""strategy"": ""class_weights""}",mean_predicted,{:.3f},docs/RESULTS_SUMMARY.md
+N3840,0.185,results/e7_imbalance.csv,"{""base_model"": ""logistic_regression"", ""strategy"": ""none""}",prevalence,{:.3f},docs/RESULTS_SUMMARY.md
+N3841,0.138,results/e7_imbalance.csv,"{""base_model"": ""logistic_regression"", ""strategy"": ""none""}",brier,{:.3f},docs/RESULTS_SUMMARY.md
+N3842,0.215,results/e7_imbalance.csv,"{""base_model"": ""logistic_regression"", ""strategy"": ""class_weights""}",brier,{:.3f},docs/RESULTS_SUMMARY.md
+N3843,0.720,results/e7_imbalance.csv,"{""base_model"": ""hist_gradient_boosting"", ""strategy"": ""smote""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
+N3844,0.156,results/e7_imbalance.csv,"{""base_model"": ""hist_gradient_boosting"", ""strategy"": ""smote""}",brier,{:.3f},docs/RESULTS_SUMMARY.md
+N3845,0.566,results/e7_imbalance.csv,"{""base_model"": ""logistic_regression"", ""strategy"": ""nearmiss""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
+N3846,0.635,results/e7_imbalance.csv,"{""base_model"": ""hist_gradient_boosting"", ""strategy"": ""nearmiss""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
+N3847,0.1448,results/e8_calibration.csv,"{""method"": ""uncalibrated"", ""stage"": ""grouped_cv""}",brier_cv,{:.4f},docs/RESULTS_SUMMARY.md
+N3848,0.1448,results/e8_calibration.csv,"{""method"": ""sigmoid"", ""stage"": ""grouped_cv""}",brier_cv,{:.4f},docs/RESULTS_SUMMARY.md
+N3849,0.1448,results/e8_calibration.csv,"{""method"": ""isotonic"", ""stage"": ""grouped_cv""}",brier_cv,{:.4f},docs/RESULTS_SUMMARY.md
+N3850,0.0124,results/e8_calibration.csv,"{""method"": ""uncalibrated"", ""stage"": ""holdout""}",ece,{:.4f},docs/RESULTS_SUMMARY.md
+N3851,0.1357,results/e8_calibration.csv,"{""method"": ""uncalibrated"", ""stage"": ""holdout""}",brier,{:.4f},docs/RESULTS_SUMMARY.md
+N3852,0.1328,results/e8_calibration.csv,"{""method"": ""uncalibrated"", ""stage"": ""holdout""}",brier_lo,{:.4f},docs/RESULTS_SUMMARY.md
+N3853,0.1385,results/e8_calibration.csv,"{""method"": ""uncalibrated"", ""stage"": ""holdout""}",brier_hi,{:.4f},docs/RESULTS_SUMMARY.md
+N3854,40.9%,results/e8_reliability.csv,"{""bin"": ""10"", ""version"": ""uncalibrated""}",mean_predicted,{:.1%},docs/RESULTS_SUMMARY.md
+N3855,37.4%,results/e8_reliability.csv,"{""bin"": ""10"", ""version"": ""uncalibrated""}",observed_rate,{:.1%},docs/RESULTS_SUMMARY.md
+N3856,0.727,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
+N3857,0.719,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",auc_roc_lo,{:.3f},docs/RESULTS_SUMMARY.md
+N3858,0.735,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",auc_roc_hi,{:.3f},docs/RESULTS_SUMMARY.md
+N3859,0.330,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",avg_precision,{:.3f},docs/RESULTS_SUMMARY.md
+N3860,0.316,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",avg_precision_lo,{:.3f},docs/RESULTS_SUMMARY.md
+N3861,0.345,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",avg_precision_hi,{:.3f},docs/RESULTS_SUMMARY.md
+N3862,0.137,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",brier,{:.3f},docs/RESULTS_SUMMARY.md
+N3863,0.134,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",brier_lo,{:.3f},docs/RESULTS_SUMMARY.md
+N3864,0.139,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",brier_hi,{:.3f},docs/RESULTS_SUMMARY.md
+N3865,0.732,results/e9_deployable.csv,"{""model"": ""research_all_features"", ""stage"": ""holdout""}",auc_roc,{:.3f},docs/RESULTS_SUMMARY.md
+N3866,0.724,results/e9_deployable.csv,"{""model"": ""research_all_features"", ""stage"": ""holdout""}",auc_roc_lo,{:.3f},docs/RESULTS_SUMMARY.md
+N3867,0.740,results/e9_deployable.csv,"{""model"": ""research_all_features"", ""stage"": ""holdout""}",auc_roc_hi,{:.3f},docs/RESULTS_SUMMARY.md
+N3868,-0.005,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",delta_auc_roc_vs_research,{:+.3f},docs/RESULTS_SUMMARY.md
+N3869,-0.009,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",delta_auc_roc_vs_research_lo,{:+.3f},docs/RESULTS_SUMMARY.md
+N3870,-0.002,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",delta_auc_roc_vs_research_hi,{:+.3f},docs/RESULTS_SUMMARY.md
+N3871,0.062,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",sens_at_prec_40,{:.3f},docs/RESULTS_SUMMARY.md
+N3872,0.016,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",sens_at_prec_40_lo,{:.3f},docs/RESULTS_SUMMARY.md
+N3873,0.189,results/e9_deployable.csv,"{""model"": ""deployable"", ""stage"": ""holdout""}",sens_at_prec_40_hi,{:.3f},docs/RESULTS_SUMMARY.md
+N3874,0.118,results/e9_deployable.csv,"{""model"": ""research_all_features"", ""stage"": ""holdout""}",sens_at_prec_40,{:.3f},docs/RESULTS_SUMMARY.md
+N3875,0.051,results/e9_deployable.csv,"{""model"": ""research_all_features"", ""stage"": ""holdout""}",sens_at_prec_40_lo,{:.3f},docs/RESULTS_SUMMARY.md
+N3876,0.233,results/e9_deployable.csv,"{""model"": ""research_all_features"", ""stage"": ""holdout""}",sens_at_prec_40_hi,{:.3f},docs/RESULTS_SUMMARY.md
+N3877,0.19,results/e10_thresholds.csv,"{""kind"": ""chosen"", ""label"": ""medium""}",threshold,{:.2f},docs/RESULTS_SUMMARY.md
+N3878,0.38,results/e10_thresholds.csv,"{""kind"": ""chosen"", ""label"": ""high""}",threshold,{:.2f},docs/RESULTS_SUMMARY.md
+N3879,41.4%,results/e10_thresholds.csv,"{""kind"": ""band"", ""label"": ""low""}",share_flagged,{:.1%},docs/RESULTS_SUMMARY.md
+N3880,5.9%,results/e10_thresholds.csv,"{""kind"": ""band"", ""label"": ""low""}",precision,{:.1%},docs/RESULTS_SUMMARY.md
+N3881,48.6%,results/e10_thresholds.csv,"{""kind"": ""band"", ""label"": ""medium""}",share_flagged,{:.1%},docs/RESULTS_SUMMARY.md
+N3882,25.4%,results/e10_thresholds.csv,"{""kind"": ""band"", ""label"": ""medium""}",precision,{:.1%},docs/RESULTS_SUMMARY.md
+N3883,10.0%,results/e10_thresholds.csv,"{""kind"": ""band"", ""label"": ""high""}",share_flagged,{:.1%},docs/RESULTS_SUMMARY.md
+N3884,37.1%,results/e10_thresholds.csv,"{""kind"": ""band"", ""label"": ""high""}",precision,{:.1%},docs/RESULTS_SUMMARY.md
+N3885,27.4%,results/e10_thresholds.csv,"{""kind"": ""chosen"", ""label"": ""medium""}",precision,{:.1%},docs/RESULTS_SUMMARY.md
+N3886,37.1%,results/e10_thresholds.csv,"{""kind"": ""chosen"", ""label"": ""high""}",precision,{:.1%},docs/RESULTS_SUMMARY.md
+N3887,20.0%,results/e10_thresholds.csv,"{""kind"": ""band"", ""label"": ""high""}",sensitivity,{:.1%},docs/RESULTS_SUMMARY.md
+N3888,86.7%,results/e10_thresholds.csv,"{""kind"": ""chosen"", ""label"": ""medium""}",sensitivity,{:.1%},docs/RESULTS_SUMMARY.md
+N3889,18.5%,results/dataset_summary.csv,"{""dataset"": ""kaggle"", ""metric"": ""holdout_no_show_rate""}",value,{:.1%},docs/RESULTS_SUMMARY.md
+N3890,31,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_sim.py""}",passed,"{:,.0f}",docs/RESULTS_SUMMARY.md
+N3891,16,results/test_summary.csv,"{""group"": ""module"", ""name"": ""tests/test_sim_experiments.py""}",passed,"{:,.0f}",docs/RESULTS_SUMMARY.md
+N3892,"41,027.6",results/sim_service_time_fit.csv,"{""family"": ""lognormal""}",aic,"{:,.1f}",docs/RESULTS_SUMMARY.md
+N3893,"41,268.5",results/sim_service_time_fit.csv,"{""family"": ""gamma""}",aic,"{:,.1f}",docs/RESULTS_SUMMARY.md
+N3894,12.1,results/sim_service_time_fit.csv,"{""family"": ""lognormal""}",median_service_min,{:.1f},docs/RESULTS_SUMMARY.md
+N3895,15,results/sim_service_time_fit.csv,"{""family"": ""lognormal""}",slot_minutes_default,{:.0f},docs/RESULTS_SUMMARY.md
+N3896,240,results/sim_service_time_fit.csv,"{""family"": ""lognormal""}",session_minutes_default,{:.0f},docs/RESULTS_SUMMARY.md
+N3897,16,results/s2_policy_tradeoffs.csv,"{""policy"": ""P0""}",n_slots,{:.0f},docs/RESULTS_SUMMARY.md
+N3898,"1,000",results/s2_policy_tradeoffs.csv,"{""policy"": ""P0""}",n_reps,"{:,.0f}",docs/RESULTS_SUMMARY.md
+N3899,42,results/s2_policy_tradeoffs.csv,"{""policy"": ""P0""}",base_seed,{:.0f},docs/RESULTS_SUMMARY.md
+N3900,12.75,results/s2_policy_tradeoffs.csv,"{""policy"": ""P0""}",patients_served,{:.2f},docs/RESULTS_SUMMARY.md
+N3901,2.9,results/s2_policy_tradeoffs.csv,"{""policy"": ""P0""}",mean_wait_min,{:.1f},docs/RESULTS_SUMMARY.md
+N3902,3.7,results/s2_policy_tradeoffs.csv,"{""policy"": ""P0""}",overtime_min,{:.1f},docs/RESULTS_SUMMARY.md
+N3903,72.1,results/s2_policy_tradeoffs.csv,"{""policy"": ""P0""}",idle_min,{:.1f},docs/RESULTS_SUMMARY.md
+N3904,19.16,results/s2_policy_tradeoffs.csv,"{""policy"": ""P1 k=2""}",patients_served,{:.2f},docs/RESULTS_SUMMARY.md
+N3905,21.4,results/s2_policy_tradeoffs.csv,"{""policy"": ""P1 k=2""}",mean_wait_min,{:.1f},docs/RESULTS_SUMMARY.md
+N3906,37.3,results/s2_policy_tradeoffs.csv,"{""policy"": ""P1 k=2""}",overtime_min,{:.1f},docs/RESULTS_SUMMARY.md
+N3907,19.7,results/s2_policy_tradeoffs.csv,"{""policy"": ""P1 k=2""}",idle_min,{:.1f},docs/RESULTS_SUMMARY.md
+N3908,1.52,results/s2_policy_tradeoffs.csv,"{""policy"": ""P2 p90""}",double_slots_mean,{:.2f},docs/RESULTS_SUMMARY.md
+N3909,13.99,results/s2_policy_tradeoffs.csv,"{""policy"": ""P2 p90""}",patients_served,{:.2f},docs/RESULTS_SUMMARY.md
+N3910,5.2,results/s2_policy_tradeoffs.csv,"{""policy"": ""P2 p90""}",mean_wait_min,{:.1f},docs/RESULTS_SUMMARY.md
+N3911,6.6,results/s2_policy_tradeoffs.csv,"{""policy"": ""P2 p90""}",overtime_min,{:.1f},docs/RESULTS_SUMMARY.md
+N3912,4.36,results/s3_probability_error.csv,"{""policy"": ""P2 0.3"", ""risk_shift"": ""0.0""}",double_slots_mean,{:.2f},docs/RESULTS_SUMMARY.md
+N3913,11.0,results/s3_probability_error.csv,"{""policy"": ""P2 0.3"", ""risk_shift"": ""0.0""}",mean_wait_min,{:.1f},docs/RESULTS_SUMMARY.md
+N3914,8.94,results/s3_probability_error.csv,"{""policy"": ""P2 0.3"", ""risk_shift"": ""0.1""}",double_slots_mean,{:.2f},docs/RESULTS_SUMMARY.md
+N3915,24.8,results/s3_probability_error.csv,"{""policy"": ""P2 0.3"", ""risk_shift"": ""0.1""}",mean_wait_min,{:.1f},docs/RESULTS_SUMMARY.md
+N3916,42.5,results/s3_probability_error.csv,"{""policy"": ""P2 0.3"", ""risk_shift"": ""0.1""}",overtime_min,{:.1f},docs/RESULTS_SUMMARY.md
+N3917,0.93,results/s3_probability_error.csv,"{""policy"": ""P2 0.3"", ""risk_shift"": ""-0.1""}",double_slots_mean,{:.2f},docs/RESULTS_SUMMARY.md
+N3918,4.3,results/s3_probability_error.csv,"{""policy"": ""P2 0.3"", ""risk_shift"": ""-0.1""}",mean_wait_min,{:.1f},docs/RESULTS_SUMMARY.md
+N3919,13.51,results/s3_probability_error.csv,"{""policy"": ""P2 0.3"", ""risk_shift"": ""-0.1""}",patients_served,{:.2f},docs/RESULTS_SUMMARY.md
+N3920,10.2%,results/s4_base_rate.csv,"{""base_rate_scale"": ""0.5"", ""policy"": ""P0""}",base_no_show_rate,{:.1%},docs/RESULTS_SUMMARY.md
+N3921,30.6%,results/s4_base_rate.csv,"{""base_rate_scale"": ""1.5"", ""policy"": ""P0""}",base_no_show_rate,{:.1%},docs/RESULTS_SUMMARY.md
+N3922,14.38,results/s4_base_rate.csv,"{""base_rate_scale"": ""0.5"", ""policy"": ""P0""}",patients_served,{:.2f},docs/RESULTS_SUMMARY.md
+N3923,11.18,results/s4_base_rate.csv,"{""base_rate_scale"": ""1.5"", ""policy"": ""P0""}",patients_served,{:.2f},docs/RESULTS_SUMMARY.md
+N3924,30.9,results/s4_base_rate.csv,"{""base_rate_scale"": ""0.5"", ""policy"": ""P1 k=2""}",mean_wait_min,{:.1f},docs/RESULTS_SUMMARY.md
+N3925,14.4,results/s4_base_rate.csv,"{""base_rate_scale"": ""1.5"", ""policy"": ""P1 k=2""}",mean_wait_min,{:.1f},docs/RESULTS_SUMMARY.md
+N3926,0.03,results/s4_base_rate.csv,"{""base_rate_scale"": ""0.5"", ""policy"": ""P2 0.3""}",double_slots_mean,{:.2f},docs/RESULTS_SUMMARY.md
+N3927,8.94,results/s4_base_rate.csv,"{""base_rate_scale"": ""1.5"", ""policy"": ""P2 0.3""}",double_slots_mean,{:.2f},docs/RESULTS_SUMMARY.md
+N3928,13.4,results/s5_service_variability.csv,"{""policy"": ""P0"", ""variability_scale"": ""1.0""}",service_mean_min,{:.1f},docs/RESULTS_SUMMARY.md
+N3929,3.1,results/s5_service_variability.csv,"{""policy"": ""P0"", ""variability_scale"": ""0.5""}",service_sd_min,{:.1f},docs/RESULTS_SUMMARY.md
+N3930,6.1,results/s5_service_variability.csv,"{""policy"": ""P0"", ""variability_scale"": ""1.0""}",service_sd_min,{:.1f},docs/RESULTS_SUMMARY.md
+N3931,9.2,results/s5_service_variability.csv,"{""policy"": ""P0"", ""variability_scale"": ""1.5""}",service_sd_min,{:.1f},docs/RESULTS_SUMMARY.md
+N3932,0.81,results/s5_service_variability.csv,"{""policy"": ""P0"", ""variability_scale"": ""0.5""}",mean_wait_min,{:.2f},docs/RESULTS_SUMMARY.md
+N3933,2.90,results/s5_service_variability.csv,"{""policy"": ""P0"", ""variability_scale"": ""1.0""}",mean_wait_min,{:.2f},docs/RESULTS_SUMMARY.md
+N3934,5.56,results/s5_service_variability.csv,"{""policy"": ""P0"", ""variability_scale"": ""1.5""}",mean_wait_min,{:.2f},docs/RESULTS_SUMMARY.md
+N3935,10.1,results/s5_service_variability.csv,"{""policy"": ""P1 k=3"", ""variability_scale"": ""0.5""}",mean_wait_min,{:.1f},docs/RESULTS_SUMMARY.md
+N3936,13.1,results/s5_service_variability.csv,"{""policy"": ""P1 k=3"", ""variability_scale"": ""1.0""}",mean_wait_min,{:.1f},docs/RESULTS_SUMMARY.md
+N3937,16.8,results/s5_service_variability.csv,"{""policy"": ""P1 k=3"", ""variability_scale"": ""1.5""}",mean_wait_min,{:.1f},docs/RESULTS_SUMMARY.md
+N3938,0.80,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=2""}",served_gain_per_double_slot,{:.2f},docs/RESULTS_SUMMARY.md
+N3939,-0.412,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""0.3""}",mean_wait_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
+N3940,-0.678,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""0.3""}",mean_wait_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
+N3941,-0.145,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""0.3""}",mean_wait_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
+N3942,-0.528,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p70""}",mean_wait_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
+N3943,-0.808,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p70""}",mean_wait_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
+N3944,-0.249,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p70""}",mean_wait_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
+N3945,-0.456,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p80""}",mean_wait_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
+N3946,-0.674,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p80""}",mean_wait_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
+N3947,-0.237,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p80""}",mean_wait_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
+N3948,-0.572,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p90""}",mean_wait_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
+N3949,-0.734,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p90""}",mean_wait_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
+N3950,-0.409,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p90""}",mean_wait_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
+N3951,-0.370,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p95""}",mean_wait_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
+N3952,-0.489,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p95""}",mean_wait_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
+N3953,-0.251,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p95""}",mean_wait_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
+N3954,-0.148,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p50""}",mean_wait_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
+N3955,-0.456,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p50""}",mean_wait_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
+N3956,+0.161,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p50""}",mean_wait_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
+N3957,+0.240,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p95""}",overtime_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
+N3958,+0.025,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p95""}",overtime_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
+N3959,+0.455,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p95""}",overtime_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
+N3960,-1.301,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p50""}",mean_wait_min_vs_random,{:+.3f},docs/RESULTS_SUMMARY.md
+N3961,-1.688,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p50""}",mean_wait_min_vs_random_lo,{:+.3f},docs/RESULTS_SUMMARY.md
+N3962,-0.914,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""p50""}",mean_wait_min_vs_random_hi,{:+.3f},docs/RESULTS_SUMMARY.md
+N3963,50.7%,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""p2_risk_threshold"", ""setting"": ""0.3""}",share_double_slots_both_attend,{:.1%},docs/RESULTS_SUMMARY.md
+N3964,63.2%,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""uniform"", ""setting"": ""0.3""}",share_double_slots_both_attend,{:.1%},docs/RESULTS_SUMMARY.md
+N3965,63.3%,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""random"", ""setting"": ""0.3""}",share_double_slots_both_attend,{:.1%},docs/RESULTS_SUMMARY.md
+N3966,26.8%,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""oracle"", ""setting"": ""0.3""}",share_double_slots_both_attend,{:.1%},docs/RESULTS_SUMMARY.md
+N3967,-2.477,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""oracle"", ""setting"": ""p80""}",mean_wait_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
+N3968,-2.695,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""oracle"", ""setting"": ""p80""}",mean_wait_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
+N3969,-2.259,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p2"", ""selector"": ""oracle"", ""setting"": ""p80""}",mean_wait_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
+N3970,-0.578,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=3""}",mean_wait_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
+N3971,-0.863,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=3""}",mean_wait_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
+N3972,-0.292,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=3""}",mean_wait_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
+N3973,-0.807,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=6""}",mean_wait_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
+N3974,-0.999,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=6""}",mean_wait_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
+N3975,-0.616,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=6""}",mean_wait_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
+N3976,+0.136,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=2""}",mean_wait_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
+N3977,-0.195,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=2""}",mean_wait_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
+N3978,+0.467,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=2""}",mean_wait_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
+N3979,+0.148,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=4""}",mean_wait_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
+N3980,-0.111,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=4""}",mean_wait_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
+N3981,+0.407,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=4""}",mean_wait_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
+N3982,+0.563,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=6""}",overtime_min_vs_uniform,{:+.3f},docs/RESULTS_SUMMARY.md
+N3983,+0.238,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=6""}",overtime_min_vs_uniform_lo,{:+.3f},docs/RESULTS_SUMMARY.md
+N3984,+0.888,results/s6_value_of_prediction.csv,"{""scheme"": ""matched_to_p1"", ""selector"": ""risk_top_m"", ""setting"": ""k=6""}",overtime_min_vs_uniform_hi,{:+.3f},docs/RESULTS_SUMMARY.md
+N3985,1,results/dataset_summary.csv,"{""dataset"": ""openml"", ""metric"": ""appt_month_min""}",value,{:.0f},docs/RESULTS_SUMMARY.md
+N3986,4,results/dataset_summary.csv,"{""dataset"": ""openml"", ""metric"": ""appt_month_max""}",value,{:.0f},docs/RESULTS_SUMMARY.md

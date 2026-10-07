@@ -12,6 +12,7 @@ bp = Blueprint("patient", __name__, url_prefix="/patient")
 patient_only = roles_required("patient")
 
 DAYS_SHOWN = 14
+_CLASH = "You already have an appointment at that time with {doctor}. Cancel or move it first, or pick another time."
 
 
 def _slot_page(template: str, doctor, day, error=None, status=200, **context):
@@ -49,7 +50,7 @@ def index():
     return render_template("patient/doctors.html", doctors=queries.list_doctors())
 
 
-@bp.get("/doctors/<int:doctor_id>")
+@bp.get("/doctors/<dbid:doctor_id>")
 @patient_only
 def doctor_slots(doctor_id):
     doctor = queries.get_doctor(doctor_id) or abort(404)
@@ -64,6 +65,10 @@ def book():
         abort(400)
     slot = queries.slot_info(slot_id) or abort(404)
     reason = (request.form.get("reason") or "").strip()[:500] or None
+    clash = queries.patient_clash(g.user.id, slot_id)
+    if clash is not None:
+        return _slot_page("patient/doctor_slots.html", queries.get_doctor(slot.doctor_id), slot.slot_date, status=409,
+                          error=_CLASH.format(doctor=clash.doctor_name))
     try:
         booking = services.book(slot_id, g.user.id, reason)
     except services.SlotTaken:
@@ -87,7 +92,7 @@ def bookings():
     return _bookings_page()
 
 
-@bp.post("/bookings/<int:booking_id>/cancel")
+@bp.post("/bookings/<dbid:booking_id>/cancel")
 @patient_only
 def cancel(booking_id):
     queries.booking_for_patient(booking_id, g.user.id) or abort(404)
@@ -107,20 +112,23 @@ def _reschedule_page(booking, day=None, error=None, status=200):
                       status=status, booking=booking)
 
 
-@bp.get("/bookings/<int:booking_id>/reschedule")
+@bp.get("/bookings/<dbid:booking_id>/reschedule")
 @patient_only
 def reschedule_form(booking_id):
     booking = queries.booking_for_patient(booking_id, g.user.id) or abort(404)
     return _reschedule_page(booking, forms.parse_date(request.args.get("date")))
 
 
-@bp.post("/bookings/<int:booking_id>/reschedule")
+@bp.post("/bookings/<dbid:booking_id>/reschedule")
 @patient_only
 def reschedule(booking_id):
     booking = queries.booking_for_patient(booking_id, g.user.id) or abort(404)
     new_slot_id = forms.parse_int(request.form.get("new_slot_id"), low=1)
     if new_slot_id is None:
         abort(400)
+    clash = queries.patient_clash(g.user.id, new_slot_id, ignoring_booking_id=booking_id)
+    if clash is not None:
+        return _reschedule_page(booking, status=409, error=_CLASH.format(doctor=clash.doctor_name))
     try:
         moved = services.reschedule(booking_id, new_slot_id, g.user.id)
     except services.SlotTaken:

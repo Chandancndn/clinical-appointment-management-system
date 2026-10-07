@@ -6,10 +6,17 @@ cryptography
 python-dotenv
 pytest
 pandas
-numpy
 scipy
-scikit-learn>=1.6
 imbalanced-learn
 simpy
 matplotlib
-joblib
+
+# The saved risk model (ml/artifacts/risk_model.joblib) was written with these versions (see ml/artifacts/model_card.json).
+# A model unpickled by other versions can score slightly differently, so they are pinned wherever they exist.
+# Python 3.9 and 3.10 cannot install them; there the app still works and the admin overview says the versions differ.
+scikit-learn==1.9.1; python_version >= "3.11"
+numpy==2.5.3; python_version >= "3.11"
+joblib==1.6.0; python_version >= "3.11"
+scikit-learn>=1.6; python_version < "3.11"
+numpy; python_version < "3.11"
+joblib; python_version < "3.11"

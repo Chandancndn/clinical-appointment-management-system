@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Models and simulation{% endblock %}
+{% block content %}
+<h1>Models and simulation</h1>
+<p class="muted">The risk model behind the Low, Medium and High badges, and the booking-policy simulation that studied overbooking. Everything here was computed beforehand by the project's scripts from public datasets and is read from their result files. The app itself never overbooks, and the flag is advisory only.</p>
+
+{% if page.missing %}
+  <div class="alert alert-info" role="status">Some result files were not found, so those parts are left out: {{ page.missing|join('; ') }}.</div>
+{% endif %}
+
+<h2>The risk model</h2>
+{% if page.card %}
+<section class="card">
+  <p><strong>{{ page.card.name }}</strong>, version {{ page.card.version }}. A {{ page.card.family }} model, trained on {{ page.card.dataset }}
+    ({{ page.card.rows_train }} appointments to train, {{ page.card.rows_holdout }} held back and scored once). Calibration: {{ page.card.calibration }}.</p>
+  <p>{{ page.card.intended_use }}</p>
+  <table>
+    <thead><tr><th>Input the model sees</th><th>What it is</th></tr></thead>
+    <tbody>{% for name, description in page.card.features %}<tr><td><code>{{ name }}</code></td><td>{{ description }}</td></tr>{% endfor %}</tbody>
+  </table>
+  {% if page.metrics %}
+    <p>On the held-out data its AUC-ROC is <strong>{{ page.metrics.auc }}</strong> (95% interval {{ page.metrics.auc_lo }} to {{ page.metrics.auc_hi }}),
+      average precision {{ page.metrics.ap }} and Brier score {{ page.metrics.brier }}. That is a useful ranking, not a certainty.
+      <span class="muted">Source: results/e9_deployable.csv.</span></p>
+  {% endif %}
+</section>
+{% endif %}
+
+{% if page.bands %}
+<h2>The three bands staff see</h2>
+<table>
+  <thead><tr><th>Band</th><th>Predicted risk</th><th>Share of bookings</th><th>No-show rate in the band</th><th>Share of all no-shows</th></tr></thead>
+  <tbody>
+    {% for b in page.bands %}
+      <tr>
+        <td><span class="risk risk-{{ b.band }}">{{ b.band|capitalize }}</span></td>
+        <td>{% if b.to %}{{ b.from }} to {{ b.to }}{% else %}{{ b.from }} and above{% endif %}</td>
+        <td>{{ b.share }}</td><td>{{ b.rate }}</td><td>{{ b.caught }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<p class="muted">Measured on the held-out Kaggle appointments. Even a High flag is wrong more often than right, which is why no patient is ever refused or moved because of one. The cut-offs are read from the model card; the app never types them in. Source: results/e10_thresholds.csv.</p>
+{% endif %}
+
+{% if page.card and page.card.limitations %}
+<details class="card"><summary><strong>What the model cannot do</strong></summary>
+  <ul>{% for item in page.card.limitations %}<li>{{ item }}</li>{% endfor %}</ul>
+</details>
+{% endif %}
+
+<h2>Overbooking: what the simulation found</h2>
+<p>A simulated half-day session for one doctor, with consultation times from the Hangu data (a clinic in China) and no-show risk from the model above (Kaggle, Brazil). Clinic behaviour is assumed: one doctor, patients who arrive on time and are seen in slot order, and a no-show uses no doctor time. This shows a method and its trade-offs, not what would happen in a real clinic.</p>
+{% if page.policies %}
+<table>
+  <thead><tr><th>Policy</th><th>Double-booked slots</th><th>Patients served</th><th>Mean wait (min)</th><th>Doctor overtime (min)</th><th>Doctor idle (min)</th><th>Sessions where both patients of some double slot attend</th></tr></thead>
+  <tbody>
+    {% for p in page.policies %}
+      <tr><td class="nowrap"><strong>{{ p.policy }}</strong></td><td>{{ p.double }}</td><td>{{ p.served }}</td><td>{{ p.wait }}</td><td>{{ p.overtime }}</td><td>{{ p.idle }}</td><td>{{ p.both }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+<p class="muted">P0 books nobody twice. P1 doubles every k-th slot. P2 doubles the slots whose booked patient has a predicted risk above a threshold (a number such as 0.3, or a percentile such as p90 of the predicted risks). More patients served always costs waiting and overtime, so no single score is computed. Source: results/s2_policy_tradeoffs.csv.</p>
+{% endif %}
+
+<div class="figures">
+  {% for slug, caption, available in page.figures %}
+    {% if available %}
+      <figure class="card">
+        <a href="{{ url_for('admin.research_figure', slug=slug) }}"><img src="{{ url_for('admin.research_figure', slug=slug) }}" alt="{{ caption }}" loading="lazy"></a>
+        <figcaption>{{ caption }}</figcaption>
+      </figure>
+    {% endif %}
+  {% endfor %}
+</div>
+{% endblock %}

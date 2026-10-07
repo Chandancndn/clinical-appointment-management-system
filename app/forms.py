@@ -10,11 +10,18 @@ MIN_PASSWORD = 8
 SEXES = ("F", "M")
 
 
+MAX_DB_ID = 2**31 - 1  # ids are INT columns; anything larger cannot exist and must not reach the database
+MAX_PAGE = 1_000_000
+EARLIEST, LATEST = date(1900, 1, 1), date(2100, 12, 31)  # dates outside this are typos, and the ends of the calendar overflow
+
+
 def parse_date(value) -> Optional[date]:
+    """An ISO date between 1900 and 2100, else None."""
     try:
-        return date.fromisoformat(value.strip())
+        parsed = date.fromisoformat(value.strip())
     except (AttributeError, TypeError, ValueError):
         return None
+    return parsed if EARLIEST <= parsed <= LATEST else None
 
 
 def parse_time(value) -> Optional[time]:
@@ -24,7 +31,8 @@ def parse_time(value) -> Optional[time]:
         return None
 
 
-def parse_int(value, low: Optional[int] = None, high: Optional[int] = None) -> Optional[int]:
+def parse_int(value, low: Optional[int] = None, high: Optional[int] = MAX_DB_ID) -> Optional[int]:
+    """A whole number between `low` and `high` (default: the largest database id), else None."""
     try:
         number = int(str(value).strip())
     except (TypeError, ValueError):

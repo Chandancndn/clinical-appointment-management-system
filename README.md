@@ -22,7 +22,7 @@ pip install -r requirements.txt
 cp .env.example .env        # then edit .env, see below
 ```
 
-**Saved model and scikit-learn.** `ml/artifacts/risk_model.joblib` was written with the library versions recorded in `ml/artifacts/model_card.json` (`environment`: scikit-learn 1.9.1). Other scikit-learn versions load it with an `InconsistentVersionWarning` and may score a few bookings slightly differently (a different Low, Medium or High badge near a threshold); the app still works. Install the versions on the card for identical scores.
+**Saved model and scikit-learn.** `ml/artifacts/risk_model.joblib` was written with the library versions recorded in `ml/artifacts/model_card.json` (`environment`). `requirements.txt` pins scikit-learn, numpy and joblib to those versions wherever they can be installed (Python 3.11 and later). On Python 3.9 or 3.10 the app still works, but scikit-learn warns on load, a few bookings near a threshold may get a different badge, and the admin overview says which versions differ.
 
 ## MySQL setup
 
@@ -86,6 +86,20 @@ outcomes. It never reads `data/raw/` or any dataset. Every demo account shares o
 
 Re-seeding needs `python -m db.seed_synthetic --reset`, which deletes every row first.
 
+## What the app does
+
+| Role | Can |
+|---|---|
+| Patient | Register, log in, browse doctors and free slots, book, cancel, reschedule, change own password |
+| Doctor | See own schedule with patient names and the advisory risk badge, create slots for a day, cancel an appointment, mark past appointments completed or no-show, change own password |
+| Admin | Add doctors, generate slots, see and cancel any booking, mark outcomes, see the risk flag status and the **Models and simulation** page |
+
+Rules the app enforces: a doctor's slot can never be booked twice (the database decides); a patient cannot hold two appointments whose times overlap (checked on the page, best effort); a started appointment cannot be cancelled or moved; a patient never sees another patient's booking (404) or any risk information. The app never overbooks.
+
+Safeguards: passwords are hashed; every POST carries a CSRF token; every route checks the role; five wrong passwords for one email from one address (twenty from one address) block further tries for fifteen minutes, also for emails that do not exist, and guessing the current password on the account page is limited the same way. The counters live in memory, per process, and use the address Flask sees, so behind a reverse proxy or several workers they bound an attacker per worker rather than globally. Set `SESSION_COOKIE_SECURE=true` in `.env` when serving over HTTPS. Ids and dates in URLs and forms are range-checked, so odd input gives a 404 or a message, never a server error (`tests/test_robustness.py` sends junk to every route as every role).
+
+The tables become cards on a phone-width screen.
+
 ## Risk flag (advisory)
 
 Doctors and admins see a **Low / Medium / High** badge beside each appointment, with the note "advisory only". It
@@ -102,7 +116,7 @@ that trained the model.
 To see the badges: `python -m db.init_db` (adds `risk_scores` if missing), `python -m db.seed_synthetic --reset`
 (scores the demo bookings and prints the Low/Medium/High mix), start the app, and log in as the doctor
 (`dr.meera@cams-demo.test`, **My schedule**, a day with appointments) or the admin (**Overview** and **All bookings**).
-Log in as a patient to confirm there is nothing to see. Re-running E9 and E10 changes the model version, and the next
+Log in as a patient to confirm there is nothing to see. The admin **Overview** also has a *Risk flag status* panel (model version, thresholds, whether the flag is on and why not, and the observed no-show rate per band on recorded outcomes), and **Models and simulation** shows the model card, the three bands and the booking-policy simulation with its figures, all read from the saved result files. Re-running E9 and E10 changes the model version, and the next
 staff page view re-scores what it shows.
 
 ## Tests

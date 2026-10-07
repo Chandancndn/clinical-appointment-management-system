@@ -1,9 +1,9 @@
 """Admin pages: overview, add doctors, generate slots for a date range, see and cancel any booking."""
 from __future__ import annotations
 
-from flask import Blueprint, abort, flash, g, redirect, render_template, request, url_for
+from flask import Blueprint, abort, current_app, flash, g, redirect, render_template, request, send_file, url_for
 
-from .. import accounts, clock, forms, queries, risk, scheduling, services
+from .. import accounts, clock, forms, queries, research, risk, scheduling, services
 from ..security import roles_required
 
 bp = Blueprint("admin", __name__, url_prefix="/admin")
@@ -19,14 +19,15 @@ def dashboard():
     now = clock.now()
     upcoming = queries.upcoming_bookings(25, now)
     return render_template("admin/dashboard.html", counts=queries.admin_counts(now), doctors=queries.list_doctors(),
-                           upcoming=upcoming, now=now, flags=risk.flags_for(b.id for b in upcoming))
+                           upcoming=upcoming, now=now, flags=risk.flags_for(b.id for b in upcoming),
+                           risk_status=risk.status(), risk_monitor=risk.monitor())
 
 
 @bp.get("/bookings")
 @admin_only
 def bookings():
     status = request.args.get("status") if request.args.get("status") in STATUSES else None
-    page = forms.parse_int(request.args.get("page"), low=1) or 1
+    page = forms.parse_int(request.args.get("page"), low=1, high=forms.MAX_PAGE) or 1
     rows, total = queries.bookings_page(page, PER_PAGE, status)
     return render_template("admin/bookings.html", rows=rows, total=total, page=page, per_page=PER_PAGE,
                            status=status, statuses=STATUSES, now=clock.now(),
@@ -34,7 +35,7 @@ def bookings():
                            flags=risk.flags_for(r.id for r in rows if r.status != "cancelled"))
 
 
-@bp.post("/bookings/<int:booking_id>/cancel")
+@bp.post("/bookings/<dbid:booking_id>/cancel")
 @admin_only
 def cancel(booking_id):
     queries.booking_row(booking_id) or abort(404)
@@ -67,7 +68,7 @@ def new_doctor():
     return render_template("admin/new_doctor.html", form=request.form, errors=errors), status
 
 
-@bp.route("/doctors/<int:doctor_id>/slots", methods=["GET", "POST"])
+@bp.route("/doctors/<dbid:doctor_id>/slots", methods=["GET", "POST"])
 @admin_only
 def generate_slots(doctor_id):
     doctor = queries.get_doctor(doctor_id) or abort(404)
@@ -89,3 +90,18 @@ def generate_slots(doctor_id):
                 return redirect(url_for("admin.dashboard"))
     return render_template("admin/generate_slots.html", doctor=doctor, form=request.form,
                            errors=errors, today=clock.now().date()), status
+
+
+@bp.get("/research")
+@admin_only
+def research_page():
+    config = current_app.config
+    return render_template("admin/research.html",
+                           page=research.load(config["RESULTS_DIR"], config["RISK_ARTIFACTS_DIR"], config["FIGURES_DIR"]))
+
+
+@bp.get("/research/figures/<slug>.png")
+@admin_only
+def research_figure(slug):
+    path = research.figure_path(slug, current_app.config["FIGURES_DIR"]) or abort(404)
+    return send_file(path, mimetype="image/png", max_age=300)

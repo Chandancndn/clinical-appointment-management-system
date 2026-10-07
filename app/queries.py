@@ -123,6 +123,38 @@ def booking_row(booking_id: int):
     return db.session.execute(_booking_rows().where(Booking.id == booking_id)).one_or_none()
 
 
+def patient_clash(patient_id: int, slot_id: int, ignoring_booking_id: Optional[int] = None):
+    """The patient's active booking whose time overlaps the slot `slot_id` (with ANY doctor), or None.
+
+    Two appointments overlap when each starts before the other ends; an appointment lasts as long as its doctor's slot length,
+    so a 30-minute appointment also blocks a 15-minute slot that starts inside it, and back-to-back appointments are fine.
+    This is a convenience rule for patients (one person cannot be in two consulting rooms at once). The page looks it up
+    before it tries to book, so it is best effort for one patient clicking twice at the same instant. The rule that matters,
+    one active booking per doctor, date and time, is the database's and is not involved here.
+    """
+    wanted = db.session.execute(
+        sa.select(Slot.slot_date, Slot.slot_time, Doctor.slot_minutes).join(Doctor, Doctor.id == Slot.doctor_id).where(Slot.id == slot_id)
+    ).one_or_none()
+    if wanted is None:
+        return None
+    wanted_start = datetime.combine(wanted.slot_date, wanted.slot_time)
+    wanted_end = wanted_start + timedelta(minutes=wanted.slot_minutes)
+    query = (
+        sa.select(Booking.id, Slot.slot_time, Doctor.slot_minutes, DoctorUser.name.label("doctor_name"))
+        .join(Slot, Slot.id == Booking.slot_id)
+        .join(Doctor, Doctor.id == Slot.doctor_id)
+        .join(DoctorUser, DoctorUser.id == Doctor.user_id)
+        .where(Booking.patient_id == patient_id, Booking.confirmed_slot_id.is_not(None), Slot.slot_date == wanted.slot_date)
+    )
+    if ignoring_booking_id is not None:
+        query = query.where(Booking.id != ignoring_booking_id)
+    for row in db.session.execute(query):  # one patient's bookings on one day: a handful of rows
+        start = datetime.combine(wanted.slot_date, row.slot_time)
+        if start < wanted_end and wanted_start < start + timedelta(minutes=row.slot_minutes):
+            return row
+    return None
+
+
 def doctor_schedule(doctor_id: int, day: date):
     """A doctor's day: every slot, with the active booking and patient name if there is one."""
     return db.session.execute(

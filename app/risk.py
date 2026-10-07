@@ -17,7 +17,7 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Iterable, Optional
 
@@ -40,6 +40,8 @@ class RiskModel:
     version: str
     medium: float  # from the model card (E10), never typed in here
     high: float
+    trained_with: dict = field(default_factory=dict)  # library versions the card says the model was saved with
+    note: Optional[str] = None  # set when this machine runs different versions of them
 
 
 @dataclass(frozen=True)
@@ -50,17 +52,48 @@ class Flag:
 
 
 _cache: dict = {}
+_reasons: dict = {}  # why the flag is off, per artifacts directory
+BANDS = ("low", "medium", "high")
 
 
 def reset_cache() -> None:
     """Forget the loaded model (tests; or after re-running E9 and E10 without restarting the app)."""
     _cache.clear()
+    _reasons.clear()
+
+
+def _runtime_versions() -> dict:
+    """The library versions this process runs, named as in the model card's `environment`."""
+    import platform
+    from importlib import metadata
+
+    found = {"python": platform.python_version()}
+    for name in ("scikit-learn", "numpy", "pandas", "joblib"):
+        try:
+            found[name] = metadata.version(name)
+        except metadata.PackageNotFoundError:
+            found[name] = "not installed"
+    return found
+
+
+def _version_note(saved: dict, running: dict) -> Optional[str]:
+    """A plain sentence if the libraries that decide how a saved model behaves differ from the ones it was saved with."""
+    differing = [name for name in ("scikit-learn", "numpy", "joblib") if saved.get(name) and saved.get(name) != running.get(name)]
+    if not differing:
+        return None
+    return (f"The saved model was written with {', '.join(f'{n} {saved[n]}' for n in differing)}; this machine runs "
+            f"{', '.join(f'{n} {running.get(n)}' for n in differing)}. Scores can differ slightly. Install the saved versions "
+            "(requirements.txt pins them for Python 3.11 and later) for identical scores.")
 
 
 # ---- loading the model once ------------------------------------------------------------------------
 def _load(directory: Path) -> Optional[RiskModel]:
     try:
         import joblib
+
+        for name in ("model_card.json", "risk_model.joblib"):
+            if not (directory / name).is_file():
+                raise FileNotFoundError(f"{name} not found in {directory}")
 
         from ml.src import features  # the same module the model was trained with
 
@@ -74,9 +107,14 @@ def _load(directory: Path) -> Optional[RiskModel]:
         medium, high = float(thresholds["medium"]["threshold"]), float(thresholds["high"]["threshold"])
         if not 0 < medium < high < 1:
             raise ValueError(f"unusable thresholds on the model card: medium {medium}, high {high}")
-        return RiskModel(joblib.load(model_path), str(card["version"]), medium, high)
+        saved, running = dict(card.get("environment") or {}), _runtime_versions()
+        note = _version_note(saved, running)
+        if note:
+            log.warning(note)
+        return RiskModel(joblib.load(model_path), str(card["version"]), medium, high, saved, note)
     except Exception as exc:  # any problem at all means: no flag
         log.warning("risk flag is off: %s", exc)
+        _reasons[str(directory)] = str(exc)[:300] or exc.__class__.__name__
         return None
 
 
@@ -223,3 +261,48 @@ def flags_for(booking_ids: Iterable) -> dict:
         db.session.rollback()
         log.warning("no risk flags on this page: %s", exc)
         return {}
+
+
+# ---- status and monitor (admin overview) -----------------------------------------------------------------------
+def status() -> dict:
+    """Is the flag on, with which model and thresholds, and why not if it is off. Never raises."""
+    try:
+        model = get_model()
+        if model is None:
+            return {"on": False, "reason": _reasons.get(str(Path(current_app.config["RISK_ARTIFACTS_DIR"])), "the model could not be loaded")}
+        return {"on": True, "version": model.version, "medium": model.medium, "high": model.high,
+                "trained_with": model.trained_with, "running": _runtime_versions(), "note": model.note}
+    except Exception as exc:
+        log.warning("could not read the risk flag status: %s", exc)
+        return {"on": False, "reason": "the status could not be read"}
+
+
+def monitor() -> Optional[list]:
+    """For each band, how many past appointments with a recorded outcome were flagged that way and how many were no-shows.
+
+    Only scores from the model in use are counted. None when the flag is off. This reads the stored scores and outcomes for
+    display; booking never calls it.
+    """
+    try:
+        model = get_model()
+        if model is None:
+            return None
+        edges = {"low": (None, model.medium), "medium": (model.medium, model.high), "high": (model.high, None)}
+        rows = []
+        for band in BANDS:
+            low, high = edges[band]
+            conditions = [Booking.status.in_(HISTORY_STATUSES), RiskScore.model_version == model.version]
+            if low is not None:
+                conditions.append(RiskScore.no_show_probability >= low)
+            if high is not None:
+                conditions.append(RiskScore.no_show_probability < high)
+            count, no_shows = db.session.execute(
+                sa.select(sa.func.count(), sa.func.sum(sa.case((Booking.status == "no_show", 1), else_=0)))
+                .select_from(RiskScore).join(Booking, Booking.id == RiskScore.booking_id).where(*conditions)).one()
+            count, no_shows = int(count), int(no_shows or 0)
+            rows.append({"band": band, "bookings": count, "no_shows": no_shows, "rate": no_shows / count if count else None})
+        return rows
+    except Exception as exc:
+        db.session.rollback()
+        log.warning("no risk monitor on this page: %s", exc)
+        return None

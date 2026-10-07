@@ -8,6 +8,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 from flask import Flask
+from werkzeug.routing import BaseConverter, ValidationError
 from sqlalchemy import event
 from sqlalchemy.engine import Engine
 
@@ -30,6 +31,21 @@ def _configure_sqlite(dbapi_connection, _connection_record):
         cursor.close()
 
 
+class DbIdConverter(BaseConverter):
+    """A URL id that can exist in the database (1 to the largest INT). Anything else is a 404, never a server error."""
+
+    regex = r"\d{1,10}"
+
+    def to_python(self, value):
+        number = int(value)
+        if not 1 <= number <= 2**31 - 1:
+            raise ValidationError()
+        return number
+
+    def to_url(self, value):
+        return str(int(value))
+
+
 def create_app(config: dict | None = None) -> Flask:
     """Build the app. Settings come from .env / environment, then `config` overrides them."""
     load_dotenv(ROOT / ".env")
@@ -43,7 +59,13 @@ def create_app(config: dict | None = None) -> Flask:
         SESSION_COOKIE_SAMESITE="Lax",
         PERMANENT_SESSION_LIFETIME=timedelta(hours=8),
         MAX_CONTENT_LENGTH=1024 * 1024,
+        SESSION_COOKIE_SECURE=os.environ.get("SESSION_COOKIE_SECURE", "").lower() in ("1", "true", "yes"),  # set behind HTTPS
+        LOGIN_MAX_FAILURES=5,              # wrong passwords for one email from one address before it is blocked
+        LOGIN_MAX_FAILURES_PER_ADDRESS=20,  # wrong passwords from one address, whatever the email
+        LOGIN_WINDOW_MINUTES=15,           # how long failures count, and how long a block lasts at most
         RISK_ARTIFACTS_DIR=ROOT / "ml" / "artifacts",  # the saved risk model and its card (advisory flag, M7)
+        RESULTS_DIR=ROOT / "results",  # read by the admin "Models and simulation" page
+        FIGURES_DIR=ROOT / "docs" / "report_assets" / "figures",
     )
     if config:
         app.config.update(config)
@@ -52,15 +74,18 @@ def create_app(config: dict | None = None) -> Flask:
     if not app.config.get("SECRET_KEY"):
         raise RuntimeError("SECRET_KEY is not set. Copy .env.example to .env and fill it in.")
 
+    app.url_map.converters["dbid"] = DbIdConverter
     db.init_app(app)
     from . import models  # noqa: F401  (registers the tables on db.metadata)
-    from .blueprints import admin, auth, doctor, main, patient
+    from .blueprints import account, admin, auth, doctor, main, patient
+    from .throttle import Throttle
     from .errors import init_errors
     from .security import init_security
 
+    app.extensions["throttle"] = Throttle()
     init_security(app)
     init_errors(app)
-    for module in (main, auth, patient, doctor, admin):
+    for module in (main, auth, account, patient, doctor, admin):
         app.register_blueprint(module.bp)
     _register_template_helpers(app)
     return app
