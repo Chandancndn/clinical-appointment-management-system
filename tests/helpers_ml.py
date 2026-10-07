@@ -7,7 +7,8 @@ import pandas as pd
 NEIGHBOURHOODS = [f"N{i:02d}" for i in range(12)]
 
 
-def synthetic_kaggle(n: int = 6000, n_patients: int = 2500, n_dates: int = 30, seed: int = 0) -> pd.DataFrame:
+def synthetic_kaggle(n: int = 6000, n_patients: int = 2500, n_dates: int = 30, seed: int = 0,
+                     signal: float = 1.0) -> pd.DataFrame:
     """Same columns as data.clean_kaggle. No-show depends on lead time, age, neighbourhood and a per-patient
     propensity (so earlier no-shows are genuinely predictive)."""
     rng = np.random.default_rng(seed)
@@ -19,8 +20,8 @@ def synthetic_kaggle(n: int = 6000, n_patients: int = 2500, n_dates: int = 30, s
     lead = rng.choice([0, 0, 0, 1, 2, 4, 7, 12, 20, 40], n)
     age = np.clip(rng.normal(37, 18, n).round(), 0, 100).astype(int)
     hood = rng.integers(0, len(NEIGHBOURHOODS), n)
-    logit = (-2.6 + 5.0 * propensity[patient] - 1.5 * (lead == 0) + 0.025 * np.minimum(lead, 30)
-             - 0.01 * (age - 37) + neighbourhood_effect[hood])
+    logit = (-2.6 + 5.0 * propensity[patient] + neighbourhood_effect[hood]
+             + signal * (-1.5 * (lead == 0) + 0.025 * np.minimum(lead, 30) - 0.01 * (age - 37)))  # signal scales lead and age
     no_show = (rng.random(n) < 1 / (1 + np.exp(-logit))).astype("int8")
     scheduled = pd.DatetimeIndex(appt) - pd.to_timedelta(lead, unit="D") + pd.to_timedelta(rng.integers(7, 18, n), unit="h")
     return pd.DataFrame({

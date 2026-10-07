@@ -110,7 +110,12 @@ python -m ml.src.e5_openml_models    # E5  the same ladder on OpenML
 python -m ml.src.e6_transfer         # E6  train on one dataset, test on the other
 python -m ml.src.e7_imbalance        # E7  class weights, thresholds, RUS, SMOTE, NearMiss (ablation only)
 python -m ml.src.e8_calibration      # E8  Platt vs isotonic, reliability figure
+python -m ml.src.e9_deployable       # E9  the six-feature deployable model -> ml/artifacts/risk_model.joblib + model_card.json
+python -m ml.src.e10_thresholds      # E10 threshold table; chooses Medium/High and writes them into the model card
 ```
+
+The deployable model uses only what the app can collect at booking time. Both the app and training compute its inputs
+with the single function `features.deployable_features()` (a test pushes one booking through both paths).
 
 The holdout (latest 20% of Kaggle appointment dates; the last OpenML month) is scored once per final model, and a
 run stops if any AUC exceeds 0.85 (suspected leakage). Hyper-parameters are tuned by patient-grouped

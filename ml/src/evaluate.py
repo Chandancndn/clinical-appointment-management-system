@@ -87,6 +87,9 @@ def _weight_stream(groups, n_boot: int, seed: int, n_rows: int | None):
         yield drawn[codes].astype("int32")
 
 
+weight_stream = _weight_stream  # public name for other modules (E10 threshold intervals)
+
+
 def bootstrap_weights(groups, n_boot: int = N_BOOT, seed: int = DEFAULT_SEED, n_rows: int | None = None) -> np.ndarray:
     """(n_boot, n_rows) integer weights; all of a patient's rows share one weight."""
     return np.vstack(list(_weight_stream(groups, n_boot, seed, n_rows if groups is None else None)))

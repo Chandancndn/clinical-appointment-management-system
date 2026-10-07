@@ -20,6 +20,7 @@ from . import data, features, train
 from .data import DEFAULT_SEED
 from .manifest import record_result
 
+ARTIFACTS_DIR = data.ROOT / "ml" / "artifacts"
 KAGGLE_INPUTS = [data.KAGGLE_PATH]
 OPENML_INPUTS = [data.OPENML_PATH]
 
@@ -111,6 +112,10 @@ class ResultWriter:
     def record_figure(self, path: Path) -> Path:
         return self._record(path)
 
+    def record(self, path: Path) -> Path:
+        """Record any file already written (a model artifact, a model card) in the manifest."""
+        return self._record(Path(path))
+
 
 def metric_columns() -> list[str]:
     from .evaluate import METRIC_NAMES
@@ -142,3 +147,38 @@ def tune_and_fit(model: str, prep: Prepared, columns, grids=None, seed: int = DE
 
 def holdout_probabilities(fitted, prep: Prepared, columns) -> np.ndarray:
     return fitted.predict_proba(prep.X_holdout[list(columns)])[:, 1]
+
+
+# ---- the deployable model's data (M5) ---------------------------------------------------------------
+def deployable_data(prep: Prepared):
+    """(X_train, X_holdout) of the six deployable features, built by calling features.deployable_features() for
+    every booking: the same function the app will call. Cross-checked against M4's independently written
+    vectorised history; a difference between the two stops the run (training and serving must not drift)."""
+    full = pd.concat([prep.train_frame, prep.holdout_frame], ignore_index=True)
+    matrix = features.deployable_matrix(full)
+    n = len(prep.train_frame)
+    X_train, X_holdout = matrix.iloc[:n].reset_index(drop=True), matrix.iloc[n:].reset_index(drop=True)
+    for mine, research in ((X_train, prep.X_train), (X_holdout, prep.X_holdout)):
+        if not np.allclose(mine.to_numpy(float), research[features.DEPLOYABLE_FEATURES].to_numpy(float), equal_nan=True):
+            raise AssertionError("the training and serving feature paths disagree: fix features.deployable_features "
+                                 "or the vectorised history before training anything on it")
+    return X_train, X_holdout
+
+
+def load_calibration_choice(results_dir) -> str:
+    """The calibration method E8 chose (uncalibrated, sigmoid or isotonic) by cross-validated Brier."""
+    path = Path(results_dir) / "e8_calibration.csv"
+    if not path.exists():
+        raise FileNotFoundError(f"{path} not found: run E8 (python -m ml.src.e8_calibration) first")
+    table = pd.read_csv(path)
+    return str(table.loc[table["stage"] == "holdout", "method"].iloc[0])
+
+
+def environment_info() -> dict:
+    import platform
+
+    import joblib
+    import sklearn
+
+    return {"python": platform.python_version(), "scikit-learn": sklearn.__version__, "numpy": np.__version__,
+            "pandas": pd.__version__, "joblib": joblib.__version__}

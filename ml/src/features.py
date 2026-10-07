@@ -9,7 +9,10 @@ The same functions will serve the deployable model and the app (M5, M7), so trai
 """
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
+from datetime import date, datetime
+from typing import Iterable
 
 import numpy as np
 import pandas as pd
@@ -144,3 +147,81 @@ def openml_features(df: pd.DataFrame) -> pd.DataFrame:
         "channel": df["channel"], "is_procedure": (df["appt_type"] == 2).astype("int64"),
         "specialty": df["specialty"],
     }, index=df.index)[all_columns("openml")]
+
+
+# ---- the deployable features: ONE function for training and serving -----------------------------------
+# Only what the app can collect at booking time (CLAUDE.md): age, sex, lead time, weekday, earlier appointments and
+# the earlier no-show rate. The Flask app imports deployable_features() and age_in_years() from here, and training
+# builds its matrix by calling the same function (deployable_matrix), so the two cannot drift apart.
+DEPLOYABLE_FEATURES = ["age", "is_female", "lead_days", "appt_weekday", "prev_appointments", "prev_no_show_rate"]
+_MAX_AGE = 120
+
+
+def _as_date(value) -> date:
+    return value.date() if isinstance(value, datetime) else value
+
+
+def age_in_years(date_of_birth, on) -> int:
+    """Completed years of age on the date `on` (the appointment date)."""
+    born, day = _as_date(date_of_birth), _as_date(on)
+    if born > day:
+        raise ValueError("date of birth is after the date the age is asked for")
+    return day.year - born.year - ((day.month, day.day) < (born.month, born.day))
+
+
+def deployable_features(*, age: int, sex: str, booked_on, appointment_date,
+                        history: Iterable[tuple] = ()) -> dict:
+    """The six model inputs for ONE booking, from plain values.
+
+    age               completed years at the appointment (see age_in_years)
+    sex               "F" or "M"
+    booked_on         the date the booking was made
+    appointment_date  the date of the appointment
+    history           (appointment_date, no_show) for the patient's other appointments that have an outcome. The
+                      caller may pass everything it has: only appointments dated STRICTLY BEFORE `booked_on` count,
+                      because only those outcomes were known when the booking was made. That also keeps this
+                      booking's own row, and any later one, out of its history.
+
+    prev_no_show_rate is NaN when there is no earlier appointment (the model reads that as "no history").
+    """
+    if sex not in ("F", "M"):
+        raise ValueError(f"sex must be 'F' or 'M', got {sex!r}")
+    if not 0 <= age <= _MAX_AGE:
+        raise ValueError(f"age must be between 0 and {_MAX_AGE}, got {age!r}")
+    booked, appointment = _as_date(booked_on), _as_date(appointment_date)
+    if appointment < booked:
+        raise ValueError("the appointment is dated before the booking")
+    earlier = no_shows = 0
+    for when, outcome in history:
+        if _as_date(when) < booked:
+            earlier += 1
+            no_shows += 1 if outcome else 0
+    return {
+        "age": age,
+        "is_female": 1 if sex == "F" else 0,
+        "lead_days": (appointment - booked).days,
+        "appt_weekday": appointment.weekday(),  # Monday = 0, as in the training data
+        "prev_appointments": earlier,
+        "prev_no_show_rate": no_shows / earlier if earlier else math.nan,
+    }
+
+
+def deployable_matrix(df: pd.DataFrame) -> pd.DataFrame:
+    """The TRAINING path: the deployable features for every booking in a cleaned Kaggle-format frame, built by
+    calling deployable_features() once per booking, so training uses exactly the function the app will use.
+
+    Needs patient_id, scheduled_at, appointment_date, no_show, age and sex. Each booking's history is the patient's
+    appointments in `df` (the function keeps only those dated before the booking).
+    """
+    appointment_dates = df["appointment_date"].dt.date.tolist()
+    booked_dates = df["scheduled_at"].dt.date.tolist()
+    per_patient: dict = {}
+    for patient, when, outcome in zip(df["patient_id"], appointment_dates, df["no_show"]):
+        per_patient.setdefault(patient, []).append((when, int(outcome)))
+    rows = [
+        deployable_features(age=int(age), sex=sex, booked_on=booked, appointment_date=appointment,
+                            history=per_patient[patient])
+        for patient, age, sex, booked, appointment in zip(df["patient_id"], df["age"], df["sex"], booked_dates,
+                                                          appointment_dates)
+    ]
+    return pd.DataFrame(rows, index=df.index)[DEPLOYABLE_FEATURES]
