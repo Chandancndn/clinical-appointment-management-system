@@ -3,6 +3,7 @@
 V-semester CSE mini project, SIT Tumakuru. Flask + SQLAlchemy + MySQL, with a no-show
 prediction model (scikit-learn) and a booking-policy simulation (SimPy).
 
+- **Live demo:** https://clinical-appointment-management-sys-one.vercel.app (Vercel, with a MySQL 8 database on Aiven; synthetic data only)
 - Rules for contributors and AI assistants: [CLAUDE.md](CLAUDE.md)
 - Design and build order: the "CAMS Master Plan" document (`docs/PLAN.pdf`)
 
@@ -176,8 +177,17 @@ Do not add `SEED_PASSWORD` there. `index.py` already turns on secure cookies, te
   size limit, delete those lines from `requirements.txt`: the app still runs, the admin overview says the flag is off,
   and booking is unaffected by design.
 - `tests/test_vercel_ready.py` checks the entry point, the static mirror, the proxy handling and that secrets and raw
-  data are never uploaded. A real deployment has not been run from this repository; check the first deploy's build log
-  and open `/login`.
+  data are never uploaded.
+- The site is live at https://clinical-appointment-management-sys-one.vercel.app, built from the `deploy-ready` branch. The booking, schema and leave tests also pass
+  against the hosted MySQL (Aiven, server 8.4.8).
+
+**Lessons from the first deploy.**
+- Vercel builds the Production Branch, which defaults to `main`. Build the branch that has `index.py` (Project, Settings,
+  Environments, Production, Branch Tracking). A plain Redeploy reuses the old commit; push a new commit to build the new branch.
+- `DATABASE_URL` must begin `mysql+pymysql://`. A lost first letter crashes the app at start-up with
+  "Can't load plugin" in the runtime logs.
+- Use a MySQL service, not PostgreSQL: the schema and the double-booking rule need MySQL's generated column.
+- Keep database URLs and passwords in a git-ignored file (`.env.*` is ignored) and in Vercel's environment variables, never in chat or in git.
 
 ## Tests
 
@@ -274,6 +284,7 @@ docs/       PLAN.pdf, RESULTS_SUMMARY.md, DEMO_SCRIPT.md, numbers_audit.csv, rep
 index.py    Vercel entry point (not used locally)
 vercel.json, .vercelignore, .python-version, public/    Vercel settings; public/static is a copy of app/static
 requirements.txt (the web app), requirements-research.txt (adds the experiment, simulation and test tools)
+certs/ca.pem    the hosted database's public CA certificate (used by `ssl_ca=certs/ca.pem` in DATABASE_URL)
 ```
 
 Raw datasets are never committed. Download steps are in `data/README.md`.

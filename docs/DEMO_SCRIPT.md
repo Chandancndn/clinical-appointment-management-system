@@ -2,6 +2,8 @@
 
 The order follows the story of the project: the app first, then the proof that it cannot double-book, then the advisory risk flag, then the results. Say the "Say" lines in your own words; they are the point of each step. No result number is quoted in this script, so there is nothing here to go out of date: when you show a result, read it off the figure or table.
 
+**Live site.** The same demo can run on the hosted site, https://clinical-appointment-management-sys-one.vercel.app, with the demo logins below and the shared demo password the team keeps. Bookings made there stay in the shared database, so cancel your test bookings afterwards. The seeded dates run about three weeks ahead; ask the developer to re-seed before an important demo.
+
 ## Before you start (two minutes, once)
 
 1. Start MySQL, then from the repository: `source venv/bin/activate`.

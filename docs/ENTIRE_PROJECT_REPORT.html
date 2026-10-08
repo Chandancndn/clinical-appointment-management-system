@@ -161,7 +161,7 @@ dd { margin: 2px 0 0; max-width: 65ch; color: var(--ink); }
     <li><strong>The app never overbooks.</strong> Overbooking is studied only in the simulation. In the app, staff just see a Low, Medium or High badge that is advisory. Nobody is refused a slot because of it.</li>
     <li><strong>Every number comes from a script.</strong> Results are written to files by code and checked by another script, so nothing in this report was typed from memory.</li>
   </ul>
-  <p><strong>Status.</strong> The web app, the model, the simulation and the checks are all finished. The recorded test run has 784 tests: 778 passed, 0 failed and 6 were skipped on purpose. No real patient data is used anywhere. The app is filled with made-up people.</p>
+  <p><strong>Status.</strong> The web app, the model, the simulation and the checks are all finished. The recorded test run has 784 tests: 778 passed, 0 failed and 6 were skipped on purpose; the latest full run has 795 tests: 790 passed, 0 failed, 5 skipped. The site is live at <a href="https://clinical-appointment-management-sys-one.vercel.app">https://clinical-appointment-management-sys-one.vercel.app</a>. No real patient data is used anywhere. The app is filled with made-up people.</p>
 </section>
 
 <section id="problem">
@@ -543,7 +543,7 @@ flask --app app run --port 5001   # open http://127.0.0.1:5001</pre>
   </table></div>
   <h3>On Vercel</h3>
   <p>The app runs as one Python function and needs a hosted MySQL 8 database, because the no-double-booking rule relies on MySQL's unique generated column. Set three environment variables on Vercel: <code>DATABASE_URL</code>, <code>SECRET_KEY</code> and <code>CLINIC_TIMEZONE</code> (for example <code>Asia/Kolkata</code>, since Vercel's servers run on UTC). Prepare the hosted database once from a laptop, then deploy. The full steps are under "Deploy to Vercel" in <code>README.md</code>.</p>
-  <p>The deployment setup was checked by a clean install of only the web app's requirements and a walk through each role on that stripped-down copy. An actual Vercel deployment has not been run from this repository yet.</p>
+  <p>The site is live at <a href="https://clinical-appointment-management-sys-one.vercel.app">https://clinical-appointment-management-sys-one.vercel.app</a>, built from the <code>deploy-ready</code> branch, with its MySQL 8 database on Aiven. The booking, schema and leave tests also pass against that hosted database. Two longer write-ups are kept outside the repository: a Website Report and an Overall Project Report (PDF).</p>
 </section>
 
 <section id="limits">

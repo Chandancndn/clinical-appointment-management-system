@@ -120,7 +120,7 @@ docs/       PLAN.pdf, numbers_audit.csv, report drafts, ENTIRE_PROJECT_REPORT.ht
 index.py    Vercel entry point; with vercel.json, .vercelignore, .python-version and public/ (a copy of app/static, kept equal by a test; refresh with `python -m scripts.sync_public`). Deployment steps are in README.md.
 ```
 
-`requirements.txt` is the web app only (it is what Vercel installs); `requirements-research.txt` adds the experiment, simulation and test tools. The clock reads `CLINIC_TIMEZONE` so a UTC server still judges "has this slot started?" in clinic time.
+`requirements.txt` is the web app only (it is what Vercel installs); `requirements-research.txt` adds the experiment, simulation and test tools. The site is live at https://clinical-appointment-management-sys-one.vercel.app (Vercel, branch `deploy-ready`), with a hosted MySQL 8 on Aiven; `certs/ca.pem` is that server's public CA. `DATABASE_URL`, `SECRET_KEY` and `CLINIC_TIMEZONE` are set in Vercel's environment, never in git. The clock reads `CLINIC_TIMEZONE` so a UTC server still judges "has this slot started?" in clinic time.
 
 ## Build order (one milestone per session; commit when its checks pass)
 
