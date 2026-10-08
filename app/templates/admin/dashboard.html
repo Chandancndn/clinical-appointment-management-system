@@ -61,13 +61,13 @@
     {% if risk_status.note %}<p class="alert alert-info">{{ risk_status.note }}</p>{% endif %}
     {% if risk_monitor %}
       <table>
-        <thead><tr><th>Flagged as</th><th>Past appointments with an outcome</th><th>No-shows</th><th>Observed no-show rate</th></tr></thead>
+        <thead><tr><th>Flagged as</th><th class="num">Past appointments with an outcome</th><th class="num">No-shows</th><th class="num">Observed no-show rate</th></tr></thead>
         <tbody>
           {% for row in risk_monitor %}
             <tr>
               <td><span class="risk risk-{{ row.band }}">{{ row.band|capitalize }}</span></td>
-              <td>{{ row.bookings }}</td><td>{{ row.no_shows }}</td>
-              <td>{% if row.rate is none %}—{% else %}{{ '%.0f' % (row.rate * 100) }}%{% endif %}</td>
+              <td class="num">{{ row.bookings }}</td><td class="num">{{ row.no_shows }}</td>
+              <td class="num">{% if row.rate is none %}—{% else %}{{ '%.0f' % (row.rate * 100) }}%{% endif %}</td>
             </tr>
           {% endfor %}
         </tbody>

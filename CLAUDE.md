@@ -109,15 +109,18 @@ Experiments: S1 sanity tests (all attend with service = L gives zero wait and ov
 ## Repository layout
 
 ```
-app/        Flask app (blueprints: auth, account, patient, doctor, admin), services, standby.py, risk.py, research.py, templates, static
+app/        Flask app (blueprints: auth, account, patient, doctor, admin), services, standby.py, risk.py, research.py, clock.py, templates, static
 db/         schema.sql, migrations.py (upgrades an older database), seed_synthetic.py
-ml/         src/ (data, features, train, evaluate, calibrate), artifacts/, notebooks/
+ml/         src/ (data, features, train, evaluate, calibrate), artifacts/
 sim/        clinic.py, policies.py, experiments.py, rl.py (S7, the learned policy)
 data/       raw/ (gitignored), README.md with download steps
 results/    tables, figures, manifest.json written by scripts
 tests/      booking concurrency and constraint tests, leakage tests, simulation sanity tests, risk flag tests
-docs/       PLAN.pdf, numbers_audit.csv, report drafts
+docs/       PLAN.pdf, numbers_audit.csv, report drafts, ENTIRE_PROJECT_REPORT.html (a plain-language tour of the whole project)
+index.py    Vercel entry point; with vercel.json, .vercelignore, .python-version and public/ (a copy of app/static, kept equal by a test; refresh with `python -m scripts.sync_public`). Deployment steps are in README.md.
 ```
+
+`requirements.txt` is the web app only (it is what Vercel installs); `requirements-research.txt` adds the experiment, simulation and test tools. The clock reads `CLINIC_TIMEZONE` so a UTC server still judges "has this slot started?" in clinic time.
 
 ## Build order (one milestone per session; commit when its checks pass)
 

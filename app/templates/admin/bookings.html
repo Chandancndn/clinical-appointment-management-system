@@ -16,11 +16,11 @@
 {{ risk_note(flags) }}
 {% if rows %}
   <table>
-    <thead><tr><th>#</th><th>When</th><th>Doctor</th><th>Patient</th><th>Reason</th><th>Status</th>{% if flags %}<th>Risk</th>{% endif %}<th></th></tr></thead>
+    <thead><tr><th class="num">#</th><th>When</th><th>Doctor</th><th>Patient</th><th>Reason</th><th>Status</th>{% if flags %}<th>Risk</th>{% endif %}<th></th></tr></thead>
     <tbody>
       {% for b in rows %}
         <tr>
-          <td>{{ b.id }}</td>
+          <td class="num">{{ b.id }}</td>
           <td>{{ b.slot_date|date_long }}, {{ b.slot_time|time_short }}</td>
           <td>{{ b.doctor_name }}</td><td>{{ b.patient_name }}</td><td>{{ b.reason or '—' }}</td>
           <td>{{ badge(b.status) }}</td>

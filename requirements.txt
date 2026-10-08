@@ -1,22 +1,37 @@
-flask
-flask-sqlalchemy
-sqlalchemy
-pymysql
-cryptography
-python-dotenv
-pytest
-pandas
-scipy
-imbalanced-learn
-simpy
-matplotlib
+# Everything the web app needs to run, on a laptop and on Vercel (Vercel installs exactly this file).
+# Experiments, the simulation, plots and the test suite need more: see requirements-research.txt.
+#
+# Python 3.11 and later get the exact versions the app was tested with (Python 3.14.6, October 2026).
+# Python 3.9 and 3.10 cannot install some of them, so there pip chooses what it can.
 
-# The saved risk model (ml/artifacts/risk_model.joblib) was written with these versions (see ml/artifacts/model_card.json).
-# A model unpickled by other versions can score slightly differently, so they are pinned wherever they exist.
-# Python 3.9 and 3.10 cannot install them; there the app still works and the admin overview says the versions differ.
+Flask==3.1.3; python_version >= "3.11"
+Flask-SQLAlchemy==3.1.1; python_version >= "3.11"
+SQLAlchemy==2.1.3; python_version >= "3.11"
+PyMySQL==1.2.3; python_version >= "3.11"
+cryptography==50.0.2; python_version >= "3.11"
+python-dotenv==1.2.4; python_version >= "3.11"
+flask; python_version < "3.11"
+flask-sqlalchemy; python_version < "3.11"
+sqlalchemy; python_version < "3.11"
+pymysql; python_version < "3.11"
+cryptography; python_version < "3.11"
+python-dotenv; python_version < "3.11"
+
+# Time zone data for CLINIC_TIMEZONE on servers that have none of their own (Vercel).
+tzdata
+
+# The advisory risk flag. The saved model (ml/artifacts/risk_model.joblib) was written with these versions
+# (see ml/artifacts/model_card.json). A model unpickled by other versions can score slightly differently, so they are
+# pinned wherever they exist. pandas and numpy are needed because the app calls the same feature function the model
+# was trained with (ml/src/features.py). Without any of them the app still runs and the admin overview says the
+# flag is off; booking is never affected.
 scikit-learn==1.9.1; python_version >= "3.11"
 numpy==2.5.3; python_version >= "3.11"
 joblib==1.6.0; python_version >= "3.11"
+scipy==1.18.1; python_version >= "3.11"
+pandas==3.0.6; python_version >= "3.11"
 scikit-learn>=1.6; python_version < "3.11"
 numpy; python_version < "3.11"
 joblib; python_version < "3.11"
+scipy; python_version < "3.11"
+pandas; python_version < "3.11"

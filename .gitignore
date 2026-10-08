@@ -2,6 +2,8 @@
 venv/
 .venv/
 .env
+.env.*
+!.env.example
 
 # Raw datasets are never committed (CLAUDE.md hard rule 5).
 # data/raw/ is the documented location; datasets/ is where the downloads currently sit.

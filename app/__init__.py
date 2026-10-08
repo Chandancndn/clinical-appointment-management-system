@@ -73,6 +73,9 @@ def create_app(config: dict | None = None) -> Flask:
         raise RuntimeError("DATABASE_URL is not set. Copy .env.example to .env and fill it in.")
     if not app.config.get("SECRET_KEY"):
         raise RuntimeError("SECRET_KEY is not set. Copy .env.example to .env and fill it in.")
+    from . import clock
+
+    clock.clinic_timezone()  # a mistyped CLINIC_TIMEZONE should stop the app now, not fail on the first booking
 
     app.url_map.converters["dbid"] = DbIdConverter
     db.init_app(app)

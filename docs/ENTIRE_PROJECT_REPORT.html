@@ -1,0 +1,588 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CAMS Entire Project Report</title>
+<style>
+/* Layout: one calm reading column, wide tables and diagrams scroll inside their own box.
+   Look: the same Swiss-minimal system the app uses (one blue accent, system sans, 8px steps). */
+:root {
+  --bg: #ffffff;
+  --surface: #f4f6fa;
+  --ink: #12151c;
+  --muted: #566074;
+  --line: #dde1e9;
+  --accent: #0047bb;
+  --accent-soft: #e6eeff;
+  --good: #176b42;
+  --warn: #8f5200;
+  --bad: #b3261e;
+  --sans: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --step: 8px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1117; --surface: #171b24; --ink: #e8ebf2; --muted: #9ba5b8; --line: #2a3141;
+    --accent: #7fa6ff; --accent-soft: #1a2747; --good: #55c78f; --warn: #e3a64a; --bad: #ff8d84;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1117; --surface: #171b24; --ink: #e8ebf2; --muted: #9ba5b8; --line: #2a3141;
+  --accent: #7fa6ff; --accent-soft: #1a2747; --good: #55c78f; --warn: #e3a64a; --bad: #ff8d84;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--sans); -webkit-text-size-adjust: 100%; }
+.wrap { max-width: 46rem; margin-inline: auto; padding-inline: 16px; padding-block: 40px 96px; }
+p, li { max-width: 65ch; }
+p { margin: 0 0 16px; }
+a { color: var(--accent); }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+code, pre { font-family: var(--mono); font-size: 0.875em; }
+code { background: var(--surface); padding: 1px 6px; border-radius: 4px; overflow-wrap: anywhere; }
+strong { font-weight: 650; }
+
+h1 { font-size: clamp(2rem, 6vw, 2.75rem); line-height: 1.1; letter-spacing: -0.02em; margin: 8px 0 16px; text-wrap: balance; }
+h2 { font-size: 1.5rem; line-height: 1.25; letter-spacing: -0.01em; margin: 0 0 16px; text-wrap: balance; }
+h3 { font-size: 1.0625rem; margin: 32px 0 8px; }
+section { padding-top: 56px; margin-top: 56px; border-top: 1px solid var(--line); }
+.eyebrow { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.lede { font-size: 1.1875rem; line-height: 1.55; color: var(--ink); }
+.meta { display: grid; gap: 4px; color: var(--muted); font-size: 0.9375rem; margin-block: 24px 0; }
+.small { font-size: 0.875rem; color: var(--muted); }
+
+nav.contents { margin-top: 32px; padding: 16px; background: var(--surface); border-radius: 8px; }
+nav.contents ol { margin: 8px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 4px 24px; }
+nav.contents a { text-decoration: none; display: block; padding: 2px 0; }
+nav.contents a:hover { text-decoration: underline; }
+
+ul, ol.steps { padding-left: 1.25rem; margin: 0 0 16px; }
+li { margin-bottom: 6px; }
+
+.rules { display: grid; gap: 8px; padding: 0; list-style: none; margin: 16px 0 24px; }
+.rules li { padding: 12px 16px; background: var(--accent-soft); border-radius: 8px; margin: 0; max-width: none; }
+
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 16px; margin: 24px 0; }
+.grid3 > div { min-width: 0; padding: 16px; border: 1px solid var(--line); border-radius: 8px; }
+.grid3 h3 { margin: 0 0 8px; }
+.grid3 p { margin: 0; font-size: 0.9375rem; }
+
+.scroll { overflow-x: auto; margin: 16px 0 24px; border: 1px solid var(--line); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 0.9375rem; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); background: var(--surface); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+.first-nowrap td:first-child { white-space: nowrap; }
+td.n, th.n { text-align: right; }
+.scroll table { min-width: 34rem; }
+
+figure { margin: 24px 0; }
+figcaption { font-size: 0.875rem; color: var(--muted); margin-top: 8px; max-width: 65ch; }
+.diagram { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+.diagram svg { display: block; min-width: 38rem; width: 100%; height: auto; }
+svg text { font-family: var(--sans); font-size: 13px; fill: var(--ink); }
+svg .m { fill: var(--muted); font-size: 12px; }
+svg .b { font-weight: 650; }
+svg .box { fill: var(--bg); stroke: var(--line); stroke-width: 1.5; }
+svg .hot { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.5; }
+svg .ok { fill: var(--bg); stroke: var(--good); stroke-width: 1.5; }
+svg .no { fill: var(--bg); stroke: var(--bad); stroke-width: 1.5; }
+svg .line { stroke: var(--muted); stroke-width: 1.5; fill: none; }
+svg .head { fill: var(--muted); }
+
+.bars { display: grid; gap: 8px; margin: 8px 0 8px; }
+.bars h4 { margin: 16px 0 0; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.bar { display: grid; grid-template-columns: minmax(0, 11rem) minmax(0, 1fr) 3.25rem; gap: 12px; align-items: center; font-size: 0.9375rem; }
+.bar .track { display: block; height: 16px; background: var(--surface); border-radius: 4px; overflow: hidden; }
+.bar .fill { display: block; height: 100%; background: var(--accent); border-radius: 0 4px 4px 0; }
+.bar .fill.alt { background: var(--muted); }
+.bar .val { font-variant-numeric: tabular-nums; text-align: right; }
+@media (max-width: 480px) { .bar { grid-template-columns: minmax(0, 7.5rem) minmax(0, 1fr) 3rem; gap: 8px; font-size: 0.875rem; } }
+
+.callout { padding: 16px; border-left: 3px solid var(--accent); background: var(--surface); border-radius: 0 8px 8px 0; margin: 24px 0; }
+.callout p:last-child { margin-bottom: 0; }
+.callout.warn { border-color: var(--warn); }
+
+pre { background: var(--surface); padding: 16px; border-radius: 8px; overflow-x: auto; margin: 16px 0 24px; line-height: 1.5; }
+details { margin: 8px 0; border: 1px solid var(--line); border-radius: 8px; padding: 8px 16px; }
+summary { cursor: pointer; font-weight: 600; padding: 4px 0; }
+details[open] summary { margin-bottom: 8px; }
+dl { margin: 0; display: grid; gap: 16px; }
+dt { font-weight: 650; }
+dd { margin: 2px 0 0; max-width: 65ch; color: var(--ink); }
+.tag { display: inline-block; font-size: 0.75rem; padding: 1px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); white-space: nowrap; }
+.tag.good { color: var(--good); border-color: var(--good); }
+.tag.warn { color: var(--warn); border-color: var(--warn); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">V-semester CSE mini project · SIT Tumakuru</div>
+  <h1>CAMS: Clinic Appointment Management System</h1>
+  <p class="lede">A booking website for a clinic, a model that estimates who might not turn up, and a simulation that tests what overbooking would do. This report explains all of it in plain language, so anyone on the team can describe the whole project.</p>
+  <div class="meta">
+    <span><strong>Guide:</strong> Dr. Joydeep Roy</span>
+    <span><strong>Team:</strong> Hrishikesh G Mahuli, Aadyantha G Nadig, Pranav P Patel, Mohammad Atif</span>
+    <span><strong>Built with:</strong> Python, Flask, SQLAlchemy, MySQL, HTML/CSS/JS, scikit-learn, SimPy</span>
+  </div>
+
+  <nav class="contents" aria-label="Contents">
+    <strong>In this report</strong>
+    <ol>
+      <li><a href="#minute">In one minute</a></li>
+      <li><a href="#problem">The problem we picked</a></li>
+      <li><a href="#parts">The three parts</a></li>
+      <li><a href="#app">The web app</a></li>
+      <li><a href="#booking">The rule that matters most</a></li>
+      <li><a href="#data">The data</a></li>
+      <li><a href="#model">The prediction model</a></li>
+      <li><a href="#sim">The simulation</a></li>
+      <li><a href="#proof">How we know it works</a></li>
+      <li><a href="#built">How it was built</a></li>
+      <li><a href="#map">Project map</a></li>
+      <li><a href="#run">Run it yourself</a></li>
+      <li><a href="#limits">What it cannot do</a></li>
+      <li><a href="#glossary">Glossary</a></li>
+    </ol>
+  </nav>
+</header>
+
+<section id="minute">
+  <h2>In one minute</h2>
+  <p>CAMS lets patients book clinic appointments online. Doctors see their day and mark who came. Admins run the whole clinic. On top of that sits a research side: a model trained on public data estimates how likely each booking is to be a no-show, and a simulation tests whether using that estimate to double-book some slots would help a clinic.</p>
+  <p>Three rules shaped every decision.</p>
+  <ul class="rules">
+    <li><strong>One slot, one patient.</strong> The same doctor, date and time can never be booked twice. The database enforces this, so it holds even when two people click at the same moment.</li>
+    <li><strong>The app never overbooks.</strong> Overbooking is studied only in the simulation. In the app, staff just see a Low, Medium or High badge that is advisory. Nobody is refused a slot because of it.</li>
+    <li><strong>Every number comes from a script.</strong> Results are written to files by code and checked by another script, so nothing in this report was typed from memory.</li>
+  </ul>
+  <p><strong>Status.</strong> The web app, the model, the simulation and the checks are all finished. The recorded test run has 784 tests: 778 passed, 0 failed and 6 were skipped on purpose. No real patient data is used anywhere. The app is filled with made-up people.</p>
+</section>
+
+<section id="problem">
+  <h2>The problem we picked</h2>
+  <p>A clinic books patients into fixed time slots. Some of them never turn up. That empty slot is wasted doctor time, and another patient could have used it.</p>
+  <p>Many clinics respond by overbooking: they put two patients in some slots and hope one of them stays away. When that works, the doctor stays busy. When both come, everyone waits and the doctor works late.</p>
+  <p>So we asked two questions. <strong>Can a computer tell which bookings are risky?</strong> And <strong>if it can, does using that to choose which slots to double-book actually beat simpler rules?</strong> The booking website is the real product. The model and the simulation are how we answered the questions.</p>
+  <div class="callout">
+    <p>No real clinic data was available to us. The model learned from public datasets, the app runs on synthetic records, and everything the simulation assumes about a clinic is stated. The project shows a method and its trade-offs. It does not claim clinical results.</p>
+  </div>
+</section>
+
+<section id="parts">
+  <h2>The three parts</h2>
+  <figure>
+    <div class="diagram">
+      <svg viewBox="0 0 720 300" role="img" aria-labelledby="d1t d1d">
+        <title id="d1t">How the three parts fit together</title>
+        <desc id="d1d">Public datasets train the prediction model. The model feeds an advisory badge in the web app and drives the booking simulation. Synthetic demo data fills the web app.</desc>
+        <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="head"/></marker></defs>
+        <rect class="box" x="16" y="24" width="190" height="84" rx="8"/>
+        <text class="b" x="32" y="52">Public datasets</text>
+        <text class="m" x="32" y="72">Kaggle no-shows (Brazil)</text>
+        <text class="m" x="32" y="90">OpenML, Hangu consult times</text>
+        <rect class="hot" x="265" y="24" width="190" height="84" rx="8"/>
+        <text class="b" x="281" y="52">Prediction model</text>
+        <text class="m" x="281" y="72">scikit-learn, six inputs</text>
+        <text class="m" x="281" y="90">chance of a no-show</text>
+        <path class="line" d="M206 66H263" marker-end="url(#arr)"/>
+        <rect class="box" x="514" y="24" width="190" height="84" rx="8"/>
+        <text class="b" x="530" y="52">Simulation</text>
+        <text class="m" x="530" y="72">SimPy, one doctor, one</text>
+        <text class="m" x="530" y="90">half-day session</text>
+        <path class="line" d="M455 66H512" marker-end="url(#arr)"/>
+        <rect class="box" x="265" y="196" width="190" height="84" rx="8"/>
+        <text class="b" x="281" y="224">Web app</text>
+        <text class="m" x="281" y="244">Flask + MySQL, three roles</text>
+        <text class="m" x="281" y="262">advisory badge for staff</text>
+        <path class="line" d="M360 108V194" marker-end="url(#arr)"/>
+        <text class="m" x="372" y="156">saved model, scored after booking</text>
+        <rect class="box" x="16" y="196" width="190" height="84" rx="8"/>
+        <text class="b" x="32" y="224">Synthetic demo data</text>
+        <text class="m" x="32" y="244">made-up people, never</text>
+        <text class="m" x="32" y="262">read from a dataset</text>
+        <path class="line" d="M206 238H263" marker-end="url(#arr)"/>
+        <rect class="box" x="514" y="196" width="190" height="84" rx="8"/>
+        <text class="b" x="530" y="224">Results files</text>
+        <text class="m" x="530" y="244">tables, figures, manifest</text>
+        <text class="m" x="530" y="262">checked by a script</text>
+        <path class="line" d="M609 108V194" marker-end="url(#arr)"/>
+      </svg>
+    </div>
+    <figcaption>The model is trained once and saved. The app and the simulation both load that saved file. The simulation never touches the app, and the app never overbooks.</figcaption>
+  </figure>
+  <div class="grid3">
+    <div><h3>Web app</h3><p>What patients, doctors and admins actually use. Written in Flask with a MySQL database.</p></div>
+    <div><h3>Prediction model</h3><p>Reads six facts about a booking and returns a chance that the patient will not come.</p></div>
+    <div><h3>Simulation</h3><p>Runs thousands of pretend clinic mornings under different double-booking rules and measures waiting and overtime.</p></div>
+  </div>
+</section>
+
+<section id="app">
+  <h2>The web app</h2>
+  <h3>Who can do what</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Role</th><th>What they can do</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Patient</strong></td><td>Register and log in. Browse doctors and free slots. Book, cancel and reschedule. Join a standby list for a day that is full. Change their own password.</td></tr>
+      <tr><td><strong>Doctor</strong></td><td>See their own schedule with patient names and the advisory badge. Create slots. Close and reopen free slots for leave. See who is on standby. Cancel an appointment. Mark past appointments completed or no-show.</td></tr>
+      <tr><td><strong>Admin</strong></td><td>Add doctors and generate their slots. Close and reopen any doctor's free slots. See and cancel any booking. Mark outcomes. View the risk flag status and the <em>Models and simulation</em> page.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>A typical day</h3>
+  <ol class="steps">
+    <li>An admin adds a doctor and generates slots, for example 20-minute slots from 09:00 to 13:00 on weekdays.</li>
+    <li>A patient registers, opens the doctor's page and books a free time. The booking appears under <em>My appointments</em>.</li>
+    <li>The doctor opens <em>My schedule</em>. Each booking carries a Low, Medium or High badge marked "advisory only". Patients never see it.</li>
+    <li>After the appointment time starts, the doctor marks the booking completed or no-show. These outcomes become the history the model learns from.</li>
+  </ol>
+
+  <h3>Features added beyond the basics</h3>
+  <dl>
+    <div><dt>Leave</dt><dd>A doctor can close free slots for a date range. Closed slots disappear for patients. Closing never cancels an existing appointment, and reopening only touches closed slots.</dd></div>
+    <div><dt>Standby list</dt><dd>If a day is full, a patient can ask to be told when something frees up. Standby reserves nothing and gives no priority. When a slot is free again the patient sees a notice and books it the normal way, first come first served.</dd></div>
+    <div><dt>No overlapping appointments</dt><dd>A patient cannot hold two appointments whose times overlap, even with different doctors.</dd></div>
+    <div><dt>Models and simulation page</dt><dd>An admin page that shows the model card, the three risk bands and the simulation figures, all read from the saved result files.</dd></div>
+    <div><dt>Phone-friendly look</dt><dd>A Swiss-minimal design: one blue accent, plain type, generous spacing. Tables turn into labelled cards on a phone-width screen.</dd></div>
+  </dl>
+
+  <h3>Safety built in</h3>
+  <ul>
+    <li>Passwords are hashed, never stored as typed.</li>
+    <li>Every form carries a CSRF token, and every route checks the user's role.</li>
+    <li>A patient who asks for another patient's booking gets a 404, as if it did not exist.</li>
+    <li>Five wrong passwords for one email from one place pause further tries for fifteen minutes.</li>
+    <li>Ids and dates in URLs are range-checked. A test sends junk to every route as every role and expects no server errors.</li>
+    <li>All database access goes through SQLAlchemy with bound parameters.</li>
+  </ul>
+  <p class="small">Under the hood: 30 routes in six blueprints (main, auth, account, patient, doctor, admin), 16 page templates, a <code>services.py</code> that holds all booking rules, and a read-only <code>queries.py</code> for pages.</p>
+</section>
+
+<section id="booking">
+  <h2>The rule that matters most</h2>
+  <p>Imagine two patients open the same doctor's page, both see 09:20 free, and both press Book within the same instant. A program that first checks "is it free?" and then saves can let both through, because each check happens before either save.</p>
+  <p>CAMS does not check first. It just tries to save, and the <strong>database</strong> decides who wins.</p>
+  <figure>
+    <div class="diagram">
+      <svg viewBox="0 0 720 270" role="img" aria-labelledby="d2t d2d">
+        <title id="d2t">Two patients race for one slot</title>
+        <desc id="d2d">Both patients press Book at the same moment. The database accepts the first insert and rejects the second because of the unique key, so the second patient sees that the slot was just taken.</desc>
+        <defs><marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="head"/></marker></defs>
+        <rect class="box" x="16" y="30" width="170" height="64" rx="8"/>
+        <text class="b" x="32" y="56">Patient A</text><text class="m" x="32" y="76">presses Book 09:20</text>
+        <rect class="box" x="16" y="176" width="170" height="64" rx="8"/>
+        <text class="b" x="32" y="202">Patient B</text><text class="m" x="32" y="222">presses Book 09:20</text>
+        <rect class="hot" x="270" y="84" width="180" height="102" rx="8"/>
+        <text class="b" x="286" y="112">Database</text>
+        <text class="m" x="286" y="134">unique key on the slot,</text>
+        <text class="m" x="286" y="152">so only one live</text>
+        <text class="m" x="286" y="170">booking can hold it</text>
+        <path class="line" d="M186 62L268 100" marker-end="url(#arr2)"/>
+        <path class="line" d="M186 208L268 170" marker-end="url(#arr2)"/>
+        <rect class="ok" x="534" y="30" width="170" height="64" rx="8"/>
+        <text class="b" x="550" y="56">Insert accepted</text><text class="m" x="550" y="76">"Booked"</text>
+        <rect class="no" x="534" y="176" width="170" height="64" rx="8"/>
+        <text class="b" x="550" y="202">Duplicate key</text><text class="m" x="550" y="222">"Slot just taken" (409)</text>
+        <path class="line" d="M450 112L532 66" marker-end="url(#arr2)"/>
+        <path class="line" d="M450 158L532 206" marker-end="url(#arr2)"/>
+      </svg>
+    </div>
+    <figcaption>Whichever insert reaches the database first wins. The other gets a clear message and an up-to-date list of free times.</figcaption>
+  </figure>
+
+  <h3>How the database guarantees it</h3>
+  <ul>
+    <li>The <code>slots</code> table has a unique key on doctor, date and time, so a slot exists once.</li>
+    <li>The <code>bookings</code> table has a hidden generated column. It copies the slot id while a booking is alive and becomes empty when the booking is cancelled. That column must be unique, so two live bookings cannot share a slot, and a cancelled booking frees it. A completed or no-show appointment keeps its slot.</li>
+    <li>Rescheduling inserts the new booking and cancels the old one in a single transaction. If the new slot is taken, everything is undone.</li>
+    <li>Closing a slot for leave uses the same mechanism: a closed row held in the doctor's own name. A patient booking and a doctor closing the same slot are decided like two patients.</li>
+  </ul>
+  <h3>How we proved it</h3>
+  <p>Three tests were written before the code and shown failing first: two simultaneous requests for one slot give exactly one success, six simultaneous requests across 25 slots give one winner per slot, and a direct SQL insert of a second live booking is refused. They run on SQLite and on real MySQL, because the project's database is MySQL.</p>
+</section>
+
+<section id="data">
+  <h2>The data</h2>
+  <p>Learning needs examples of past appointments and whether the patient came. We used three public datasets, each for one job.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Dataset</th><th>Used for</th><th>What it holds</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Kaggle "Medical Appointment No Shows"</strong></td><td>Training the model and reporting results</td><td>110,527 appointments from Vitória, Brazil, April to June 2016. No doctor id and no consultation times.</td></tr>
+      <tr><td><strong>OpenML "Medical-Appointment"</strong></td><td>Checking that findings hold on a second dataset</td><td>61,214 appointments from early 2017, with specialty, booking channel and hour. Its origin is not stated.</td></tr>
+      <tr><td><strong>Hangu open data</strong></td><td>Consultation lengths in the simulation only</td><td>6,637 consultations from 381 half-day sessions of one physician at a private clinic in China.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Care we took</h3>
+  <ul>
+    <li><strong>Target coding.</strong> The two datasets label attendance in opposite ways. In all our code the value 1 always means a no-show, and a test confirms both loaders agree on the same hand-made rows.</li>
+    <li><strong>Cleaning is logged.</strong> The Kaggle file lost 16 rows to cleaning rules (fractional patient ids, impossible ages, appointments dated before they were booked). Each rule's count is written to a log file.</li>
+    <li><strong>History uses only what was known.</strong> A patient's "earlier no-show rate" counts only appointments dated before the current booking date, so the model never peeks at the future.</li>
+    <li><strong>Raw datasets are never committed.</strong> They live in a git-ignored folder, and the download steps are in <code>data/README.md</code>. The app itself never reads them.</li>
+  </ul>
+</section>
+
+<section id="model">
+  <h2>The prediction model</h2>
+  <p>The model answers one question for a booking: <em>how likely is this patient to be a no-show?</em> It is deliberately limited to six facts a real clinic could collect at booking time.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Input</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td><code>age</code></td><td>Age in years on the appointment date</td></tr>
+      <tr><td><code>is_female</code></td><td>Sex, coded 1 for female and 0 for male</td></tr>
+      <tr><td><code>lead_days</code></td><td>Days between booking and the appointment</td></tr>
+      <tr><td><code>appt_weekday</code></td><td>Day of the week, Monday is 0</td></tr>
+      <tr><td><code>prev_appointments</code></td><td>Earlier appointments whose outcome was already known</td></tr>
+      <tr><td><code>prev_no_show_rate</code></td><td>Share of those earlier appointments that were no-shows</td></tr>
+    </tbody>
+  </table></div>
+  <p>The same function, <code>deployable_features()</code>, computes these inputs during training and inside the app. A test pushes one booking through both paths and expects identical numbers, so the model sees the same thing in use as it did in training.</p>
+
+  <h3>The ladder of models</h3>
+  <p>We climbed in steps, so each step had to earn its place: an "always show up" baseline, a rule based on earlier no-show rate, logistic regression, random forest and gradient boosting. The score used is AUC-ROC. It runs from 0.5, a coin flip, to 1.0, a perfect ranking. Accuracy is never the headline, because always guessing "will show" is already right 0.815 of the time on the holdout while telling us nothing.</p>
+  <figure>
+    <div class="bars" role="img" aria-label="AUC-ROC on the locked holdout: Kaggle logistic regression 0.718, random forest 0.730, gradient boosting 0.732; OpenML 0.612, 0.648, 0.646; deployable model 0.727">
+      <h4>Kaggle, every feature the dataset offers</h4>
+      <div class="bar"><span>Logistic regression</span><span class="track"><span class="fill" style="width:43.6%"></span></span><span class="val">0.718</span></div>
+      <div class="bar"><span>Random forest</span><span class="track"><span class="fill" style="width:46%"></span></span><span class="val">0.730</span></div>
+      <div class="bar"><span>Gradient boosting</span><span class="track"><span class="fill" style="width:46.4%"></span></span><span class="val">0.732</span></div>
+      <h4>OpenML, the second dataset</h4>
+      <div class="bar"><span>Logistic regression</span><span class="track"><span class="fill alt" style="width:22.4%"></span></span><span class="val">0.612</span></div>
+      <div class="bar"><span>Random forest</span><span class="track"><span class="fill alt" style="width:29.6%"></span></span><span class="val">0.648</span></div>
+      <div class="bar"><span>Gradient boosting</span><span class="track"><span class="fill alt" style="width:29.2%"></span></span><span class="val">0.646</span></div>
+      <h4>The model the app uses</h4>
+      <div class="bar"><span>Deployable, six inputs</span><span class="track"><span class="fill" style="width:45.4%"></span></span><span class="val">0.727</span></div>
+    </div>
+    <figcaption>AUC-ROC on a holdout of the latest appointments, never used for tuning. Each bar starts at 0.5, which is a coin flip, and a full bar would be 1.0.</figcaption>
+  </figure>
+  <p>The honest reading: the model ranks patients usefully but not sharply. The deployable model with six inputs scores 0.727 (95% interval 0.719 to 0.735), only 0.005 below the research model with every feature. Random forest and gradient boosting are statistically close, and both beat logistic regression.</p>
+
+  <h3>Guarding against fooling ourselves</h3>
+  <ul>
+    <li>The test set is the latest 20% of appointment dates, locked first and scored once per final model.</li>
+    <li>Tuning uses patient-grouped cross-validation, so no patient appears on both sides of a split. A test checks that 0 patients do.</li>
+    <li>An AUC above about 0.85 would be treated as a leak. Ours are well below. A model trained on shuffled labels scores 0.506, which is what chance looks like.</li>
+    <li>Class weights and resampling were compared. Class weights distort the probabilities and resampling made things worse, so the final model uses neither.</li>
+    <li>Calibration was tested. Neither Platt scaling nor isotonic regression improved the Brier score, so the model is left uncalibrated.</li>
+    <li>The SMS reminder shows a link with fewer no-shows, but reminders were sent selectively. We describe it as an association and never as a cause.</li>
+  </ul>
+
+  <h3>From a probability to a badge</h3>
+  <p>Staff see three bands, set from the model card at 0.19 and 0.38 and chosen on training data so the holdout stayed a fair test. These are the real no-show rates on the holdout. The clinic-wide average there is 18.5%.</p>
+  <figure>
+    <div class="bars" role="img" aria-label="Holdout no-show rate by band: Low 5.9 percent, Medium 25.4 percent, High 37.1 percent, clinic average 18.5 percent">
+      <div class="bar"><span>Low (41.4% of bookings)</span><span class="track"><span class="fill" style="width:14.75%"></span></span><span class="val">5.9%</span></div>
+      <div class="bar"><span>Medium (48.6%)</span><span class="track"><span class="fill" style="width:63.5%"></span></span><span class="val">25.4%</span></div>
+      <div class="bar"><span>High (10.0%)</span><span class="track"><span class="fill" style="width:92.75%"></span></span><span class="val">37.1%</span></div>
+      <div class="bar"><span>Clinic average</span><span class="track"><span class="fill alt" style="width:46.25%"></span></span><span class="val">18.5%</span></div>
+    </div>
+    <figcaption>Bars run from 0% to 40%. A High flag roughly doubles the chance of a no-show, and a Low flag cuts it to about a third.</figcaption>
+  </figure>
+  <p>Even High bookings still attend more often than not. That is why the badge is advisory: a prompt for staff, such as a reminder call, and never a reason to refuse or move anyone.</p>
+  <p class="small">The model uses age and sex. That raises fairness questions, so it is listed under limits. Removing both lowers AUC-ROC by only 0.011 in the feature test.</p>
+</section>
+
+<section id="sim">
+  <h2>The simulation</h2>
+  <p>We cannot run overbooking experiments on real patients, so we built a pretend clinic. One doctor works one half-day session of 240 minutes with 16 slots of 15 minutes. Patients arrive on time and are seen in slot order. A no-show uses no doctor time. Consultation lengths follow a lognormal curve fitted to the Hangu data, and each patient's chance of showing up comes from the saved model, applied to profiles drawn from the Kaggle holdout.</p>
+  <p>Every setting was run 1,000 times with fixed seeds, and differences are paired and reported with 95% intervals.</p>
+
+  <h3>The policies compared</h3>
+  <ul>
+    <li><strong>P0, no overbooking.</strong> One patient per slot.</li>
+    <li><strong>P1, uniform.</strong> Every k-th slot gets a second patient.</li>
+    <li><strong>P2, risk threshold.</strong> A second patient goes into slots whose first patient has a high predicted risk.</li>
+    <li><strong>P3, learned.</strong> A small reinforcement-learning policy (REINFORCE) that sees the same risk plus its own earlier choices.</li>
+  </ul>
+
+  <h3>The trade-off: more patients means more waiting</h3>
+  <div class="scroll"><table class="first-nowrap">
+    <thead><tr><th>Policy</th><th class="n">Doubled slots</th><th class="n">Served</th><th class="n">Wait</th><th class="n">Overtime</th><th class="n">Idle</th></tr></thead>
+    <tbody>
+      <tr><td>P0 no overbooking</td><td class="n">0.00</td><td class="n">12.75</td><td class="n">2.9</td><td class="n">3.7</td><td class="n">72.1</td></tr>
+      <tr><td>P1 every 6th slot</td><td class="n">2.00</td><td class="n">14.36</td><td class="n">6.9</td><td class="n">6.9</td><td class="n">53.6</td></tr>
+      <tr><td>P1 every 4th slot</td><td class="n">4.00</td><td class="n">15.96</td><td class="n">9.9</td><td class="n">17.3</td><td class="n">42.7</td></tr>
+      <tr><td>P1 every 3rd slot</td><td class="n">5.00</td><td class="n">16.76</td><td class="n">13.1</td><td class="n">19.0</td><td class="n">33.6</td></tr>
+      <tr><td>P1 every 2nd slot</td><td class="n">8.00</td><td class="n">19.16</td><td class="n">21.4</td><td class="n">37.3</td><td class="n">19.7</td></tr>
+      <tr><td>P2 risk above 0.3</td><td class="n">4.36</td><td class="n">16.25</td><td class="n">11.0</td><td class="n">16.1</td><td class="n">37.6</td></tr>
+      <tr><td>P2 top 10% by risk</td><td class="n">1.52</td><td class="n">13.99</td><td class="n">5.2</td><td class="n">6.6</td><td class="n">58.5</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small">Per half-day session, averaged over 1,000 runs. Doubled slots and patients served are counts. Wait is the mean for patients who attended. Wait, overtime and idle are in minutes.</p>
+  <p>Every extra patient served costs waiting and overtime, and no policy wins on every column. For that reason we publish the full table and never merge it into one score, because any score would hide a choice about how much a minute of waiting is worth.</p>
+
+  <h3>The headline question: does prediction add anything?</h3>
+  <p>More double-booking always serves more patients, so comparing policies that double-book different amounts proves nothing. The fair test double-books exactly the same number of slots and only changes <em>which</em> slots. This is experiment S6.</p>
+  <ul>
+    <li>Choosing by predicted risk lowered the mean wait compared with evenly spaced extras in most settings. At the 0.3 threshold the difference is −0.412 minutes (95% interval −0.678 to −0.145). Against random choice the gain is larger.</li>
+    <li>The share of double-booked slots where <strong>both</strong> patients came, the outcome overbooking tries to avoid, was 50.7% with the risk threshold. It was 63.2% with evenly spaced slots, 63.3% with random slots and 26.8% for an oracle that knows who will not come.</li>
+    <li>The oracle does far better, so the model captures only a small part of what perfect knowledge would give.</li>
+  </ul>
+  <div class="callout">
+    <p><strong>Plain summary.</strong> Prediction adds a modest benefit over spacing extras evenly, and a clearer one over picking at random. Because the simulation uses the model's own risk as the truth, this is also the best case for the model.</p>
+  </div>
+
+  <h3>What happens when assumptions are wrong</h3>
+  <ul>
+    <li><strong>Risk estimates off (S3).</strong> Overestimating risk by 0.10 raises the double-booked slots at the 0.3 threshold from 4.36 to 8.94 and the mean wait from 11.0 to 24.8 minutes. Overestimating hurts more than underestimating helps.</li>
+    <li><strong>Different clinic no-show rate (S4).</strong> A fixed risk threshold adapts on its own, while a "every k-th slot" rule has to be retuned for each clinic.</li>
+    <li><strong>More variable consultations (S5).</strong> Holding the mean at 13.4 minutes, the more the lengths vary, the more overbooking costs in waiting.</li>
+  </ul>
+
+  <h3>A learned policy (S7)</h3>
+  <p>To learn, the policy needs one number to maximise, and there is no single right price for delay. We fixed three stated settings and trained one policy for each. The reward is patients served, minus a cost for patient-hours waited, minus a cost for doctor overtime hours. Training, validation and evaluation use separate random seeds.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Cost of delay</th><th class="n">Doubled slots</th><th class="n">Served / wait / overtime</th><th>Best hand-made rule</th><th>Learned minus best (reward)</th></tr></thead>
+    <tbody>
+      <tr><td>Light (0.5 per wait hour, 1.0 per overtime hour)</td><td class="n">8.74</td><td class="n">19.70 / 22.6 / 48.5</td><td>P1 every 2nd slot</td><td>+0.024 (−0.055 to +0.103), no clear difference</td></tr>
+      <tr><td>Moderate (1.0 and 2.0)</td><td class="n">3.61</td><td class="n">15.66 / 9.0 / 11.9</td><td>P1 every 4th slot</td><td>+0.157 (+0.086 to +0.227), learned is better</td></tr>
+      <tr><td>Heavy (2.0 and 4.0)</td><td class="n">0.04</td><td class="n">12.78 / 2.9 / 3.7</td><td>P2 at 0.5</td><td>−0.009 (−0.017 to −0.000), about the same</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small">The first two numeric columns describe the learned policy. Wait and overtime are in minutes.</p>
+  <p>The learned policy beats the best hand-made rule only under the moderate setting. Under light costs it ties, and under heavy costs both almost never double-book. This is a small, honest result and not a claim that reinforcement learning wins.</p>
+</section>
+
+<section id="proof">
+  <h2>How we know it works</h2>
+  <h3>Tests</h3>
+  <p>The recorded full run (<code>results/test_summary.txt</code>) has <strong>784 tests: 778 passed, 0 failed, 6 skipped on purpose</strong>. The six are five database-upgrade tests that only make sense on MySQL and one self-check that skips itself while the summary is being written. The 202 database-touching tests were run on both SQLite and real MySQL.</p>
+  <p>After the deployment changes (an 11-test addition for the clinic time zone and the Vercel files) the whole suite was run again on both engines: <strong>795 tests, 790 passed, 0 failed, 5 skipped</strong>. The five skips are the MySQL-only upgrade tests. The recorded summary file was not rewritten by that run.</p>
+  <p>They cover booking and the double-booking constraint, access control and CSRF, patient isolation, login throttling, leave and standby, data loaders and splits, leakage, the feature function used in training and serving, the simulation's sanity cases, the learned policy, the risk flag (including that booking still works when the model is missing), and the admin pages.</p>
+
+  <h3>The numbers audit</h3>
+  <p>Every number in the project's results summary is listed in an audit file with the results file and column it came from. One script rebuilds the summary and fails if a quoted number no longer matches. Each results file also has an entry in a manifest recording its seed, the hash of the data it used, the date and the git commit.</p>
+
+  <h3>Size of the work</h3>
+  <p class="small">Counted by script as non-blank lines.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Part</th><th class="n">Files</th><th class="n">Lines</th></tr></thead>
+    <tbody>
+      <tr><td>Web app (Python)</td><td class="n">23</td><td class="n">2,026</td></tr>
+      <tr><td>Web app (page templates)</td><td class="n">16</td><td class="n">732</td></tr>
+      <tr><td>Database and seed scripts</td><td class="n">6</td><td class="n">485</td></tr>
+      <tr><td>Machine learning</td><td class="n">19</td><td class="n">2,251</td></tr>
+      <tr><td>Simulation</td><td class="n">6</td><td class="n">1,083</td></tr>
+      <tr><td>Report and audit scripts</td><td class="n">7</td><td class="n">1,096</td></tr>
+      <tr><td>Tests</td><td class="n">41</td><td class="n">5,061</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="built">
+  <h2>How it was built</h2>
+  <p>The work followed a plan with milestones. Each one was finished and checked before the next began, and the booking constraint was proven first.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Step</th><th>What was done</th></tr></thead>
+    <tbody>
+      <tr><td><strong>M0 Setup</strong></td><td>Folder layout, virtual environment, requirements, MySQL steps.</td></tr>
+      <tr><td><strong>M1 Booking core</strong></td><td>Database schema and booking service, tests written first. Concurrency tests passing on MySQL.</td></tr>
+      <tr><td><strong>M2 App screens</strong></td><td>Patient, doctor and admin screens, roles, seed script, end-to-end tests.</td></tr>
+      <tr><td><strong>M3 Data pipeline</strong></td><td>Loaders for the three datasets, logged cleaning, splits, dataset profile.</td></tr>
+      <tr><td><strong>M4 Research models</strong></td><td>Baselines, model ladder, ablation, second dataset, transfer, imbalance, calibration, with leakage tests first.</td></tr>
+      <tr><td><strong>M5 Deployable model</strong></td><td>The six-input model, threshold table, model card and the shared feature function.</td></tr>
+      <tr><td><strong>M6 Simulation</strong></td><td>Sanity tests first, then policy trade-offs, error, base rate, variability and the value of prediction.</td></tr>
+      <tr><td><strong>M7 Risk flag</strong></td><td>Advisory badges for staff, stored separately, booking unaffected if the model fails.</td></tr>
+      <tr><td><strong>M8 Report assets</strong></td><td>Tables and figures from result files, the numbers audit, demo script, tagged v1.0.</td></tr>
+      <tr><td><strong>Hardening</strong></td><td>Login throttling, change password, safe handling of odd input, patient overlap guard, a risk status panel and the Models and simulation page.</td></tr>
+      <tr><td><strong>Extras</strong></td><td>Standby list, closing slots for leave and a reinforcement-learning policy (S7), each with its own tests.</td></tr>
+      <tr><td><strong>Restyle</strong></td><td>A Swiss-minimal redesign touching only templates and styles, kept on its own branch for review.</td></tr>
+      <tr><td><strong>Deployment prep</strong></td><td>Vercel entry point, a clinic time-zone setting, a slimmed install for the web app, and a cleanup of the folder.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small">The history has 27 commits on the main branch, and the first release is tagged v1.0.</p>
+</section>
+
+<section id="map">
+  <h2>Project map</h2>
+  <pre>CAMS/
+├─ app/            the Flask web app
+│  ├─ blueprints/  auth, account, patient, doctor, admin
+│  ├─ services.py  every booking rule (the only place bookings change)
+│  ├─ queries.py   read-only data for pages
+│  ├─ risk.py      the advisory flag (never read by booking code)
+│  ├─ standby.py   the standby list
+│  ├─ templates/   page templates       static/   stylesheet and script
+├─ db/             schema.sql, upgrade steps, seed_synthetic.py
+├─ ml/
+│  ├─ src/         loaders, features, training, experiments E1 to E10
+│  └─ artifacts/   the saved model and its model card
+├─ sim/            the clinic simulation, policies, experiments, learned policy
+├─ results/        tables, figures and manifest written by scripts
+├─ scripts/        report assets, numbers check, test summary
+├─ tests/          the test suite
+├─ docs/           plan, results summary, demo script, audit, this report
+├─ data/           download steps (raw files stay out of git)
+├─ index.py        entry point used only by Vercel
+├─ requirements.txt            what the web app needs
+└─ requirements-research.txt   adds experiment and test tools</pre>
+</section>
+
+<section id="run">
+  <h2>Run it yourself</h2>
+  <h3>On a laptop</h3>
+  <pre>python3 -m venv venv &amp;&amp; source venv/bin/activate
+pip install -r requirements-research.txt
+cp .env.example .env              # fill in the database URL and a secret key
+python -m db.init_db              # create the tables
+python -m db.seed_synthetic       # fake demo data, prints the demo logins
+flask --app app run --port 5001   # open http://127.0.0.1:5001</pre>
+  <p>Demo accounts all share the password set as <code>SEED_PASSWORD</code> in <code>.env</code>.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Role</th><th>Email</th></tr></thead>
+    <tbody>
+      <tr><td>Admin</td><td><code>admin@cams-demo.test</code></td></tr>
+      <tr><td>Doctor</td><td><code>dr.meera@cams-demo.test</code> (also dr.arjun, dr.kavya, dr.rohan, dr.sana)</td></tr>
+      <tr><td>Patient</td><td><code>asha.demo01@cams-demo.test</code> (also .demo02 to .demo40)</td></tr>
+    </tbody>
+  </table></div>
+  <h3>On Vercel</h3>
+  <p>The app runs as one Python function and needs a hosted MySQL 8 database, because the no-double-booking rule relies on MySQL's unique generated column. Set three environment variables on Vercel: <code>DATABASE_URL</code>, <code>SECRET_KEY</code> and <code>CLINIC_TIMEZONE</code> (for example <code>Asia/Kolkata</code>, since Vercel's servers run on UTC). Prepare the hosted database once from a laptop, then deploy. The full steps are under "Deploy to Vercel" in <code>README.md</code>.</p>
+  <p>The deployment setup was checked by a clean install of only the web app's requirements and a walk through each role on that stripped-down copy. An actual Vercel deployment has not been run from this repository yet.</p>
+</section>
+
+<section id="limits">
+  <h2>What it cannot do</h2>
+  <ul>
+    <li><strong>No real clinic data.</strong> The model learned from a Brazilian public clinic, the consultation times come from a private clinic in China, and the app runs on made-up records.</li>
+    <li><strong>Assumed clinic behaviour.</strong> One doctor, one half-day, equal slots, patients on time, seen in order. In the simulation the model's risk is the true risk, so S6 shows the most prediction could help.</li>
+    <li><strong>Short data.</strong> Kaggle covers about six weeks, so seasons are not captured, and its holdout is only 5 dates.</li>
+    <li><strong>Modest accuracy.</strong> AUC-ROC 0.727, and even a High flag is wrong more often than right. It is a nudge, not a decision.</li>
+    <li><strong>Findings transfer only partly</strong> between the two datasets, so a clinic would need its own data.</li>
+    <li><strong>Age and sex are inputs.</strong> That is a fairness concern. Because the flag only informs staff and the slot rule never changes, nobody is denied a slot on that basis.</li>
+    <li><strong>The login throttle is per process.</strong> On Vercel it slows guessing rather than stopping it.</li>
+    <li><strong>A preprint is cited.</strong> The reinforcement-learning idea follows Amalina and An (2026), an arXiv preprint that has not been peer reviewed.</li>
+  </ul>
+</section>
+
+<section id="glossary">
+  <h2>Glossary</h2>
+  <dl>
+    <div><dt>No-show</dt><dd>A booked patient who does not turn up and does not cancel.</dd></div>
+    <div><dt>Overbooking</dt><dd>Giving two patients the same slot, hoping one of them will not come.</dd></div>
+    <div><dt>AUC-ROC</dt><dd>How well a model ranks risky cases above safe ones. 0.5 is a coin flip, 1.0 is perfect.</dd></div>
+    <div><dt>Holdout</dt><dd>Data kept aside, here the latest appointments, and scored only at the end so the result is a fair test.</dd></div>
+    <div><dt>Leakage</dt><dd>When a model accidentally sees information from the future or from the answer, giving scores that look great and mean nothing.</dd></div>
+    <div><dt>Calibration</dt><dd>Whether a predicted 30% really happens about 30% of the time.</dd></div>
+    <div><dt>Brier score</dt><dd>A measure of how far predicted probabilities are from what happened. Lower is better.</dd></div>
+    <div><dt>Unique key</dt><dd>A database rule that refuses a second row with the same value, used here so one slot holds one live booking.</dd></div>
+    <div><dt>Generated column</dt><dd>A column whose value the database computes from other columns. Ours copies the slot id for live bookings and is empty for cancelled ones.</dd></div>
+    <div><dt>CSRF token</dt><dd>A secret in each form that stops another website from submitting actions as a logged-in user.</dd></div>
+    <div><dt>Discrete-event simulation</dt><dd>A simulation that jumps from one event to the next, such as a patient arriving or a consultation ending. SimPy does this.</dd></div>
+    <div><dt>REINFORCE</dt><dd>A simple reinforcement-learning method: try decisions, see how well sessions went, and nudge the policy toward the choices that did better.</dd></div>
+    <div><dt>Oracle</dt><dd>A pretend policy that knows in advance who will not come. It shows the upper limit of what prediction could give.</dd></div>
+    <div><dt>Advisory</dt><dd>Shown to staff for information only. It never changes who can book.</dd></div>
+  </dl>
+</section>
+
+<section>
+  <h2>Where the numbers come from</h2>
+  <p>Model and simulation figures are copied from <code>docs/RESULTS_SUMMARY.md</code>, which a script checks against the files in <code>results/</code>. The learned-policy table and the policy table are read from <code>results/s7_reward_by_policy.csv</code> and <code>results/s2_policy_tradeoffs.csv</code>. Test counts are from <code>results/test_summary.txt</code>. File counts, line counts and route counts were produced by a script over the repository. The full detail and the audit are in the files named above.</p>
+</section>
+
+</div>
